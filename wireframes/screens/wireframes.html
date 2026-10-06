@@ -1,0 +1,1348 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Wireframes · Sổ chi tiêu</title>
+<style>
+  :root{--bg:#eceae6;--paper:#fff;--line:#c9c6c0;--ink:#2a2a2a;--mute:#8a8780;--fill:#e4e2dd;--acc:#2a2a2a;--note:#fff6c8;--warn:#d9a441;--bad:#c45b4a;--ok:#5a8f5a}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.4 system-ui,"Segoe UI",Roboto,sans-serif}
+  header.top{padding:24px 16px 8px;max-width:1400px;margin:auto}
+  header.top h1{margin:0 0 4px;font-size:22px}
+  header.top p{margin:4px 0;color:#555;max-width:900px}
+  section{max-width:1400px;margin:auto;padding:8px 16px 24px}
+  section>h2{font-size:17px;border-bottom:2px solid var(--ink);padding-bottom:4px}
+  .grid{display:flex;flex-wrap:wrap;gap:28px;align-items:flex-start}
+  figure{margin:0;width:300px}
+  figcaption{margin-top:8px;font-size:12.5px}
+  figcaption > b:first-child{display:block;font-size:13.5px;margin-bottom:2px}
+  .uc{display:inline-block;background:var(--ink);color:#fff;border-radius:3px;padding:0 5px;font-size:11px;margin:1px 2px 1px 0}
+  .idea{background:var(--note);border-left:3px solid var(--warn);padding:4px 6px;margin-top:4px}
+  .phone{position:relative;width:300px;height:620px;background:var(--paper);border:2px solid var(--ink);border-radius:26px;overflow:hidden;display:flex;flex-direction:column}
+  .sb{height:22px;font-size:10px;color:var(--mute);display:flex;justify-content:space-between;padding:4px 18px 0}
+  .hd{display:flex;align-items:center;justify-content:space-between;padding:6px 14px 8px;font-weight:600;font-size:16px}
+  .hd .ic{width:26px;height:26px;border-radius:50%;background:var(--fill);display:inline-block}
+  .body{flex:1;overflow:hidden;padding:0 12px}
+  .nav{height:56px;border-top:1px solid var(--line);display:flex;align-items:center;justify-content:space-around;font-size:10px;color:var(--mute)}
+  .nav span{display:flex;flex-direction:column;align-items:center;gap:2px}
+  .nav span:before{content:"";width:18px;height:18px;border-radius:4px;background:var(--fill)}
+  .nav .on{color:var(--ink);font-weight:600}.nav .on:before{background:var(--ink)}
+  .nav .plus:before{display:none}
+  .nav .plus{width:46px;height:46px;border-radius:50%;background:var(--ink);color:#fff;font-size:24px;justify-content:center;margin-top:-18px;box-shadow:0 2px 6px #0003}
+  .card{border:1.5px solid var(--line);border-radius:12px;padding:10px;margin-bottom:10px}
+  .card.hero{border-color:var(--ink);border-width:2px}
+  .lbl{font-size:11px;color:var(--mute)}
+  .big{font-size:28px;font-weight:700;letter-spacing:-.5px}
+  .mid{font-size:18px;font-weight:700}
+  .row{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:6px 0}
+  .row+.row{border-top:1px dashed var(--line)}
+  .row .l{display:flex;align-items:center;gap:8px;min-width:0}
+  .ico{width:28px;height:28px;border-radius:8px;background:var(--fill);flex:none}
+  .t{font-size:13px}.s{font-size:11px;color:var(--mute)}
+  .bar{height:7px;border-radius:4px;background:var(--fill);overflow:hidden;margin-top:5px}
+  .bar i{display:block;height:100%;background:var(--ink)}
+  .bar.over i{background:var(--bad)}
+  .chip{display:inline-block;border:1.5px solid var(--line);border-radius:999px;padding:2px 9px;font-size:11px;margin:2px 3px 2px 0;white-space:nowrap}
+  .chip.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+  .chip.warn{border-color:var(--warn);color:#8a6113}.chip.bad{border-color:var(--bad);color:var(--bad)}
+  .btn{display:inline-block;border:1.5px solid var(--ink);border-radius:8px;padding:5px 10px;font-size:12px;font-weight:600}
+  .btn.pri{background:var(--ink);color:#fff}
+  .btn.blk{display:block;text-align:center;padding:10px}
+  .tabs{display:flex;gap:4px;margin-bottom:10px}
+  .tabs span{flex:1;text-align:center;font-size:11.5px;padding:6px 0;border-bottom:2px solid var(--line);color:var(--mute)}
+  .tabs .on{border-color:var(--ink);color:var(--ink);font-weight:600}
+  .month{display:flex;justify-content:center;gap:14px;font-weight:600;margin:0 0 10px}
+  .month b{color:var(--mute);font-weight:400}
+  .day{font-size:11px;color:var(--mute);display:flex;justify-content:space-between;margin:8px 0 2px;text-transform:uppercase;letter-spacing:.3px}
+  .dim{position:absolute;inset:0;background:#0005}
+  .sheet{position:absolute;left:0;right:0;bottom:0;background:var(--paper);border-radius:18px 18px 0 0;padding:8px 12px 12px;border-top:2px solid var(--ink)}
+  .grab{width:40px;height:4px;border-radius:2px;background:var(--line);margin:0 auto 8px}
+  .seg{display:flex;border:1.5px solid var(--ink);border-radius:8px;overflow:hidden;margin-bottom:8px}
+  .seg span{flex:1;text-align:center;padding:5px 0;font-size:12px;font-weight:600}
+  .seg .on{background:var(--ink);color:#fff}
+  .amount{text-align:right;font-size:30px;font-weight:700;padding:2px 4px}
+  .expr{text-align:right;font-size:12px;color:var(--mute);padding:0 4px;min-height:16px}
+  .cats{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin:6px 0}
+  .cats span{display:flex;flex-direction:column;align-items:center;font-size:10px;gap:3px;padding:4px 0;border-radius:8px}
+  .cats span:before{content:"";width:26px;height:26px;border-radius:8px;background:var(--fill)}
+  .cats .on{outline:2px solid var(--ink)}
+  .input{border:1.5px solid var(--line);border-radius:8px;padding:6px 8px;font-size:12px;color:var(--mute);margin:4px 0}
+  .keys{display:grid;grid-template-columns:repeat(4,1fr);gap:5px;margin-top:6px}
+  .keys span{border:1.5px solid var(--line);border-radius:8px;text-align:center;padding:7px 0;font-weight:600;font-size:14px}
+  .keys .op{background:var(--fill)}
+  .keys .save{background:var(--ink);color:#fff;grid-row:span 2;display:flex;align-items:center;justify-content:center}
+  .more{font-size:12px;font-weight:600;padding:4px 0;display:flex;justify-content:space-between}
+  .toast{position:absolute;left:12px;right:12px;bottom:66px;background:var(--ink);color:#fff;border-radius:10px;padding:8px 10px;font-size:12px;display:flex;justify-content:space-between}
+  .step{display:flex;gap:4px;margin-bottom:10px}.step i{flex:1;height:4px;border-radius:2px;background:var(--fill)}.step i.on{background:var(--ink)}
+  .tog{width:30px;height:17px;border-radius:9px;background:var(--ink);position:relative;flex:none}
+  .tog:after{content:"";position:absolute;right:2px;top:2px;width:13px;height:13px;border-radius:50%;background:#fff}
+  .tog.off{background:var(--line)}.tog.off:after{left:2px;right:auto}
+  .done{opacity:.45}
+  .chart{display:flex;align-items:flex-end;gap:6px;height:110px;padding:6px 0;border-bottom:1px solid var(--line)}
+  .chart div{flex:1;display:flex;gap:2px;align-items:flex-end;height:100%}
+  .chart i{flex:1;background:var(--ink);border-radius:2px 2px 0 0}.chart i+i{background:var(--line)}
+  .donut{width:110px;height:110px;border-radius:50%;background:conic-gradient(#2a2a2a 0 38%,#6d6a64 0 60%,#a29f98 0 78%,#cfccc5 0 100%);margin:6px auto;position:relative}
+  .donut:after{content:"";position:absolute;inset:28px;border-radius:50%;background:#fff}
+  .desk{width:960px;height:560px;background:var(--paper);border:2px solid var(--ink);border-radius:10px;display:grid;grid-template-columns:180px 1fr 300px;overflow:hidden}
+  .desk aside{border-right:1px solid var(--line);padding:14px 10px}
+  .desk aside div{padding:7px 8px;border-radius:6px;font-size:13px;color:var(--mute)}
+  .desk aside .on{background:var(--fill);color:var(--ink);font-weight:600}
+  .desk main{padding:14px;overflow:hidden}
+  .desk .side{border-left:1px solid var(--line);padding:14px}
+  figure.wide{width:960px;max-width:100%}
+  @media (max-width:1000px){figure.wide{overflow-x:auto}}
+  /* ===== Colored main flow (section 0, class .v) ===== */
+  .v{--teal:#0d9488;--teal-d:#0f766e;--teal-l:#e6f6f4;--inc:#16a34a;--exp:#e11d48;--slate:#0f172a}
+  .v .phone{border-color:var(--slate);background:#f8fafc}
+  .v .hd{color:var(--slate);font-weight:700}
+  .v .back{color:var(--teal);font-size:20px;margin-right:4px}
+  .v .ic.gear{background:#fff;border:1.5px solid #e2e8f0;display:flex;align-items:center;justify-content:center;font-size:14px;color:#64748b}
+  .v .btn{border-color:var(--teal);color:var(--teal-d)}
+  .v .btn.pri{background:linear-gradient(135deg,#14b8a6,var(--teal-d));border:none;color:#fff;box-shadow:0 6px 14px #0d948845}
+  .v .chip.on{background:var(--teal);border-color:var(--teal);color:#fff}
+  .v .seg{border:none;background:#e2e8f0;border-radius:10px;padding:3px}
+  .v .seg span{color:#475569;border-radius:8px}
+  .v .seg .on{background:#fff;color:var(--teal-d);box-shadow:0 1px 3px #0002}
+  .v .inc{color:var(--inc);font-weight:600}.v .exp{color:var(--exp);font-weight:600}
+  .v .day{color:#64748b}
+  .v .row+.row{border-top:1px solid #eef2f6}
+  .v .input{background:#fff;border-color:#e2e8f0}
+  .v .sheet{border-top:none;box-shadow:0 -8px 24px #0f172a30}
+  .v .grad-teal{background:linear-gradient(135deg,#2dd4bf,#0d9488 55%,#0f766e);color:#fff}
+  .v .grad-violet{background:linear-gradient(135deg,#a78bfa,#7c3aed 55%,#5b21b6);color:#fff}
+  /* welcome */
+  .v .welcome-top{background:linear-gradient(160deg,#2dd4bf,#0d9488 50%,#5b21b6);color:#fff;text-align:center;padding:0 0 30px;border-radius:0 0 28px 28px}
+  .v .welcome-top .sb{color:#fff}
+  .v .logo{width:70px;height:70px;border-radius:22px;background:#ffffff30;border:2px solid #ffffff70;margin:34px auto 0;display:flex;align-items:center;justify-content:center;font-size:34px;font-weight:800}
+  .v .privacy{display:flex;gap:10px;align-items:flex-start;background:var(--teal-l);border-radius:12px;padding:10px;font-size:12px;color:#134e4a}
+  /* hub */
+  .v .hub{display:flex;align-items:center;gap:12px;border-radius:18px;padding:22px 14px;margin-bottom:12px;box-shadow:0 8px 18px #0f172a22}
+  .v .hub-ic{width:42px;height:42px;border-radius:12px;background:#ffffff30;display:flex;align-items:center;justify-content:center;font-size:22px;flex:none}
+  .v .hub-go{margin-left:auto;flex:none;width:28px;height:28px;border-radius:50%;background:#ffffff30;display:flex;align-items:center;justify-content:center;font-size:18px}
+  .v .backup{display:flex;align-items:center;gap:10px;background:#fffbeb;border:1.5px solid #fcd34d;border-radius:12px;padding:8px 10px;margin-bottom:14px}
+  .v .backup .btn{border-color:#d97706;color:#b45309}
+  /* month list */
+  .v .year{display:flex;justify-content:space-between;align-items:center;padding:4px 2px 6px}
+  .v .year b{font-size:18px;color:var(--slate)}
+  .v .year span{color:var(--teal)}
+  .v .mcard{display:flex;align-items:center;gap:10px;background:#fff;border:1.5px solid #e2e8f0;border-radius:12px;padding:7px 10px;margin-bottom:6px}
+  .v .mcard.now{border-color:var(--teal);box-shadow:0 0 0 3px #0d948822}
+  .v .mcard.sel{background:#f0fdfa}
+  .v .mcard.empty{opacity:.55}
+  .v .mnum{width:32px;height:32px;border-radius:10px;background:#f1f5f9;color:#64748b;font-weight:800;display:flex;align-items:center;justify-content:center;flex:none}
+  .v .mcard.now .mnum{background:var(--teal);color:#fff}
+  .v .arr{color:#94a3b8;font-size:18px}
+  .v .ratio{height:5px;border-radius:3px;background:#dcfce7;margin-top:4px;overflow:hidden}
+  .v .ratio i{display:block;height:100%;background:#fb7185}
+  /* month page */
+  .v .sum{border-radius:16px;padding:12px 14px;margin-bottom:10px;box-shadow:0 8px 18px #0d948833}
+  .v .pill{flex:1;background:#ffffff26;border-radius:10px;padding:5px 8px;font-size:11.5px}
+  .v .pill b{display:block;font-size:14px}
+  /* category icons */
+  .v .ico.e{display:flex;align-items:center;justify-content:center;font-size:15px;font-style:normal;border-radius:10px}
+  .v .food{background:#ffedd5}.v .move{background:#dbeafe}.v .health{background:#fce7f3}.v .family{background:#ede9fe}
+  .v .home{background:#dcfce7}.v .shop{background:#fef3c7}.v .fun{background:#e0e7ff}.v .other{background:#f1f5f9}
+  .v .cats span{color:#334155}
+  .v .cats span:before{display:none}
+  .v .cats .ico.e{width:34px;height:34px;font-size:18px}
+  .v .cats .on{outline:none;background:var(--teal-l)}
+  .v .cats .on .ico.e{box-shadow:0 0 0 2.5px var(--teal)}
+  .v .amt-box{display:flex;justify-content:space-between;align-items:center;background:var(--teal-l);border-radius:12px;padding:8px 12px;margin:4px 0 8px}
+  .v .amt-box span:last-child{font-size:26px;font-weight:800;color:var(--teal-d)}
+  /* ===== Month detail (0b) ===== */
+  h3.sub{font-size:15px;margin:28px 0 6px;color:#0f766e}
+  .v .sumc{display:flex;justify-content:space-between;align-items:center;border-radius:14px;padding:9px 12px;margin-bottom:8px;box-shadow:0 6px 14px #0d948833}
+  .v .living{background:#fff7ed;border:1.5px solid #fed7aa;border-radius:12px;padding:8px 10px;margin-bottom:8px}
+  .v .lbar{height:10px;border-radius:6px;background:#ffffff;border:1px solid #fde3c7;overflow:hidden;display:flex}
+  .v .lbar i{display:block;height:100%}
+  .v .lbar .a{background:#f97316}
+  .v .lbar .b{background:repeating-linear-gradient(45deg,#fb923c 0 3px,#fed7aa 3px 6px)}
+  .v .ptabs{display:flex;gap:5px;overflow:hidden;margin-bottom:6px}
+  .v .ptabs span{white-space:nowrap;padding:5px 9px;border-radius:999px;background:#e2e8f0;color:#475569;font-size:11px;font-weight:600}
+  .v .ptabs .on{background:var(--teal);color:#fff}
+  .v .ptabs i{font-style:normal;opacity:.7;margin-left:4px}
+  .v .goal{background:#fff;border:1.5px solid #e2e8f0;border-radius:12px;padding:7px 10px;margin-bottom:6px}
+  .v .gbar{height:7px;border-radius:5px;background:#f1f5f9;overflow:hidden;margin:5px 0 2px}
+  .v .gbar i{display:block;height:100%;border-radius:5px}
+  .v .ico.sm{width:24px;height:24px;font-size:13px;border-radius:7px}
+  .v .ico.none{background:#fff;border:1.5px dashed #94a3b8;color:#94a3b8;font-weight:700}
+  .v .fab{position:absolute;right:16px;bottom:18px;width:52px;height:52px;border-radius:50%;background:linear-gradient(135deg,#14b8a6,#0f766e);color:#fff;font-size:26px;display:flex;align-items:center;justify-content:center;box-shadow:0 8px 18px #0d948866}
+  .v .dialog{position:absolute;left:16px;right:16px;top:150px;background:#fff;border-radius:20px;padding:18px 16px;box-shadow:0 24px 48px #0f172a66}
+  .v .move-box{white-space:nowrap;font-size:12px;display:flex;align-items:center;justify-content:center;gap:6px;background:#f8fafc;border-radius:12px;padding:8px;margin:12px 0 8px}
+  .v .sw{display:inline-block;width:14px;height:14px;border-radius:50%;vertical-align:middle;margin-left:3px}
+  .v .info{display:flex;gap:6px;background:#f1f5f9;border-radius:10px;padding:7px 9px;font-size:11.5px;color:#334155;margin-bottom:6px}
+  .v .ring{width:150px;height:150px;border-radius:50%;background:conic-gradient(#f97316 0 71%,#fdba74 0 77.5%,#f1f5f9 0);margin:6px auto 4px;position:relative;display:flex;align-items:center;justify-content:center}
+  .v .ring:before{content:"";position:absolute;inset:16px;background:#f8fafc;border-radius:50%}
+  .v .ring>div{position:relative;text-align:center}
+  .v .legend{flex:1;display:flex;gap:6px;align-items:flex-start;background:#fff;border:1.5px solid #e2e8f0;border-radius:10px;padding:6px 8px;font-size:12px}
+  .v .it b.hi{color:#e11d48}
+  .v .carousel{position:relative}
+  .v .carousel .arr{position:absolute;top:66px;width:26px;height:26px;border-radius:50%;background:#fff;border:1.5px solid #e2e8f0;color:#0f766e;font-weight:800;font-size:16px;display:flex;align-items:center;justify-content:center}
+  .v .carousel .arr.l{left:2px}.v .carousel .arr.r{right:2px}
+  .v .chart-name{text-align:center;font-weight:700;font-size:12.5px;color:#0f172a;margin:2px 0 8px}
+  .v .pie-legend{display:grid;grid-template-columns:1fr 1fr;gap:4px 10px;font-size:11.5px}
+  .v .pie-legend div{display:flex;align-items:center;gap:5px;white-space:nowrap}
+  .v .pie-legend .dot{margin-top:0;border:1px solid #0000001a}
+  .v .pie-legend b{margin-left:auto}
+  .v .input.ro{background:#f1f5f9;color:#64748b}
+  .v .dot{width:10px;height:10px;border-radius:3px;margin-top:3px;flex:none}
+  .v .good{background:#f0fdf4;border:1.5px solid #bbf7d0;color:#166534;border-radius:10px;padding:7px 10px;font-size:12px}
+  .v .minibars{display:flex;align-items:flex-end;gap:2px;height:54px;border-bottom:1px solid #e2e8f0}
+  .v .minibars i{flex:1;background:#fdba74;border-radius:2px 2px 0 0}
+  .v .set-sec{font-size:11px;font-weight:700;color:var(--teal-d);text-transform:uppercase;letter-spacing:.4px;margin:10px 2px 4px}
+  .v .set{background:#fff;border:1.5px solid #e2e8f0;border-radius:12px;padding:0 10px}
+  .v .val{font-weight:700;color:var(--teal-d);font-size:12.5px;white-space:nowrap}
+  .v .dates{font-size:11px;color:#0f766e;font-weight:600;margin:1px 0}
+  .v .dates i{font-weight:400;color:#64748b}
+  .code{display:inline-block;background:#0f766e;color:#fff;border-radius:4px;padding:0 6px;font-size:11.5px;font-family:ui-monospace,Consolas,monospace;margin-right:4px;vertical-align:1px}
+  .code-tag{font-family:ui-monospace,Consolas,monospace;font-weight:700;font-size:13px;color:#0f766e;margin:0 0 6px 4px}
+  .v .daybox{background:#e9f3f1;border-radius:14px;padding:7px 10px 3px;margin-bottom:8px}
+  .v .daybox .day{margin:0 0 2px;color:#0f766e;font-weight:700;text-transform:none;letter-spacing:0;font-size:11.5px}
+  .v .daybox .row{padding:5px 0}
+  .v .daybox .row+.row{border-top:1px solid #d3e6e2}
+  .v .over{color:#e11d48;background:#ffe4e6;border-radius:6px;padding:0 5px}
+  .v .goal .gbar{margin-bottom:4px}
+  .v .bal{font-size:11px;color:#ffffffd9;margin-top:3px;font-weight:600}
+  .v .carry{display:flex;justify-content:space-between;align-items:center;background:#f0fdf4;border:1.5px solid #bbf7d0;border-radius:10px;padding:7px 10px;margin:6px 0 2px;font-size:12px;color:#166534}
+  .v .carry b{font-size:15px}
+  .v .inc-box{background:#ecf8ef}
+  .v .inc-box .day{color:#15803d}
+  .v .inc-box .row+.row{border-top-color:#cfeedd}
+  .v .incm{background:#dcfce7}
+  .v .daybox.nb{background:#f1f5f9;padding:6px 6px 6px}
+  .v .daybox.nb .day{color:#475569;padding:0 4px 4px}
+  .v .it{display:flex;align-items:center;gap:6px;border-radius:9px;padding:6px 9px;margin-top:4px;font-size:13px}
+  .v .it .d{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:#0f172a}
+  .v .it .tag{font-size:9.5px;font-weight:700;letter-spacing:.2px;padding:1px 6px;border-radius:999px;background:#ffffffa6;white-space:nowrap}
+  .v .it b{min-width:34px;text-align:right}
+  .v .c-food{background:#ffedd5}.v .c-food .tag{color:#c2410c}
+  .v .c-move{background:#dbeafe}.v .c-move .tag{color:#1d4ed8}
+  .v .c-health{background:#fce7f3}.v .c-health .tag{color:#be185d}
+  .v .c-shop{background:#fef3c7}.v .c-shop .tag{color:#b45309}
+  .v .c-home{background:#dcfce7}.v .c-home .tag{color:#15803d}
+  .v .c-family{background:#ede9fe}.v .c-family .tag{color:#6d28d9}
+  .v .c-none{background:#fff;border:1.5px dashed #cbd5e1;padding:5px 8px}.v .c-none .d{color:#64748b;font-style:italic}
+  .v .tabbar{position:absolute;left:0;right:0;bottom:0;height:62px;background:#fff;border-top:1px solid #e2e8f0;display:flex;align-items:center;justify-content:space-around;padding-bottom:6px}
+  .v .tabbar span{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;font-size:10.5px;font-weight:600;color:#94a3b8}
+  .v .tabbar span i{font-style:normal;font-size:18px;filter:grayscale(1);opacity:.6}
+  .v .tabbar span.on{color:#0f766e}
+  .v .tabbar span.on i{filter:none;opacity:1;background:#ccfbf1;border-radius:999px;padding:1px 14px}
+  .v .tabbar .cplus{flex:none;width:52px;height:52px;border-radius:50%;background:linear-gradient(135deg,#14b8a6,#0f766e);color:#fff;font-size:26px;justify-content:center;margin-top:-26px;box-shadow:0 8px 18px #0d948866}
+  .v .capsule{position:absolute;left:12px;right:76px;bottom:16px;height:50px;border-radius:25px;background:#0f172a;display:flex;align-items:center;justify-content:space-around;padding:0 6px;box-shadow:0 10px 24px #0f172a55}
+  .v .capsule span{display:flex;align-items:center;gap:6px;white-space:nowrap;color:#cbd5e1;font-size:12px;font-weight:700;padding:7px 12px;border-radius:999px}
+  .v .capsule span i{font-style:normal;font-size:17px}
+  .v .capsule span.on{background:#14b8a6;color:#fff}
+  .v .c-inc{background:#dcfce7}.v .c-inc b{color:#15803d}
+  /* savings (D50) */
+  .v .grad-amber{background:linear-gradient(135deg,#fcd34d,#f59e0b 50%,#b45309);color:#fff}
+  .v .c-save{background:#fef9c3}.v .c-save b{color:#a16207}
+  .v .savebtn{display:flex;align-items:center;gap:10px;background:linear-gradient(135deg,#fde047,#facc15 55%,#eab308);border-radius:14px;padding:9px 12px;margin-bottom:8px;box-shadow:0 6px 14px #eab30855}
+  .v .savebtn .pig{width:38px;height:38px;border-radius:12px;background:#ffffff80;display:flex;align-items:center;justify-content:center;font-size:22px;flex:none}
+  .v .savebtn .sb-t{font-size:15px;font-weight:800;color:#713f12}
+  .v .savebtn .sb-s{font-size:11.5px;font-weight:600;color:#854d0e}
+  .v .savebtn .sb-go{width:30px;height:30px;border-radius:50%;background:#713f12;color:#fef08a;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:800;flex:none}
+  .v .basebtn{display:flex;align-items:center;gap:10px;border:2px dashed #f59e0b;background:#fffbeb;border-radius:14px;padding:9px 12px;color:#92400e;font-size:14px}
+  .v .basebtn .pig{width:34px;height:34px;border-radius:10px;background:#fef3c7;display:flex;align-items:center;justify-content:center;font-size:18px;flex:none}
+  .v .basebtn .sb-go{width:28px;height:28px;border-radius:50%;background:#f59e0b;color:#fff;display:flex;align-items:center;justify-content:center;font-size:17px;font-weight:800;flex:none}
+  .v .mcard.base{background:#fffbeb;border-color:#fcd34d}
+  .v .wbar{display:flex;gap:3px;height:12px;border-radius:7px;background:#ffffff40;overflow:hidden;margin:10px 0 2px;padding:0}
+  .v .wbar i{display:block;height:100%;border-radius:6px}
+  .v .mcard.wpart{padding:9px 10px}
+  .v .save-tile{background:#fef3c7;color:#b45309}
+  .specref{display:block;margin-top:3px;color:#0f766e;font-size:11.5px}
+</style>
+</head>
+<body>
+<header class="top">
+  <h1>Sổ chi tiêu · Wireframes (vòng 1b)</h1>
+  <p><b>Section 0 is the current direction:</b> a simple main flow that we build up step by step. Sections 1–6 are the first, more detailed round. They are kept as a <b>parking lot of later ideas</b> and are not the current design.</p>
+  <p>Section 0 is drawn in draft colors; sections 1–6 are grey layout only. All data is fictional. <span class="uc">UC#</span> marks the use case a screen covers. <span class="idea" style="display:inline-block;padding:0 6px">Yellow</span> marks a question for you.</p>
+</header>
+
+<!-- ============ 0. MAIN FLOW (v1b, colored) ============ -->
+<section class="v">
+<h2>0 · Luồng chính (hướng hiện tại)</h2>
+<p class="s" style="font-size:13px;margin-top:-4px"><code>1.0</code> → <code>2.0</code> → <code>3.0</code> Tổng quan · <code>4.0</code> (<code>4.1</code>) → <code>5.0</code> (bottom tabs <code>5.1</code> Ghi chép · <code>5.2</code> Mục tiêu · <code>5.3</code> Thống kê) · <code>6.0</code> · <code>7.0</code> Tiết kiệm (0c). Screen numbers are listed in <code>screen-registry.md</code>, and each screen has a spec in <code>screens/specs/</code> (the source of truth; captions here are short). <i>This section is shown in color; the colors are drafts and can still change.</i></p>
+<div class="grid">
+
+<figure id="s1-0">
+  <div class="code-tag">1.0. Welcome</div>
+  <div class="phone">
+    <div class="welcome-top">
+      <div class="sb" style="color:#ffffffb0"><span>9:41</span><span>●●●</span></div>
+      <div class="logo">₫</div>
+      <div style="font-size:22px;font-weight:800;margin-top:12px">Sổ chi tiêu</div>
+    </div>
+    <div class="body" style="display:flex;flex-direction:column;padding:22px 22px 0">
+      <div style="flex:1"></div>
+      <div class="btn pri blk" style="margin-bottom:22px">Bắt đầu mới</div>
+    </div>
+  </div>
+  <figcaption><b><span class="code">1.0.</span> Welcome <span style="font-weight:400;color:#64748b">· Chào mừng</span></b><span class="uc">UC22</span> First run, when there is no data yet: start with empty data (no backup restore, D56). <span class="specref">Spec: <code>specs/1.0-welcome.md</code></span></figcaption>
+</figure>
+
+<figure id="s2-0">
+  <div class="code-tag">2.0. Home</div>
+  <div class="phone">
+    <div class="sb"><span>9:41</span><span>●●●</span></div>
+    <div class="hd"><span>Xin chào 👋</span><span class="ic gear">⚙</span></div>
+    <div class="body" style="display:flex;flex-direction:column;padding-top:4px">
+      <div class="mid" style="margin-bottom:14px;color:#0f172a">Bạn muốn làm gì?</div>
+      <div class="hub grad-violet">
+        <div class="hub-ic">📊</div>
+        <div style="font-size:19px;font-weight:800">Tổng quan</div>
+        <span class="hub-go">›</span>
+      </div>
+      <div class="hub grad-teal">
+        <div class="hub-ic">✏️</div>
+        <div style="font-size:19px;font-weight:800">Ghi chép</div>
+        <span class="hub-go">›</span>
+      </div>
+      <div class="hub grad-amber">
+        <div class="hub-ic">🐷</div>
+        <div style="font-size:19px;font-weight:800">Tiết kiệm</div>
+        <span class="hub-go">›</span>
+      </div>
+    </div>
+  </div>
+  <figcaption><b><span class="code">2.0.</span> Home <span style="font-weight:400;color:#64748b">· Bạn muốn làm gì?</span></b><span class="uc">UC18</span> The start page: Tổng quan, Ghi chép or Tiết kiệm (new, D50). No backup reminder (D56). <span class="specref">Spec: <code>specs/2.0-home.md</code></span></figcaption>
+</figure>
+
+<figure id="s3-0">
+  <div class="code-tag">3.0. Overview</div>
+  <div class="phone">
+    <div class="sb"><span>9:41</span><span>●●●</span></div>
+    <div class="hd"><span><span class="back">‹</span> Tổng quan</span><span></span></div>
+    <div class="body">
+      <div class="sum grad-violet" style="box-shadow:0 8px 18px #7c3aed40">
+        <div class="lbl" style="color:#ffffffd9">Tổng tài sản</div>
+        <div style="font-size:30px;font-weight:800;line-height:1.15">16.255</div>
+        <div class="wbar"><i style="width:37%;background:#fbbf24"></i><i style="width:63%;background:#2dd4bf"></i></div>
+      </div>
+      <div class="lbl" style="margin:4px 2px 4px">Tiết kiệm</div>
+      <div class="mcard wpart" style="border-left:5px solid #f59e0b">
+        <div class="mnum save-tile">🐷</div>
+        <div style="flex:1;min-width:0"><div class="t"><b>Quỹ tiết kiệm</b></div><div class="s">37%</div></div>
+        <b style="font-size:15px;color:#0f172a">6.000</b><span class="arr">›</span>
+      </div>
+      <div class="lbl" style="margin:8px 2px 4px">Kỳ đang theo dõi</div>
+      <div class="mcard wpart" style="border-left:5px solid #14b8a6">
+        <div class="mnum" style="background:#ccfbf1;color:#0f766e">🗓</div>
+        <div style="flex:1;min-width:0"><div class="t"><b>Tháng 10/2026</b></div>
+          <div class="dates" style="white-space:nowrap;font-size:10.5px">01/10/2026 → <i>chưa kết thúc</i></div><div class="s">Số dư · 63%</div></div>
+        <b style="font-size:15px;color:#0f172a">10.255</b><span class="arr">›</span>
+      </div>
+    </div>
+  </div>
+  <figcaption><b><span class="code">3.0.</span> Overview <span style="font-weight:400;color:#64748b">· Tổng quan</span></b><span class="uc">UC18</span><span class="uc">UC20</span> Total wealth = the savings fund + the Số dư (Thu − Chi, no goal reserve) of the <b>active period</b> (R7). The bar and the two cards show how much comes from each part. Tap a card → 7.0 or that period's 5.0. <span class="specref">Spec: <code>specs/3.0-overview.md</code></span></figcaption>
+</figure>
+
+<figure id="s4-0">
+  <div class="code-tag">4.0. Periods</div>
+  <div class="phone">
+    <div class="sb"><span>9:41</span><span>●●●</span></div>
+    <div class="hd"><span><span class="back">‹</span> Ghi chép</span><span></span></div>
+    <div class="body">
+      <div class="btn pri blk" style="margin-bottom:12px">＋ Tạo kỳ mới</div>
+      <div class="year"><b>2026</b><span>▾</span></div>
+      <div class="mcard now">
+        <div class="mnum">🗓</div>
+        <div style="flex:1;min-width:0"><div class="t"><b>Tháng 10/2026</b></div>
+          <div class="dates">01/10/2026 → <i>chưa kết thúc</i></div>
+          <div class="s"><span class="inc">+10.500</span> · <span class="exp">−245</span> · 4 khoản</div></div><span class="arr">›</span>
+      </div>
+      <div class="mcard sel">
+        <div class="mnum" style="background:#ccfbf1;color:#0f766e">🗓</div>
+        <div style="flex:1;min-width:0"><div class="t"><b>Tháng 9/2026</b></div>
+          <div class="dates">01/09/2026 → 30/09/2026</div>
+          <div class="s"><span class="inc">+20.000</span> · <span class="exp">−9.500</span> · 43 khoản</div></div><span class="arr">›</span>
+      </div>
+      <div class="mcard">
+        <div class="mnum" style="background:#fef3c7;color:#b45309">✈️</div>
+        <div style="flex:1;min-width:0"><div class="t"><b>Du lịch Đà Lạt</b></div>
+          <div class="dates">14/08/2026 → 18/08/2026</div>
+          <div class="s"><span class="inc">+2.000</span> · <span class="exp">−3.200</span> · 18 khoản</div></div><span class="arr">›</span>
+      </div>
+      <div class="mcard">
+        <div class="mnum" style="background:#e0e7ff;color:#4338ca">🗓</div>
+        <div style="flex:1;min-width:0"><div class="t"><b>Kỳ lương 5/7 – 4/8</b></div>
+          <div class="dates">05/07/2026 → 04/08/2026</div>
+          <div class="s"><span class="inc">+19.000</span> · <span class="exp">−8.900</span> · 38 khoản</div></div><span class="arr">›</span>
+      </div>
+      <div class="year"><b>2025</b><span>▸</span></div>
+    </div>
+  </div>
+  <figcaption><b><span class="code">4.0.</span> Periods <span style="font-weight:400;color:#64748b">· Kỳ chi tiêu</span></b><span class="uc">UC8</span> Periods grouped by start year, newest first (R1.1–R1.4). The outlined card is the <b>active period</b> used by 3.0 (R7.1). <span class="specref">Spec: <code>specs/4.0-periods.md</code></span></figcaption>
+</figure>
+
+<figure id="s4-1">
+  <div class="code-tag">4.1. Create / Edit Period</div>
+  <div class="phone">
+    <div class="sb"><span>9:41</span><span>●●●</span></div>
+    <div class="hd"><span><span class="back">‹</span> Ghi chép</span><span></span></div>
+    <div class="body" style="opacity:.35"><div class="btn pri blk">＋ Tạo kỳ mới</div></div>
+    <div class="dim"></div>
+    <div class="sheet">
+      <div class="grab"></div>
+      <div class="row" style="padding-top:0"><b style="font-size:15px">Tạo kỳ mới</b><span class="s">✕</span></div>
+      <div class="lbl">Tên kỳ</div>
+      <div class="input" style="color:var(--ink);font-weight:600;margin-bottom:6px">Tháng 11/2026</div>
+      <div style="display:flex;gap:8px">
+        <div style="flex:1"><div class="lbl">Ngày bắt đầu</div><div class="input" style="color:var(--ink)">📅 01/11/2026</div></div>
+        <div style="flex:1"><div class="lbl">Ngày kết thúc</div><div class="input">📅</div></div>
+      </div>
+      <div class="lbl" style="margin-top:4px">Chọn kỳ trước đó</div>
+      <div class="input" style="color:var(--ink)">Tháng 10/2026 ▾</div>
+      <div class="carry"><span>↩️ Còn lại từ tháng trước</span><b>+10.255</b></div>
+      <div class="btn pri blk" style="margin-top:8px">Tạo kỳ</div>
+    </div>
+  </div>
+  <figcaption><b><span class="code">4.1.</span> Create / Edit Period <span style="font-weight:400;color:#64748b">· Tạo kỳ mới / Sửa kỳ</span></b><span class="uc">UC8</span><span class="uc">UC9</span> Name, dates and "Chọn kỳ trước đó" (last option "Không chọn"): copies the goals and creates the carry-over income entry, negative too (R1.6, R1.8, D60). The Sinh hoạt maximum is copied too; with "Không chọn" it comes from 6.0 (D62). <span class="specref">Spec: <code>specs/4.1-create-edit-period.md</code></span></figcaption>
+</figure>
+
+
+</div>
+
+<h3 class="sub">0b · Chi tiết kỳ (ví dụ: kỳ “Tháng 9/2026”)</h3>
+<p class="s" style="font-size:13px;margin:-4px 0 12px">The summary card stays on top. A <b>bottom bar</b> switches between three tabs: <b>Ghi chép</b> (5.1, with a Chi tiêu / Thu nhập toggle) · <b>Mục tiêu</b> (5.2) · <b>Thống kê</b> (5.3). Adopted from experiment variant A (D43).</p>
+<div class="grid">
+
+<figure id="s5-1">
+  <div class="code-tag">5.1. Logging · Chi tiêu</div>
+  <div class="phone">
+    <div class="sb"><span>9:41</span><span>●●●</span></div>
+    <div class="hd"><span style="display:flex;align-items:center"><span class="back">‹</span><span style="line-height:1.15">Tháng 9/2026<br><span style="font-size:10.5px;font-weight:600;color:#0f766e">01/09 → 30/09/2026</span></span></span><span style="display:flex;gap:6px"><span class="ic gear">⋯</span><span class="ic gear">⚙</span></span></div>
+    <div class="body" style="padding-bottom:70px">
+      <div class="sumc grad-teal">
+        <div><div class="lbl" style="color:#ffffffcc">Còn lại</div><div style="font-size:26px;font-weight:800;line-height:1.1">10.100</div><div class="bal">Số dư 10.500</div></div>
+        <div style="text-align:right;font-size:12px;line-height:1.6"><div>Thu <b>+20.000</b></div><div>Chi <b>−9.500</b></div></div>
+      </div>
+      <div class="seg"><span class="on">Chi tiêu (40)</span><span>Thu nhập (3)</span></div>
+      <div class="daybox nb">
+        <div class="day"><span>Thứ 4 · 30/09</span></div>
+        <div class="it c-food"><span class="d">Ăn trưa</span><span class="tag">Sinh hoạt</span><b>−60</b></div>
+        <div class="it c-none"><span class="d">Không danh mục</span><b>−16</b></div>
+        <div class="it c-move"><span class="d">Đổ xăng</span><span class="tag">Đi lại</span><b>−51</b></div>
+        <div class="it c-food"><span class="d">Cà phê</span><span class="tag">Sinh hoạt</span><b>−35</b></div>
+      </div>
+      <div class="daybox nb">
+        <div class="day"><span>Thứ 3 · 29/09</span></div>
+        <div class="it c-health"><span class="d">Khám bệnh</span><span class="tag">Sức khỏe</span><b class="hi">−318</b></div>
+        <div class="it c-shop"><span class="d">Áo khoác</span><span class="tag">Mua sắm</span><b class="hi">−250</b></div>
+      </div>
+    </div>
+    <div class="tabbar"><span class="on"><i>📝</i>Ghi chép</span><span class=""><i>🎯</i>Mục tiêu</span><span class=""><i>📊</i>Thống kê</span></div><div class="fab" style="bottom:76px">＋</div>
+  </div>
+  <figcaption><b><span class="code">5.1.</span> Logging · Chi tiêu <span style="font-weight:400;color:#64748b">· Chi tiết kỳ · tab Ghi chép</span></b><span class="uc">UC1</span><span class="uc">UC5</span> Ghi chép tab with the toggle on Chi tiêu. Day boxes with category-colored rows; untracked rows are white and dashed. Amounts at or above the 6.0 threshold (200) are red. <span class="specref">Spec: <code>specs/5.1-logging.md</code></span></figcaption>
+</figure>
+
+<figure id="s5-1b">
+  <div class="code-tag">5.1. Logging · Thu nhập</div>
+  <div class="phone">
+    <div class="sb"><span>9:41</span><span>●●●</span></div>
+    <div class="hd"><span style="display:flex;align-items:center"><span class="back">‹</span><span style="line-height:1.15">Tháng 9/2026<br><span style="font-size:10.5px;font-weight:600;color:#0f766e">01/09 → 30/09/2026</span></span></span><span style="display:flex;gap:6px"><span class="ic gear">⋯</span><span class="ic gear">⚙</span></span></div>
+    <div class="body" style="padding-bottom:70px">
+      <div class="sumc grad-teal">
+        <div><div class="lbl" style="color:#ffffffcc">Còn lại</div><div style="font-size:26px;font-weight:800;line-height:1.1">10.100</div><div class="bal">Số dư 10.500</div></div>
+        <div style="text-align:right;font-size:12px;line-height:1.6"><div>Thu <b>+20.000</b></div><div>Chi <b>−9.500</b></div></div>
+      </div>
+      <div class="seg"><span>Chi tiêu (40)</span><span class="on">Thu nhập (3)</span></div>
+      <div class="savebtn"><span class="pig">🐷</span><div style="flex:1"><div class="sb-t">Gửi tiết kiệm</div><div class="sb-s">Quỹ 6.000</div></div><span class="sb-go">＋</span></div>
+      <div class="daybox nb">
+        <div class="day"><span>Thứ 7 · 05/09</span></div>
+        <div class="it c-save"><span class="d">Gửi tiết kiệm</span><b>−3.000</b></div>
+        <div class="it c-inc"><span class="d">Lương tháng 8</span><b>+21.750</b></div>
+      </div>
+      <div class="daybox nb">
+        <div class="day"><span>Thứ 3 · 01/09</span></div>
+        <div class="it c-inc"><span class="d">Còn lại từ tháng trước</span><b>+1.250</b></div>
+      </div>
+    </div>
+    <div class="tabbar"><span class="on"><i>📝</i>Ghi chép</span><span class=""><i>🎯</i>Mục tiêu</span><span class=""><i>📊</i>Thống kê</span></div><div class="fab" style="bottom:76px">＋</div>
+  </div>
+  <figcaption><b><span class="code">5.1.</span> Logging · Thu nhập <span style="font-weight:400;color:#64748b">· Chi tiết kỳ · tab Ghi chép (Thu nhập)</span></b><span class="uc">UC4</span><span class="uc">UC9</span> Ghi chép tab with the toggle on Thu nhập. Green income rows, including "Còn lại từ tháng trước". The yellow "Gửi tiết kiệm" button under the toggle opens 5.10 (D51). Savings transfers are amber rows ("Gửi tiết kiệm" −, "Rút tiết kiệm" +) and count in Thu (R6.3). <span class="specref">Spec: <code>specs/5.1-logging.md</code></span></figcaption>
+</figure>
+
+<figure id="s5-2">
+  <div class="code-tag">5.2. Goals</div>
+  <div class="phone">
+    <div class="sb"><span>9:41</span><span>●●●</span></div>
+    <div class="hd"><span style="display:flex;align-items:center"><span class="back">‹</span><span style="line-height:1.15">Tháng 9/2026<br><span style="font-size:10.5px;font-weight:600;color:#0f766e">01/09 → 30/09/2026</span></span></span><span style="display:flex;gap:6px"><span class="ic gear">⋯</span><span class="ic gear">⚙</span></span></div>
+    <div class="body" style="padding-bottom:70px">
+      <div class="sumc grad-teal">
+        <div><div class="lbl" style="color:#ffffffcc">Còn lại</div><div style="font-size:26px;font-weight:800;line-height:1.1">10.100</div><div class="bal">Số dư 10.500</div></div>
+        <div style="text-align:right;font-size:12px;line-height:1.6"><div>Thu <b>+20.000</b></div><div>Chi <b>−9.500</b></div></div>
+      </div>
+      <div class="living">
+        <div class="row" style="padding:0"><span class="t"><b>🍜 Sinh hoạt</b></span><span class="t"><b>3.100</b> <span class="s">/ 4.000</span></span></div>
+        <div class="lbar" style="margin-top:6px"><i class="a" style="width:71%"></i><i class="b" style="width:6.5%"></i></div>
+      </div>
+      <div class="row" style="padding:0 2px 6px"><span class="s">Đã chi <b style="color:#0f172a">6.400</b> / mục tiêu <b style="color:#0f172a">6.800</b></span></div>
+      <div class="goal"><div class="row" style="padding:0"><div class="l"><span class="ico e home sm">🏠</span><b class="t">Nhà ở</b></div><span class="t"><b class="over">2.600</b> <span class="s">/ 2.500</span></span></div>
+        <div class="gbar"><i style="width:100%;background:#e11d48"></i></div></div>
+      <div class="goal" style="opacity:.5"><div class="row" style="padding:0"><div class="l"><span class="ico e family sm">👨‍👩‍👧</span><b class="t">Gia đình</b><b style="color:#16a34a;margin-left:4px">✓</b></div><span class="t"><b>2.000</b> <span class="s">/ 2.000</span></span></div>
+        <div class="gbar"><i style="width:100%;background:#22c55e"></i></div></div>
+      <div class="goal"><div class="row" style="padding:0"><div class="l"><span class="ico e shop sm">🛍️</span><b class="t">Mua sắm</b></div><span class="t"><b>900</b> <span class="s">/ 1.000</span></span></div>
+        <div class="gbar"><i style="width:90%;background:#eab308"></i></div></div>
+      <div class="goal"><div class="row" style="padding:0"><div class="l"><span class="ico e move sm">🛵</span><b class="t">Đi lại</b></div><span class="t"><b>582</b> <span class="s">/ 700</span></span></div>
+        <div class="gbar"><i style="width:83%;background:#eab308"></i></div></div>
+    </div>
+    <div class="tabbar"><span class=""><i>📝</i>Ghi chép</span><span class="on"><i>🎯</i>Mục tiêu</span><span class=""><i>📊</i>Thống kê</span></div><div class="fab" style="bottom:76px">＋</div>
+  </div>
+  <figcaption><b><span class="code">5.2.</span> Goals <span style="font-weight:400;color:#64748b">· Chi tiết kỳ · tab Mục tiêu</span></b><span class="uc">UC10</span> Sinh hoạt tracker on top, then the goals with yellow/green/red bars. Gia đình is marked done (dimmed, ✓): it reserves nothing (D59, R2.5). <span class="specref">Spec: <code>specs/5.2-goals.md</code></span></figcaption>
+</figure>
+
+<figure id="s5-3">
+  <div class="code-tag">5.3. Statistics · chart 1</div>
+  <div class="phone">
+    <div class="sb"><span>9:41</span><span>●●●</span></div>
+    <div class="hd"><span style="display:flex;align-items:center"><span class="back">‹</span><span style="line-height:1.15">Tháng 9/2026<br><span style="font-size:10.5px;font-weight:600;color:#0f766e">01/09 → 30/09/2026</span></span></span><span style="display:flex;gap:6px"><span class="ic gear">⋯</span><span class="ic gear">⚙</span></span></div>
+    <div class="body" style="padding-bottom:70px">
+      <div class="sumc grad-teal">
+        <div><div class="lbl" style="color:#ffffffcc">Còn lại</div><div style="font-size:26px;font-weight:800;line-height:1.1">10.100</div><div class="bal">Số dư 10.500</div></div>
+        <div style="text-align:right;font-size:12px;line-height:1.6"><div>Thu <b>+20.000</b></div><div>Chi <b>−9.500</b></div></div>
+      </div>
+      <div class="carousel">
+        <div class="ring"><div><div class="s">Đã chi</div><div style="font-size:26px;font-weight:800">3.100</div><div class="s">/ 4.000 · 78%</div></div></div>
+        <span class="arr r">›</span>
+      </div>
+      <div class="chart-name">Danh mục & không danh mục</div>
+      <div class="good" style="display:flex;justify-content:space-between;align-items:center"><span>Còn lại</span><b style="font-size:16px">900</b></div>
+      <div class="lbl" style="margin:10px 0 2px">Chi sinh hoạt theo ngày</div>
+      <div class="minibars">
+        <i style="height:40%"></i><i style="height:55%"></i><i style="height:30%"></i><i style="height:70%"></i><i style="height:45%"></i><i style="height:35%"></i><i style="height:90%"></i><i style="height:50%"></i><i style="height:42%"></i><i style="height:38%"></i>
+        <i style="height:60%"></i><i style="height:33%"></i><i style="height:48%"></i><i style="height:28%"></i><i style="height:65%"></i><i style="height:40%"></i><i style="height:52%"></i><i style="height:36%"></i><i style="height:80%"></i><i style="height:44%"></i>
+        <i style="height:30%"></i><i style="height:58%"></i><i style="height:41%"></i><i style="height:35%"></i><i style="height:62%"></i><i style="height:47%"></i><i style="height:39%"></i><i style="height:55%"></i><i style="height:43%"></i><i style="height:50%"></i>
+      </div>
+      <div class="s" style="display:flex;justify-content:space-between"><span>1/9</span><span>15/9</span><span>30/9</span></div>
+      
+    </div>
+    <div class="tabbar"><span class=""><i>📝</i>Ghi chép</span><span class=""><i>🎯</i>Mục tiêu</span><span class="on"><i>📊</i>Thống kê</span></div>
+  </div>
+  <figcaption><b><span class="code">5.3.</span> Statistics · Danh mục & không danh mục <span style="font-weight:400;color:#64748b">· Chi tiết kỳ · tab Thống kê, chart page 1</span></b><span class="uc">UC5</span><span class="uc">UC19</span> Chart page 1 of 2: the Sinh hoạt ring (categorized solid, untracked light), Còn lại and daily bars. Swipe or tap › for the next chart; the first page has no ‹. <span class="specref">Spec: <code>specs/5.3-statistics.md</code></span></figcaption>
+</figure>
+
+<figure id="s5-3b">
+  <div class="code-tag">5.3. Statistics · chart 2</div>
+  <div class="phone">
+    <div class="sb"><span>9:41</span><span>●●●</span></div>
+    <div class="hd"><span style="display:flex;align-items:center"><span class="back">‹</span><span style="line-height:1.15">Tháng 9/2026<br><span style="font-size:10.5px;font-weight:600;color:#0f766e">01/09 → 30/09/2026</span></span></span><span style="display:flex;gap:6px"><span class="ic gear">⋯</span><span class="ic gear">⚙</span></span></div>
+    <div class="body" style="padding-bottom:70px">
+      <div class="sumc grad-teal">
+        <div><div class="lbl" style="color:#ffffffcc">Còn lại</div><div style="font-size:26px;font-weight:800;line-height:1.1">10.100</div><div class="bal">Số dư 10.500</div></div>
+        <div style="text-align:right;font-size:12px;line-height:1.6"><div>Thu <b>+20.000</b></div><div>Chi <b>−9.500</b></div></div>
+      </div>
+      <div class="carousel">
+        <div class="ring" style="background:conic-gradient(#ffedd5 0 32.6%,#dcfce7 0 60%,#ede9fe 0 81.1%,#fef3c7 0 90.6%,#dbeafe 0 96.7%,#fce7f3 0 100%)"><div><div class="s">Đã chi</div><div style="font-size:26px;font-weight:800">9.500</div></div></div>
+        <span class="arr l">‹</span>
+      </div>
+      <div class="chart-name">Mục tiêu</div>
+      <div class="pie-legend">
+        <div><span class="dot" style="background:#ffedd5"></span>Sinh hoạt<b>3.100</b></div>
+        <div><span class="dot" style="background:#dcfce7"></span>Nhà ở<b>2.600</b></div>
+        <div><span class="dot" style="background:#ede9fe"></span>Gia đình<b>2.000</b></div>
+        <div><span class="dot" style="background:#fef3c7"></span>Mua sắm<b>900</b></div>
+        <div><span class="dot" style="background:#dbeafe"></span>Đi lại<b>582</b></div>
+        <div><span class="dot" style="background:#fce7f3"></span>Sức khỏe<b>318</b></div>
+      </div>
+    </div>
+    <div class="tabbar"><span class=""><i>📝</i>Ghi chép</span><span class=""><i>🎯</i>Mục tiêu</span><span class="on"><i>📊</i>Thống kê</span></div>
+  </div>
+  <figcaption><b><span class="code">5.3.</span> Statistics · Mục tiêu <span style="font-weight:400;color:#64748b">· Chi tiết kỳ · tab Thống kê, chart page 2</span></b><span class="uc">UC5</span><span class="uc">UC10</span> Chart page 2 of 2 (the last, so no ›): each goal's share of the total spent (9.500), in the goal's own color from 5.2. Untracked spending is part of Sinh hoạt. <span class="specref">Spec: <code>specs/5.3-statistics.md</code></span></figcaption>
+</figure>
+
+<figure id="s5-4">
+  <div class="code-tag">5.4. Add Expense</div>
+  <div class="phone">
+    <div class="sb"><span>9:41</span><span>●●●</span></div>
+    <div class="hd"><span><span class="back">‹</span> Tháng 9/2026</span><span></span></div>
+    <div class="body" style="opacity:.35"><div class="sumc grad-teal" style="height:64px"></div></div>
+    <div class="dim"></div>
+    <div class="sheet">
+      <div class="grab"></div>
+      <div class="row" style="padding-top:0"><b style="font-size:15px">Thêm khoản chi</b><span class="s">✕</span></div>
+      <div class="amt-box"><span class="s">Số tiền</span><span>60</span></div>
+      <div class="lbl">Danh mục</div>
+      <div class="cats" style="margin-top:4px">
+        <span class="on"><i class="ico e food">🍜</i>Sinh hoạt</span><span><i class="ico e none">?</i>Không DM</span><span><i class="ico e home">🏠</i>Nhà ở</span><span><i class="ico e family">👨‍👩‍👧</i>Gia đình</span>
+        <span><i class="ico e health">💊</i>Sức khỏe</span><span><i class="ico e move">🛵</i>Đi lại</span><span><i class="ico e shop">🛍️</i>Mua sắm</span><span><i class="ico e other">＋</i>Mục tiêu mới</span>
+      </div>
+      <div class="lbl">Mô tả</div>
+      <div class="input" style="color:var(--ink)">Ăn trưa</div>
+      <div class="lbl">Ngày</div>
+      <div class="input" style="color:var(--ink)">📅 30/09/2026 ▾</div>
+      <div style="display:flex;gap:8px;margin-top:10px"><span class="btn" style="flex:1;text-align:center;padding:10px">Lưu & thêm tiếp</span><span class="btn pri" style="flex:1;text-align:center;padding:10px">Lưu</span></div>
+    </div>
+  </div>
+  <figcaption><b><span class="code">5.4.</span> Add Expense <span style="font-weight:400;color:#64748b">· Thêm khoản chi</span></b><span class="uc">UC1</span><span class="uc">UC5</span> Add or edit an expense. Sinh hoạt is preselected. <span class="specref">Spec: <code>specs/5.4-add-expense.md</code></span></figcaption>
+</figure>
+
+<figure id="s5-5">
+  <div class="code-tag">5.5. Add Untracked Expense</div>
+  <div class="phone">
+    <div class="sb"><span>9:41</span><span>●●●</span></div>
+    <div class="hd"><span><span class="back">‹</span> Tháng 9/2026</span><span></span></div>
+    <div class="body" style="opacity:.35"><div class="sumc grad-teal" style="height:64px"></div></div>
+    <div class="dim"></div>
+    <div class="sheet">
+      <div class="grab"></div>
+      <div class="row" style="padding-top:0"><b style="font-size:15px">Thêm khoản chi</b><span class="s">✕</span></div>
+      <div class="amt-box"><span class="s">Số tiền</span><span>120</span></div>
+      <div class="lbl">Danh mục</div>
+      <div class="cats" style="margin-top:4px">
+        <span><i class="ico e food">🍜</i>Sinh hoạt</span><span class="on"><i class="ico e none">?</i>Không DM</span><span><i class="ico e home">🏠</i>Nhà ở</span><span><i class="ico e family">👨‍👩‍👧</i>Gia đình</span>
+        <span><i class="ico e health">💊</i>Sức khỏe</span><span><i class="ico e move">🛵</i>Đi lại</span><span><i class="ico e shop">🛍️</i>Mua sắm</span><span><i class="ico e other">＋</i>Mục tiêu mới</span>
+      </div>
+      <div class="lbl">Ngày</div>
+      <div class="input" style="color:var(--ink)">📅 24/09/2026 ▾</div>
+      <div style="display:flex;gap:8px;margin-top:10px"><span class="btn" style="flex:1;text-align:center;padding:10px">Lưu & thêm tiếp</span><span class="btn pri" style="flex:1;text-align:center;padding:10px">Lưu</span></div>
+    </div>
+  </div>
+  <figcaption><b><span class="code">5.5.</span> Add Untracked Expense <span style="font-weight:400;color:#64748b">· Thêm khoản chi, đã chọn Không DM</span></b><span class="uc">UC5</span> 5.4 with "Không DM" selected: no description. <span class="specref">Spec: <code>specs/5.5-add-untracked-expense.md</code></span></figcaption>
+</figure>
+
+<figure id="s5-6">
+  <div class="code-tag">5.6. Edit Goal</div>
+  <div class="phone">
+    <div class="sb"><span>9:41</span><span>●●●</span></div>
+    <div class="hd"><span><span class="back">‹</span> Tháng 9/2026</span><span></span></div>
+    <div class="body" style="opacity:.35"><div class="sumc grad-teal" style="height:64px"></div></div>
+    <div class="dim"></div>
+    <div class="sheet">
+      <div class="grab"></div>
+      <div class="row" style="padding-top:0"><b style="font-size:15px">Sửa mục tiêu</b><span class="s">✕</span></div>
+      <div style="display:flex;gap:8px;align-items:center;margin:4px 0 8px">
+        <span class="ico e health" style="width:44px;height:44px;font-size:22px">💊</span>
+        <div style="flex:1"><div class="lbl">Tên danh mục</div><div class="input" style="color:var(--ink);margin:2px 0 0">Sức khỏe</div></div>
+      </div>
+      <div class="s" style="margin-bottom:4px">Biểu tượng & màu: <span class="sw" style="background:#ec4899"></span><span class="sw" style="background:#3b82f6"></span><span class="sw" style="background:#22c55e"></span><span class="sw" style="background:#f59e0b"></span><span class="sw" style="background:#8b5cf6"></span> …</div>
+      <div class="amt-box"><span class="s">Mục tiêu kỳ này</span><span>600</span></div>
+      <div class="goal" style="background:#f8fafc"><div class="row" style="padding:0"><span class="s">Đã chi trong kỳ</span><span class="t"><b>318</b> · 3 khoản ›</span></div>
+        <div class="gbar"><i style="width:53%;background:#eab308"></i></div></div>
+      <div class="btn pri blk" style="margin-top:6px">Lưu</div>
+      <div class="btn blk" style="margin-top:8px;border-color:#16a34a;color:#15803d">✓ Hoàn thành mục tiêu</div>
+      <div style="text-align:center;color:#e11d48;font-weight:600;font-size:13px;margin-top:12px">🗑 Xóa mục tiêu này</div>
+    </div>
+  </div>
+  <figcaption><b><span class="code">5.6.</span> Edit Goal <span style="font-weight:400;color:#64748b">· Sửa mục tiêu</span></b><span class="uc">UC10</span><span class="uc">UC21</span> Edit a goal for this period only; it can be marked done (frees its unspent amount, D59) or deleted. <span class="specref">Spec: <code>specs/5.6-edit-goal.md</code></span></figcaption>
+</figure>
+
+<figure id="s5-6b">
+  <div class="code-tag">5.6. Edit Goal · Sinh hoạt</div>
+  <div class="phone">
+    <div class="sb"><span>9:41</span><span>●●●</span></div>
+    <div class="hd"><span><span class="back">‹</span> Tháng 9/2026</span><span></span></div>
+    <div class="body" style="opacity:.35"><div class="sumc grad-teal" style="height:64px"></div></div>
+    <div class="dim"></div>
+    <div class="sheet">
+      <div class="grab"></div>
+      <div class="row" style="padding-top:0"><b style="font-size:15px">Sửa mục tiêu</b><span class="s">✕</span></div>
+      <div style="display:flex;gap:8px;align-items:center;margin:4px 0 8px">
+        <span class="ico e food" style="width:44px;height:44px;font-size:22px">🍜</span>
+        <div style="flex:1"><div class="lbl">Tên danh mục</div><div class="input ro" style="margin:2px 0 0">Sinh hoạt</div></div>
+      </div>
+      <div class="s" style="margin-bottom:4px">Biểu tượng & màu: <span class="sw" style="background:#ec4899"></span><span class="sw" style="background:#3b82f6"></span><span class="sw" style="background:#22c55e"></span><span class="sw" style="background:#f59e0b"></span><span class="sw" style="background:#8b5cf6"></span> …</div>
+      <div class="amt-box"><span class="s">Mức tối đa kỳ này</span><span>4.000</span></div>
+      <div class="goal" style="background:#f8fafc"><div class="row" style="padding:0"><span class="s">Đã chi trong kỳ</span><span class="t"><b>3.100</b> · 40 khoản ›</span></div>
+        <div class="gbar"><i style="width:78%;background:#eab308"></i></div></div>
+      <div class="btn pri blk" style="margin-top:6px">Lưu</div>
+    </div>
+  </div>
+  <figcaption><b><span class="code">5.6.</span> Edit Goal · Sinh hoạt <span style="font-weight:400;color:#64748b">· tap the Sinh hoạt tracker on 5.2</span></b><span class="uc">UC10</span> The default goal: the name is locked and there is no delete action. Only the maximum and the icon/color can change. <span class="specref">Spec: <code>specs/5.6-edit-goal.md</code></span></figcaption>
+</figure>
+
+<figure id="s5-7">
+  <div class="code-tag">5.7. Delete Goal</div>
+  <div class="phone">
+    <div class="sb"><span>9:41</span><span>●●●</span></div>
+    <div class="hd"><span><span class="back">‹</span> Tháng 9/2026</span><span></span></div>
+    <div class="body" style="opacity:.35"><div class="sumc grad-teal" style="height:64px"></div><div class="goal" style="height:60px"></div><div class="goal" style="height:60px"></div></div>
+    <div class="dim"></div>
+    <div class="dialog">
+      <div style="width:48px;height:48px;border-radius:50%;background:#ffe4e6;display:flex;align-items:center;justify-content:center;font-size:22px;margin:0 auto 10px">🗑</div>
+      <div style="text-align:center;font-weight:800;font-size:16px">Xóa mục tiêu “Sức khỏe”?</div>
+      <div class="move-box">
+        <span class="ico e health sm">💊</span><span class="t"><b>3 khoản</b> (318)</span><span style="color:#94a3b8">→</span><span class="ico e food sm">🍜</span><span class="t"><b>Sinh hoạt</b></span>
+      </div>
+      <div style="display:flex;gap:8px;margin-top:14px"><span class="btn" style="flex:1;text-align:center;padding:9px">Hủy</span><span class="btn" style="flex:1;text-align:center;padding:9px;background:#e11d48;border-color:#e11d48;color:#fff">Xóa</span></div>
+    </div>
+  </div>
+  <figcaption><b><span class="code">5.7.</span> Delete Goal <span style="font-weight:400;color:#64748b">· Xóa mục tiêu</span></b><span class="uc">UC10</span> Factual confirmation: the entries move to Sinh hoạt. <span class="specref">Spec: <code>specs/5.7-delete-goal.md</code></span></figcaption>
+</figure>
+
+<figure id="s6-0">
+  <div class="code-tag">6.0. Settings</div>
+  <div class="phone">
+    <div class="sb"><span>9:41</span><span>●●●</span></div>
+    <div class="hd"><span><span class="back">‹</span> Cài đặt</span><span></span></div>
+    <div class="body">
+      <div class="set-sec">🍜 Sinh hoạt</div>
+      <div class="set">
+        <div class="row"><span class="t">Mức sinh hoạt tối đa mong đợi</span><span class="val">4.000 ›</span></div>
+      </div>
+      <div class="set-sec">⚠️ Cảnh báo</div>
+      <div class="set">
+        <div class="row"><span class="t">Tô màu khoản chi lớn từ</span><span class="val">200 ›</span></div>
+      </div>
+    </div>
+  </div>
+  <figcaption><b><span class="code">6.0.</span> Settings <span style="font-weight:400;color:#64748b">· Cài đặt</span></b><span class="uc">UC6</span><span class="uc">UC21</span> Starting values and app-wide options. No data section (D56). <span class="specref">Spec: <code>specs/6.0-settings.md</code></span></figcaption>
+</figure>
+
+</div>
+
+<h3 class="sub">0c · Tiết kiệm (new, D50, for review)</h3>
+<p class="s" style="font-size:13px;margin:-4px 0 12px">One savings fund that starts at 0. Money moves in or out only <b>from inside a period</b> (the yellow "Gửi tiết kiệm" button on 5.1 Thu nhập, see <a href="#s5-1b">5.1</a>): <b>Gửi vào</b> takes it from the period's income, <b>Rút ra</b> adds it to the period's income. <b>7.0</b> shows the fund and every transfer with its period; tapping one opens that period's Ghi chép tab. Rules: R6.</p>
+<div class="grid">
+
+<figure id="s5-10">
+  <div class="code-tag">5.10. Savings Transfer · Gửi vào</div>
+  <div class="phone">
+    <div class="sb"><span>9:41</span><span>●●●</span></div>
+    <div class="hd"><span><span class="back">‹</span> Tháng 9/2026</span><span></span></div>
+    <div class="body" style="opacity:.35"><div class="sumc grad-teal" style="height:64px"></div></div>
+    <div class="dim"></div>
+    <div class="sheet">
+      <div class="grab"></div>
+      <div class="row" style="padding-top:0"><b style="font-size:15px">Tiết kiệm</b><span class="s">✕</span></div>
+      <div class="seg"><span class="on">Gửi vào</span><span>Rút ra</span></div>
+      <div class="row" style="padding:2px 2px 6px"><span class="s">Quỹ tiết kiệm</span><span class="val" style="color:#b45309">🐷 3.000</span></div>
+      <div class="amt-box" style="background:#fef9c3"><span class="s">Số tiền</span><span style="color:#a16207">3.000</span></div>
+      <div class="lbl">Ngày</div>
+      <div class="input" style="color:var(--ink)">📅 05/09/2026 ▾</div>
+      <div class="btn pri blk" style="margin-top:12px">Lưu</div>
+    </div>
+  </div>
+  <figcaption><b><span class="code">5.10.</span> Savings Transfer · Gửi vào <span style="font-weight:400;color:#64748b">· Tiết kiệm</span></b><span class="uc">UC20</span> Move money between this period and the fund. "Gửi vào" lowers the period's Thu; "Rút ra" raises it. "Quỹ tiết kiệm" is the fund's current balance. A "Rút ra" above the fund shows the error "Vượt quá quỹ tiết kiệm" (R6.4). <span class="specref">Spec: <code>specs/5.10-savings-transfer.md</code></span></figcaption>
+</figure>
+
+<figure id="s5-10b">
+  <div class="code-tag">5.10. Savings Transfer · Rút ra (edit)</div>
+  <div class="phone">
+    <div class="sb"><span>9:41</span><span>●●●</span></div>
+    <div class="hd"><span><span class="back">‹</span> Du lịch Đà Lạt</span><span></span></div>
+    <div class="body" style="opacity:.35"><div class="sumc grad-teal" style="height:64px"></div></div>
+    <div class="dim"></div>
+    <div class="sheet">
+      <div class="grab"></div>
+      <div class="row" style="padding-top:0"><b style="font-size:15px">Tiết kiệm</b><span class="s">✕</span></div>
+      <div class="seg"><span>Gửi vào</span><span class="on">Rút ra</span></div>
+      <div class="row" style="padding:2px 2px 6px"><span class="s">Quỹ tiết kiệm</span><span class="val" style="color:#b45309">🐷 8.000</span></div>
+      <div class="amt-box" style="background:#fef9c3"><span class="s">Số tiền</span><span style="color:#a16207">2.000</span></div>
+      <div class="lbl">Ngày</div>
+      <div class="input" style="color:var(--ink)">📅 14/08/2026 ▾</div>
+      <div class="btn pri blk" style="margin-top:12px">Lưu</div>
+      <div style="text-align:center;color:#e11d48;font-weight:600;font-size:13px;margin-top:12px">🗑 Xóa</div>
+    </div>
+  </div>
+  <figcaption><b><span class="code">5.10.</span> Savings Transfer · Rút ra, edit mode <span style="font-weight:400;color:#64748b">· tap "Rút tiết kiệm" on 5.1</span></b><span class="uc">UC20</span> Editing the withdrawal in "Du lịch Đà Lạt". The fund shown is the current balance without the entry being edited (6.000 + 2.000). Edit mode adds "Xóa". <span class="specref">Spec: <code>specs/5.10-savings-transfer.md</code></span></figcaption>
+</figure>
+
+<figure id="s7-0">
+  <div class="code-tag">7.0. Savings</div>
+  <div class="phone">
+    <div class="sb"><span>9:41</span><span>●●●</span></div>
+    <div class="hd"><span><span class="back">‹</span> Tiết kiệm</span><span></span></div>
+    <div class="body">
+      <div class="sumc grad-amber" style="box-shadow:0 6px 14px #f59e0b40">
+        <div><div class="lbl" style="color:#ffffffd9">Quỹ tiết kiệm</div><div style="font-size:26px;font-weight:800;line-height:1.1">6.000</div></div>
+        <div style="text-align:right;font-size:12px;line-height:1.6"><div>Gửi <b>+7.000</b></div><div>Rút <b>−2.000</b></div></div>
+      </div>
+      <div class="mcard">
+        <div class="mnum save-tile">📥</div>
+        <div style="flex:1;min-width:0"><div class="t"><b>Tháng 9/2026</b></div>
+          <div class="s">05/09/2026 · Gửi vào</div></div><b class="inc">+3.000</b><span class="arr">›</span>
+      </div>
+      <div class="mcard">
+        <div class="mnum save-tile">📤</div>
+        <div style="flex:1;min-width:0"><div class="t"><b>Du lịch Đà Lạt</b></div>
+          <div class="s">14/08/2026 · Rút ra</div></div><b style="color:#0f172a">−2.000</b><span class="arr">›</span>
+      </div>
+      <div class="mcard">
+        <div class="mnum save-tile">📥</div>
+        <div style="flex:1;min-width:0"><div class="t"><b>Kỳ lương 5/7 – 4/8</b></div>
+          <div class="s">05/07/2026 · Gửi vào</div></div><b class="inc">+4.000</b><span class="arr">›</span>
+      </div>
+      <div class="mcard base">
+        <div class="mnum save-tile">🏦</div>
+        <div style="flex:1;min-width:0"><div class="t"><b>Số dư ban đầu</b></div></div><b class="inc">+1.000</b><span class="arr" style="visibility:hidden">›</span>
+      </div>
+    </div>
+  </div>
+  <figcaption><b><span class="code">7.0.</span> Savings <span style="font-weight:400;color:#64748b">· Tiết kiệm</span></b><span class="uc">UC20</span> The fund's balance (it starts at 0) with the totals in and out, then every transfer, newest first, with its period, date and direction (R6.2). Tap a row → that period's 5.1 with the toggle on Thu nhập. The "Số dư ban đầu" row (D52) is pinned last, has no period and no ›; tapping it opens 7.1. Period transfers are made inside a period. <span class="specref">Spec: <code>specs/7.0-savings.md</code></span></figcaption>
+</figure>
+
+<figure id="s7-0b">
+  <div class="code-tag">7.0. Savings · empty (new user)</div>
+  <div class="phone">
+    <div class="sb"><span>9:41</span><span>●●●</span></div>
+    <div class="hd"><span><span class="back">‹</span> Tiết kiệm</span><span></span></div>
+    <div class="body">
+      <div class="sumc grad-amber" style="box-shadow:0 6px 14px #f59e0b40">
+        <div><div class="lbl" style="color:#ffffffd9">Quỹ tiết kiệm</div><div style="font-size:26px;font-weight:800;line-height:1.1">0</div></div>
+        <div style="text-align:right;font-size:12px;line-height:1.6"><div>Gửi <b>+0</b></div><div>Rút <b>−0</b></div></div>
+      </div>
+      <div class="basebtn"><span class="pig">🏦</span><b style="flex:1">Số dư ban đầu</b><span class="sb-go">＋</span></div>
+    </div>
+  </div>
+  <figcaption><b><span class="code">7.0.</span> Savings · empty <span style="font-weight:400;color:#64748b">· no base savings yet</span></b><span class="uc">UC20</span> A new user can enter the savings they already have in real life before logging any period. The "Số dư ban đầu" button shows only while there is no base savings; it opens 7.1 (R6.7). <span class="specref">Spec: <code>specs/7.0-savings.md</code></span></figcaption>
+</figure>
+
+<figure id="s7-1">
+  <div class="code-tag">7.1. Base Savings (edit)</div>
+  <div class="phone">
+    <div class="sb"><span>9:41</span><span>●●●</span></div>
+    <div class="hd"><span><span class="back">‹</span> Tiết kiệm</span><span></span></div>
+    <div class="body" style="opacity:.35"><div class="sumc grad-amber" style="height:64px"></div><div class="mcard" style="height:50px"></div><div class="mcard" style="height:50px"></div></div>
+    <div class="dim"></div>
+    <div class="sheet">
+      <div class="grab"></div>
+      <div class="row" style="padding-top:0"><b style="font-size:15px">Số dư ban đầu</b><span class="s">✕</span></div>
+      <div class="amt-box" style="background:#fef9c3"><span class="s">Số tiền</span><span style="color:#a16207">1.000</span></div>
+      <div class="btn pri blk" style="margin-top:12px">Lưu</div>
+      <div style="text-align:center;color:#e11d48;font-weight:600;font-size:13px;margin-top:12px">🗑 Xóa</div>
+    </div>
+  </div>
+  <figcaption><b><span class="code">7.1.</span> Base Savings <span style="font-weight:400;color:#64748b">· Số dư ban đầu</span></b><span class="uc">UC20</span> Amount only: no period, no date. Create mode has no "Xóa". It can be deleted at any time, even if the fund then goes below 0 (R6.7). <span class="specref">Spec: <code>specs/7.1-base-savings.md</code></span></figcaption>
+</figure>
+
+</div>
+</section>
+
+
+
+<section style="opacity:.85">
+<h2 style="border-color:#999;color:#666">Sections 1–6 · Later ideas (round 1, not the current direction)</h2>
+</section>
+
+<!-- ============ 1. HOME & ENTRY ============ -->
+<section>
+<h2>1 · Trang chủ & nhập liệu</h2>
+<div class="grid">
+
+<figure>
+  <div class="phone">
+    <div class="sb"><span>9:41</span><span>●●●</span></div>
+    <div class="body" style="display:flex;flex-direction:column;justify-content:center;text-align:center;padding:0 24px">
+      <div class="ico" style="width:64px;height:64px;margin:0 auto 14px;border-radius:18px"></div>
+      <div class="mid">Sổ chi tiêu</div>
+      <p class="s" style="font-size:12.5px;margin:10px 0 22px">Dữ liệu chỉ lưu trên trình duyệt của bạn. Không ai khác — kể cả người quản trị trang — có thể xem.</p>
+      <div class="btn pri blk" style="margin-bottom:8px">Bắt đầu mới</div>
+      <div class="btn blk" style="margin-bottom:8px">Tải lên tệp sao lưu</div>
+      <div class="s" style="text-decoration:underline">Dùng thử với dữ liệu mẫu</div>
+    </div>
+  </div>
+  <figcaption><b>Chào mừng (lần đầu)</b><span class="uc">UC22</span> Privacy explained up front. Three ways to start.</figcaption>
+</figure>
+
+<figure>
+  <div class="phone">
+    <div class="sb"><span>9:41</span><span>●●●</span></div>
+    <div class="hd">Tháng 10/2026 <span class="ic"></span></div>
+    <div class="body">
+      <div class="card hero">
+        <div class="lbl">Tiền tự do</div>
+        <div class="big">5.300</div>
+        <div class="s">Thu 20.000 · Đã chi 9.500 · Đang giữ 5.200 ›</div>
+      </div>
+      <div class="card">
+        <div class="row"><b class="t">Sắp đến hạn</b><span class="s">Định kỳ ›</span></div>
+        <div class="row"><div class="l"><span class="ico"></span><div><div class="t">Internet</div><div class="s">ngày 26 · còn 2 ngày</div></div></div><span class="btn">Đã trả</span></div>
+        <div class="row"><div class="l"><span class="ico"></span><div><div class="t">Nhạc trực tuyến</div><div class="s">ngày 28</div></div></div><span class="btn">Đã trả</span></div>
+      </div>
+      <div class="card">
+        <div class="row"><b class="t">Kế hoạch tháng</b><span class="s">Xem tất cả ›</span></div>
+        <div class="t">Ăn uống <span class="s">· 3.100 / 4.000</span></div><div class="bar"><i style="width:78%"></i></div>
+        <div class="t" style="margin-top:6px">Nhà ở <span class="s">· 2.600 / 2.500</span></div><div class="bar over"><i style="width:100%"></i></div>
+      </div>
+      <div class="card" style="display:flex;gap:8px;padding:8px">
+        <div style="flex:1"><div class="lbl">Tôi nợ</div><b>8.000</b></div>
+        <div style="flex:1"><div class="lbl">Nợ tôi</div><b>1.150</b></div>
+        <div style="flex:1"><div class="lbl">Tiết kiệm</div><b>12.400</b></div>
+      </div>
+      <span class="chip warn">Chưa sao lưu 9 ngày · Sao lưu ngay</span>
+    </div>
+    <div class="nav"><span class="on">Trang chủ</span><span>Giao dịch</span><span class="plus">＋</span><span>Kế hoạch</span><span>Sổ nợ</span></div>
+  </div>
+  <figcaption><b>Trang chủ</b><span class="uc">UC11</span><span class="uc">UC17</span><span class="uc">UC18</span> Free money is the headline. Tap it for the breakdown (screen 3·2).
+    <div class="idea">Which cards should Home show, and in what order? (Q3)</div></figcaption>
+</figure>
+
+<figure>
+  <div class="phone">
+    <div class="sb"><span>9:41</span><span>●●●</span></div>
+    <div class="hd">Tháng 10/2026 <span class="ic"></span></div>
+    <div class="body" style="opacity:.4"><div class="card hero"><div class="big">5.300</div></div></div>
+    <div class="dim"></div>
+    <div class="sheet">
+      <div class="grab"></div>
+      <div class="seg"><span class="on">Chi</span><span>Thu</span><span>Tiết kiệm</span></div>
+      <div class="expr">100 + 218</div>
+      <div class="amount">= 318</div>
+      <div class="cats">
+        <span class="on">Ăn uống</span><span>Đi lại</span><span>Sức khỏe</span><span>Gia đình</span>
+        <span>Nhà ở</span><span>Mua sắm</span><span>Giải trí</span><span>Thêm…</span>
+      </div>
+      <div class="input">Mô tả (vd. Ăn trưa) — gợi ý: Ăn trưa · Cà phê</div>
+      <div class="more"><span>Hôm nay ▾</span><span>Thêm chi tiết ›</span></div>
+      <div class="keys">
+        <span>7</span><span>8</span><span>9</span><span class="op">÷</span>
+        <span>4</span><span>5</span><span>6</span><span class="op">×</span>
+        <span>1</span><span>2</span><span>3</span><span class="op">−</span>
+        <span>000</span><span>0</span><span>⌫</span><span class="op">+</span>
+        <span class="op">±</span><span class="btn" style="grid-column:span 2;border-radius:8px;text-align:center">Lưu & thêm tiếp</span><span class="save">Lưu</span>
+      </div>
+    </div>
+  </div>
+  <figcaption><b>＋ Ghi giao dịch (cơ bản)</b><span class="uc">UC1</span><span class="uc">UC2</span><span class="uc">UC3</span> Only the amount and category are required.
+    <div class="idea">The keypad is also a calculator (<code>100 + 218</code>), and the expression is kept. The ± key records a refund.</div></figcaption>
+</figure>
+
+<figure>
+  <div class="phone">
+    <div class="sb"><span>9:41</span><span>●●●</span></div>
+    <div class="dim"></div>
+    <div class="sheet" style="top:40px">
+      <div class="grab"></div>
+      <div class="row" style="padding-top:0"><b>Chi · Ăn uống</b><span class="mid">153</span></div>
+      <div class="lbl" style="margin-top:6px">Ngày</div><div class="input">Hôm nay, 02/10/2026</div>
+      <div class="lbl">Thanh toán bằng</div>
+      <div><span class="chip on">Tiền mặt / TK</span><span class="chip">Thẻ tín dụng</span><span class="chip">＋</span></div>
+      <div class="lbl" style="margin-top:6px">Ghi chú</div><div class="input">Cơm gà cả nhóm</div>
+      <div class="row" style="border-top:1px solid var(--line);margin-top:6px"><b class="t">Chia hóa đơn</b><span class="tog"></span></div>
+      <div><span class="chip on">Chia đều</span><span class="chip">Nhập từng phần</span></div>
+      <div class="row"><div class="l"><span class="ico"></span><span class="t">Bạn</span></div><b>51</b></div>
+      <div class="row"><div class="l"><span class="ico"></span><span class="t">Minh</span></div><span><b>51</b> <span class="chip">đã trả ngay</span></span></div>
+      <div class="row"><div class="l"><span class="ico"></span><span class="t">Lan</span></div><b>51</b></div>
+      <div class="s">＋ Thêm người</div>
+      <div class="card" style="margin-top:8px;padding:8px"><div class="t">Phần của bạn: <b>51</b> · Lan nợ bạn: <b>51</b></div></div>
+      <div class="lbl">Liên kết khoản nợ</div><div class="input">Không</div>
+      <div class="btn pri blk">Lưu</div>
+    </div>
+  </div>
+  <figcaption><b>＋ Thêm chi tiết · Chia hóa đơn</b><span class="uc">UC7</span><span class="uc">UC12</span><span class="uc">UC16</span> Advanced options are revealed only when needed.
+    <div class="idea">Unpaid shares automatically become "Nợ tôi" items.</div></figcaption>
+</figure>
+
+<figure>
+  <div class="phone">
+    <div class="sb"><span>9:41</span><span>●●●</span></div>
+    <div class="dim"></div>
+    <div class="sheet" style="top:120px">
+      <div class="grab"></div>
+      <div class="seg"><span>Chi</span><span class="on">Thu</span><span>Tiết kiệm</span></div>
+      <div class="amount">2.000</div>
+      <div class="lbl">Loại thu nhập</div>
+      <div><span class="chip">Lương</span><span class="chip">Thưởng</span><span class="chip">Được cho / hỗ trợ</span><span class="chip on">Vay mượn</span><span class="chip">Khác</span></div>
+      <div class="lbl" style="margin-top:8px">Vay từ ai?</div>
+      <div class="input" style="color:var(--ink)">Anh Tuấn</div>
+      <div class="card" style="padding:8px"><div class="s">Sẽ cộng vào <b>Tôi nợ · Anh Tuấn</b>: 3.000 → 5.000</div></div>
+      <div class="input">Mô tả (không bắt buộc)</div>
+      <div class="more"><span>Hôm nay ▾</span><span>Thêm chi tiết ›</span></div>
+      <div class="btn pri blk" style="margin-top:8px">Lưu</div>
+    </div>
+  </div>
+  <figcaption><b>＋ Ghi thu nhập · Vay mượn</b><span class="uc">UC4</span><span class="uc">UC13</span> Borrowed money counts as this month's income and also creates or updates a debt.</figcaption>
+</figure>
+
+</div>
+</section>
+
+<!-- ============ 2. TRANSACTIONS ============ -->
+<section>
+<h2>2 · Giao dịch</h2>
+<div class="grid">
+
+<figure>
+  <div class="phone">
+    <div class="sb"><span>9:41</span><span>●●●</span></div>
+    <div class="hd">Giao dịch <span class="ic"></span></div>
+    <div class="body">
+      <div class="month"><b>‹</b>Tháng 10/2026<b>›</b></div>
+      <div class="input">🔍 Tìm giao dịch…</div>
+      <div><span class="chip on">Tất cả</span><span class="chip">Chi</span><span class="chip">Thu</span><span class="chip">Trả sau</span><span class="chip">Danh mục ▾</span></div>
+      <div class="day"><span>Hôm nay · 02/10</span><span>−421</span></div>
+      <div class="row"><div class="l"><span class="ico"></span><div><div class="t">Ăn trưa</div><div class="s">Ăn uống</div></div></div><b>60</b></div>
+      <div class="row"><div class="l"><span class="ico"></span><div><div class="t">Sửa xe <span class="chip warn">Khoản lớn</span></div><div class="s">Đi lại</div></div></div><b>285</b></div>
+      <div class="row"><div class="l"><span class="ico"></span><div><div class="t">Cơm gà cả nhóm</div><div class="s">Ăn uống · chia 3 · 💬</div></div></div><b>51</b></div>
+      <div class="row"><div class="l"><span class="ico"></span><div><div class="t">Phim</div><div class="s">Giải trí · 💳 Thẻ tín dụng</div></div></div><b class="s">149</b></div>
+      <div class="day"><span>Hôm qua · 01/10</span><span>−3.570 · +20.000</span></div>
+      <div class="row"><div class="l"><span class="ico"></span><div><div class="t">Lương tháng 9</div><div class="s">Lương</div></div></div><b style="color:var(--ok)">+20.000</b></div>
+      <div class="row"><div class="l"><span class="ico"></span><div><div class="t">Tiền nhà</div><div class="s">Nhà ở · định kỳ</div></div></div><b>3.500</b></div>
+      <div class="row"><div class="l"><span class="ico"></span><div><div class="t">Hoàn tiền vé</div><div class="s">Giải trí · hoàn tiền</div></div></div><b style="color:var(--ok)">−30</b></div>
+    </div>
+    <div class="nav"><span>Trang chủ</span><span class="on">Giao dịch</span><span class="plus">＋</span><span>Kế hoạch</span><span>Sổ nợ</span></div>
+  </div>
+  <figcaption><b>Dòng thời gian giao dịch</b><span class="uc">UC1</span><span class="uc">UC3</span><span class="uc">UC6</span><span class="uc">UC7</span><span class="uc">UC12</span> Grouped by day with daily totals. Pay-later amounts are greyed out because they don't reduce free money yet.</figcaption>
+</figure>
+
+<figure>
+  <div class="phone">
+    <div class="sb"><span>9:41</span><span>●●●</span></div>
+    <div class="hd">‹ Chi tiết <span class="s">Sửa</span></div>
+    <div class="body">
+      <div style="text-align:center;margin:10px 0 14px">
+        <div class="ico" style="width:44px;height:44px;margin:0 auto 6px"></div>
+        <div class="big">318</div>
+        <div class="s">100 + 218</div>
+        <div class="t" style="margin-top:4px">Khám bệnh · Sức khỏe</div>
+      </div>
+      <div class="card">
+        <div class="row"><span class="s">Ngày</span><span class="t">29/09/2026</span></div>
+        <div class="row"><span class="s">Thanh toán</span><span class="t">Tiền mặt / TK</span></div>
+        <div class="row"><span class="s">Kế hoạch</span><span class="t">Sức khỏe · 1.618 / 2.000</span></div>
+        <div class="row"><span class="s">Ghi chú</span><span class="t">Phí khám 100, thuốc 218</span></div>
+      </div>
+      <div style="display:flex;gap:8px"><span class="btn" style="flex:1;text-align:center">Hoàn tiền</span><span class="btn" style="flex:1;text-align:center">Nhân bản</span><span class="btn" style="flex:1;text-align:center">Xóa</span></div>
+    </div>
+    <div class="toast"><span>Đã xóa “Cà phê”</span><b>Hoàn tác</b></div>
+    <div class="nav"><span>Trang chủ</span><span class="on">Giao dịch</span><span class="plus">＋</span><span>Kế hoạch</span><span>Sổ nợ</span></div>
+  </div>
+  <figcaption><b>Chi tiết giao dịch</b><span class="uc">UC2</span><span class="uc">UC3</span><span class="uc">UC7</span> Shows how the amount was calculated, the note, and the plan the transaction counts toward. Deleting shows an undo toast instead of a confirm dialog.</figcaption>
+</figure>
+
+</div>
+</section>
+
+<!-- ============ 3. PLAN ============ -->
+<section>
+<h2>3 · Kế hoạch tháng & tiền tự do</h2>
+<div class="grid">
+
+<figure>
+  <div class="phone">
+    <div class="sb"><span>9:41</span><span>●●●</span></div>
+    <div class="hd">Kế hoạch <span class="ic"></span></div>
+    <div class="body">
+      <div class="month"><b>‹</b>Tháng 10/2026<b>›</b></div>
+      <div class="card hero" style="display:flex;justify-content:space-between;align-items:center">
+        <div><div class="lbl">Tiền tự do</div><div class="mid">5.300</div></div>
+        <div style="text-align:right"><div class="lbl">Đang giữ cho kế hoạch</div><div class="mid">5.200</div></div>
+      </div>
+      <div class="row" style="padding:2px 0"><span class="s">Chuyển từ tháng 9</span><b class="t">+1.250</b></div>
+      <div class="card">
+        <div class="row" style="padding:0"><b class="t">Ăn uống</b><span class="s">còn giữ 900</span></div>
+        <div class="bar"><i style="width:78%"></i></div><div class="s">3.100 / 4.000</div>
+      </div>
+      <div class="card">
+        <div class="row" style="padding:0"><b class="t">Nhà ở</b><span class="chip bad">vượt 100</span></div>
+        <div class="bar over"><i style="width:100%"></i></div><div class="s">2.600 / 2.500</div>
+      </div>
+      <div class="card">
+        <div class="row" style="padding:0"><b class="t">Du lịch Đà Lạt <span class="s">· riêng tháng này</span></b><span class="btn">Xong</span></div>
+        <div class="bar"><i style="width:40%"></i></div><div class="s">1.200 / 3.000 · còn giữ 1.800</div>
+      </div>
+      <div class="card done">
+        <div class="row" style="padding:0"><b class="t">Trả nợ anh Tuấn ✓</b><span class="s">đã xong</span></div>
+        <div class="bar"><i style="width:100%"></i></div><div class="s">1.000 / 1.000</div>
+      </div>
+      <div style="display:flex;gap:8px"><span class="btn" style="flex:1;text-align:center">＋ Mục kế hoạch</span><span class="btn" style="flex:1;text-align:center">Đối chiếu số dư</span></div>
+    </div>
+    <div class="nav"><span>Trang chủ</span><span>Giao dịch</span><span class="plus">＋</span><span class="on">Kế hoạch</span><span>Sổ nợ</span></div>
+  </div>
+  <figcaption><b>Kế hoạch tháng</b><span class="uc">UC8</span><span class="uc">UC9</span><span class="uc">UC10</span><span class="uc">UC11</span> Items can be categories or one-off goals. Marking an item <b>Xong</b> releases its leftover back into free money.
+    <div class="idea">Should we keep the "reserve the unspent plan" idea from the Excel sheet? (Q4)</div></figcaption>
+</figure>
+
+<figure>
+  <div class="phone">
+    <div class="sb"><span>9:41</span><span>●●●</span></div>
+    <div class="body" style="opacity:.4;padding-top:40px"><div class="card hero"><div class="big">5.300</div></div></div>
+    <div class="dim"></div>
+    <div class="sheet">
+      <div class="grab"></div>
+      <b>Tiền tự do được tính thế nào?</b>
+      <div class="row" style="margin-top:6px"><span class="t">Thu nhập tháng này</span><b>18.750</b></div>
+      <div class="row"><span class="t">＋ Chuyển từ tháng 9</span><b>1.250</b></div>
+      <div class="row"><span class="t">− Đã chi</span><b>9.500</b></div>
+      <div class="row"><span class="s" style="padding-left:12px">trong đó chi không ghi chép</span><span class="s">250</span></div>
+      <div class="row"><span class="s" style="padding-left:12px">không tính: mua trả sau</span><span class="s">149</span></div>
+      <div class="row"><span class="t">− Đang giữ cho kế hoạch</span><b>5.200</b></div>
+      <div class="row"><span class="t">− Gửi tiết kiệm</span><b>0</b></div>
+      <div class="row" style="border-top:2px solid var(--ink)"><b>Tiền tự do</b><b class="mid">5.300</b></div>
+      <div class="s">Nếu chốt hết kế hoạch: 10.500</div>
+    </div>
+  </div>
+  <figcaption><b>Giải thích tiền tự do</b><span class="uc">UC5</span><span class="uc">UC11</span><span class="uc">UC12</span> The calculation is explained in words instead of shown as a formula.</figcaption>
+</figure>
+
+<figure>
+  <div class="phone">
+    <div class="sb"><span>9:41</span><span>●●●</span></div>
+    <div class="hd">✕ Lập kế hoạch tháng 11 <span></span></div>
+    <div class="body">
+      <div class="step"><i class="on"></i><i class="on"></i><i></i><i></i></div>
+      <div class="s">Bước 2/4</div>
+      <div class="mid" style="margin:2px 0 8px">Khoản định kỳ</div>
+      <div class="s" style="margin-bottom:6px">Các khoản này sẽ được đưa vào kế hoạch tháng 11.</div>
+      <div class="card">
+        <div class="row"><div class="l"><span class="ico"></span><div><div class="t">Tiền nhà</div><div class="s">ngày 1 · 3.500</div></div></div><span class="tog"></span></div>
+        <div class="row"><div class="l"><span class="ico"></span><div><div class="t">Internet</div><div class="s">ngày 26 · 220</div></div></div><span class="tog"></span></div>
+        <div class="row"><div class="l"><span class="ico"></span><div><div class="t">Nhạc trực tuyến</div><div class="s">ngày 28 · 59</div></div></div><span class="tog"></span></div>
+        <div class="row"><div class="l"><span class="ico"></span><div><div class="t">Phòng gym</div><div class="s">tạm dừng</div></div></div><span class="tog off"></span></div>
+      </div>
+      <div class="s">Tiếp theo: kế hoạch theo danh mục (lấy từ tháng 10), rồi mục tiêu riêng.</div>
+    </div>
+    <div style="padding:12px;display:flex;gap:8px"><span class="btn" style="flex:1;text-align:center">Quay lại</span><span class="btn pri" style="flex:2;text-align:center">Tiếp tục</span></div>
+  </div>
+  <figcaption><b>Wizard tháng mới</b><span class="uc">UC8</span><span class="uc">UC9</span><span class="uc">UC10</span><span class="uc">UC17</span> 4 steps: carry-over → recurring payments → category plan (copied from last month) → one-off goals.</figcaption>
+</figure>
+
+<figure>
+  <div class="phone">
+    <div class="sb"><span>9:41</span><span>●●●</span></div>
+    <div class="hd">‹ Đối chiếu số dư <span></span></div>
+    <div class="body">
+      <div class="t" style="margin:6px 0 10px">Bạn <b>thực sự</b> đang có bao nhiêu tiền (tiền mặt + tài khoản)?</div>
+      <div class="card" style="text-align:right"><div class="s">850 + 4.200</div><div class="big">5.050</div></div>
+      <div class="card">
+        <div class="row"><span class="t">Theo sổ</span><b>5.300</b></div>
+        <div class="row"><span class="t">Thực tế</span><b>5.050</b></div>
+        <div class="row"><b>Chênh lệch</b><b style="color:var(--bad)">−250</b></div>
+      </div>
+      <div class="lbl">Ghi nhận vào danh mục</div><div class="input" style="color:var(--ink)">Ăn uống ▾</div>
+      <div class="btn pri blk" style="margin-top:10px">Ghi là chi không ghi chép</div>
+      <div class="s" style="text-align:center;margin-top:8px">Không có giao dịch nào bị sửa — chỉ thêm 1 khoản điều chỉnh.</div>
+    </div>
+    <div class="nav"><span>Trang chủ</span><span>Giao dịch</span><span class="plus">＋</span><span class="on">Kế hoạch</span><span>Sổ nợ</span></div>
+  </div>
+  <figcaption><b>Đối chiếu số dư</b><span class="uc">UC5</span>
+    <div class="idea">Instead of typing an "untracked" figure, enter the money you actually have and the app works out the difference. (Q5)</div></figcaption>
+</figure>
+
+</div>
+</section>
+
+<!-- ============ 4. LEDGER ============ -->
+<section>
+<h2>4 · Sổ nợ & định kỳ</h2>
+<div class="grid">
+
+<figure>
+  <div class="phone">
+    <div class="sb"><span>9:41</span><span>●●●</span></div>
+    <div class="hd">Sổ nợ <span class="ic"></span></div>
+    <div class="body">
+      <div class="tabs"><span class="on">Tôi nợ</span><span>Nợ tôi</span><span>Trả sau</span><span>Định kỳ</span></div>
+      <div class="card hero"><div class="lbl">Tổng tôi còn nợ</div><div class="big">8.000</div></div>
+      <div class="card">
+        <div class="row" style="padding:0"><div class="l"><span class="ico"></span><div><b class="t">Chị Hạnh</b><div class="s">trả dần · lần cuối 15/09</div></div></div><b>22.000</b></div>
+        <div class="bar"><i style="width:27%"></i></div>
+        <div class="row"><span class="s">Đã trả 8.000 / 30.000 · 5 lần</span><span class="btn">Ghi nhận trả</span></div>
+      </div>
+      <div class="card">
+        <div class="row" style="padding:0"><div class="l"><span class="ico"></span><div><b class="t">Anh Tuấn</b><div class="s">vay 01/10</div></div></div><b>5.000</b></div>
+        <div class="row"><span class="s">Chưa trả</span><span class="btn">Ghi nhận trả</span></div>
+      </div>
+      <div class="card">
+        <div class="row" style="padding:0"><div class="l"><span class="ico"></span><div><b class="t">Ngân hàng (khoản vay)</b><div class="s">định kỳ ngày 1</div></div></div><b>…</b></div>
+      </div>
+      <div class="btn blk">＋ Thêm khoản nợ</div>
+    </div>
+    <div class="nav"><span>Trang chủ</span><span>Giao dịch</span><span class="plus">＋</span><span>Kế hoạch</span><span class="on">Sổ nợ</span></div>
+  </div>
+  <figcaption><b>Sổ nợ · Tôi nợ</b><span class="uc">UC13</span><span class="uc">UC14</span> Optional total target with a progress bar. <b>Ghi nhận trả</b> opens the ＋ sheet already filled in.</figcaption>
+</figure>
+
+<figure>
+  <div class="phone">
+    <div class="sb"><span>9:41</span><span>●●●</span></div>
+    <div class="hd">‹ Chị Hạnh <span class="s">Sửa</span></div>
+    <div class="body">
+      <div class="card hero">
+        <div class="lbl">Còn nợ</div><div class="big">22.000</div>
+        <div class="bar"><i style="width:27%"></i></div>
+        <div class="s">Đã trả 8.000 / 30.000 · dự kiến xong 05/2027</div>
+      </div>
+      <div class="btn pri blk" style="margin-bottom:10px">Ghi nhận trả</div>
+      <b class="t">Lịch sử</b>
+      <div class="row"><span class="t">15/09/2026 · lần 5</span><b>1.000</b></div>
+      <div class="row"><span class="t">12/08/2026 · lần 4</span><b>500</b></div>
+      <div class="row"><span class="t">10/07/2026 · lần 3</span><b>1.000</b></div>
+      <div class="row"><span class="t">09/06/2026 · lần 2</span><b>500</b></div>
+      <div class="row"><span class="s">Xem thêm 1 lần…</span><span></span></div>
+      <div class="lbl" style="margin-top:8px">Ghi chú</div><div class="input">Mượn sửa nhà, trả dần không lãi</div>
+    </div>
+    <div class="nav"><span>Trang chủ</span><span>Giao dịch</span><span class="plus">＋</span><span>Kế hoạch</span><span class="on">Sổ nợ</span></div>
+  </div>
+  <figcaption><b>Chi tiết khoản nợ</b><span class="uc">UC14</span> A payment history replaces the numbered installment table. The projected payoff date is based on the average payment.</figcaption>
+</figure>
+
+<figure>
+  <div class="phone">
+    <div class="sb"><span>9:41</span><span>●●●</span></div>
+    <div class="hd">Sổ nợ <span class="ic"></span></div>
+    <div class="body">
+      <div class="tabs"><span>Tôi nợ</span><span class="on">Nợ tôi</span><span>Trả sau</span><span>Định kỳ</span></div>
+      <div class="card hero"><div class="lbl">Người khác còn nợ bạn</div><div class="big">1.150</div></div>
+      <div class="card">
+        <div class="row" style="padding:0"><div class="l"><span class="ico"></span><div><b class="t">Lan</b><div class="s">Cơm gà cả nhóm · 02/10</div></div></div><b>51</b></div>
+        <div class="row"><span class="chip">Đang chờ</span><span class="btn">Nhận tiền</span></div>
+      </div>
+      <div class="card">
+        <div class="row" style="padding:0"><div class="l"><span class="ico"></span><div><b class="t">Hùng</b><div class="s">Mượn mua laptop</div></div></div><b>700</b></div>
+        <div class="row"><span class="chip warn">Trả một phần · 300/1.000</span><span class="btn">Nhận tiền</span></div>
+      </div>
+      <div class="card">
+        <div class="row" style="padding:0"><div class="l"><span class="ico"></span><div><b class="t">Phong</b><div class="s">Cho mượn 2024</div></div></div><b>400</b></div>
+        <div class="row"><span class="chip">Đang chờ</span><span class="s">⋯ Xóa nợ</span></div>
+      </div>
+      <div class="s" style="text-align:center">Đã đóng (3) ›</div>
+    </div>
+    <div class="nav"><span>Trang chủ</span><span>Giao dịch</span><span class="plus">＋</span><span>Kế hoạch</span><span class="on">Sổ nợ</span></div>
+  </div>
+  <figcaption><b>Sổ nợ · Nợ tôi</b><span class="uc">UC15</span><span class="uc">UC16</span> Status per person, partial repayments, and write-offs ("Xóa nợ") that stay in history.</figcaption>
+</figure>
+
+<figure>
+  <div class="phone">
+    <div class="sb"><span>9:41</span><span>●●●</span></div>
+    <div class="hd">Sổ nợ <span class="ic"></span></div>
+    <div class="body">
+      <div class="tabs"><span>Tôi nợ</span><span>Nợ tôi</span><span class="on">Trả sau</span><span>Định kỳ</span></div>
+      <div class="card">
+        <div class="row" style="padding:0"><div class="l"><span class="ico"></span><b class="t">Thẻ tín dụng</b></div><b>1.264</b></div>
+        <div class="s">Chi bằng thẻ tháng này: 264 · chưa thanh toán từ trước: 1.000</div>
+        <div class="row"><span></span><span class="btn">Thanh toán thẻ</span></div>
+      </div>
+      <div class="card">
+        <div class="row" style="padding:0"><div class="l"><span class="ico"></span><b class="t">Quỹ nhóm</b></div><b>0</b></div>
+        <div class="s">Đã thanh toán đủ</div>
+      </div>
+      <div class="btn blk" style="margin-bottom:14px">＋ Thêm nguồn trả sau</div>
+      <div class="tabs"><span>Tôi nợ</span><span>Nợ tôi</span><span>Trả sau</span><span class="on">Định kỳ</span></div>
+      <div class="row"><div class="l"><span class="ico"></span><div><div class="t">Tiền nhà</div><div class="s">ngày 1 · Nhà ở</div></div></div><span><b>3.500</b> <span class="chip" style="color:var(--ok)">✓</span></span></div>
+      <div class="row"><div class="l"><span class="ico"></span><div><div class="t">Internet</div><div class="s">ngày 26</div></div></div><span><b>220</b> <span class="chip warn">2 ngày</span></span></div>
+      <div class="row"><div class="l"><span class="ico"></span><div><div class="t">Nhạc trực tuyến</div><div class="s">ngày 28</div></div></div><b>59</b></div>
+    </div>
+    <div class="nav"><span>Trang chủ</span><span>Giao dịch</span><span class="plus">＋</span><span>Kế hoạch</span><span class="on">Sổ nợ</span></div>
+  </div>
+  <figcaption><b>Trả sau & Định kỳ</b> (two tabs shown together)<span class="uc">UC12</span><span class="uc">UC17</span> Each pay-later source shows its outstanding balance. Recurring payments show their status this month.
+    <div class="idea">Should recurring payments be recorded automatically on their charge day? (Q6)</div></figcaption>
+</figure>
+
+</div>
+</section>
+
+<!-- ============ 5. SAVINGS, REPORTS, SETTINGS ============ -->
+<section>
+<h2>5 · Tiết kiệm, báo cáo, cài đặt</h2>
+<div class="grid">
+
+<figure>
+  <div class="phone">
+    <div class="sb"><span>9:41</span><span>●●●</span></div>
+    <div class="hd">‹ Tiết kiệm <span></span></div>
+    <div class="body">
+      <div class="card hero"><div class="lbl">Số dư tiết kiệm</div><div class="big">12.400</div><div class="s">+1.500 tháng này</div></div>
+      <div style="display:flex;gap:8px;margin-bottom:10px"><span class="btn pri" style="flex:1;text-align:center">Gửi thêm</span><span class="btn" style="flex:1;text-align:center">Rút</span></div>
+      <b class="t">Mục tiêu</b>
+      <div class="card" style="margin-top:6px"><div class="row" style="padding:0"><span class="t">Quỹ khẩn cấp</span><span class="s">10.000 / 30.000</span></div><div class="bar"><i style="width:33%"></i></div></div>
+      <div class="card"><div class="row" style="padding:0"><span class="t">Mua laptop</span><span class="s">2.400 / 20.000 · 06/2027</span></div><div class="bar"><i style="width:12%"></i></div></div>
+      <b class="t">Lịch sử</b>
+      <div class="row"><span class="t">01/10 · Gửi</span><b>+1.500</b></div>
+      <div class="row"><span class="t">01/09 · Gửi</span><b>+1.500</b></div>
+      <div class="row"><span class="t">14/08 · Rút (sửa xe)</span><b>−800</b></div>
+    </div>
+    <div class="nav"><span>Trang chủ</span><span>Giao dịch</span><span class="plus">＋</span><span>Kế hoạch</span><span>Sổ nợ</span></div>
+  </div>
+  <figcaption><b>Tiết kiệm</b> <span class="uc">UC20</span> New feature. A deposit reduces free money for the month, and the balance builds up over time.
+    <div class="idea">Is one savings balance with goals enough, or do you want separate pots? (Q7)</div></figcaption>
+</figure>
+
+<figure>
+  <div class="phone">
+    <div class="sb"><span>9:41</span><span>●●●</span></div>
+    <div class="hd">‹ Báo cáo <span></span></div>
+    <div class="body">
+      <div><span class="chip">3 tháng</span><span class="chip on">6 tháng</span><span class="chip">12 tháng</span></div>
+      <div class="lbl" style="margin-top:8px">Thu (đen) và chi (xám) mỗi tháng</div>
+      <div class="chart">
+        <div><i style="height:80%"></i><i style="height:70%"></i></div><div><i style="height:75%"></i><i style="height:82%"></i></div>
+        <div><i style="height:90%"></i><i style="height:60%"></i></div><div><i style="height:70%"></i><i style="height:72%"></i></div>
+        <div><i style="height:95%"></i><i style="height:88%"></i></div><div><i style="height:85%"></i><i style="height:45%"></i></div>
+      </div>
+      <div class="s" style="display:flex;justify-content:space-between"><span>T5</span><span>T6</span><span>T7</span><span>T8</span><span>T9</span><span>T10</span></div>
+      <div class="lbl" style="margin-top:10px">Chi theo danh mục · Tháng 10</div>
+      <div class="donut"></div>
+      <div class="row"><span class="t">■ Ăn uống</span><span class="t">3.100 <span class="s">▲ 12%</span></span></div>
+      <div class="row"><span class="t">■ Nhà ở</span><span class="t">2.600 <span class="s">— 0%</span></span></div>
+      <div class="row"><span class="t">■ Gia đình</span><span class="t">1.800 <span class="s">▼ 20%</span></span></div>
+    </div>
+    <div class="nav"><span>Trang chủ</span><span>Giao dịch</span><span class="plus">＋</span><span>Kế hoạch</span><span>Sổ nợ</span></div>
+  </div>
+  <figcaption><b>Báo cáo</b><span class="uc">UC19</span> New feature. Trends over time and a comparison with the previous month. Tapping a category opens its transactions.</figcaption>
+</figure>
+
+<figure>
+  <div class="phone">
+    <div class="sb"><span>9:41</span><span>●●●</span></div>
+    <div class="hd">Cài đặt <span></span></div>
+    <div class="body">
+      <div class="lbl">Dữ liệu</div>
+      <div class="card">
+        <div class="row"><div><div class="t">Sao lưu (tải xuống)</div><div class="s">Lần cuối: 23/09/2026</div></div><span class="btn pri">Tải xuống</span></div>
+        <div class="row"><div class="t">Khôi phục từ tệp</div><span class="btn">Tải lên</span></div>
+        <div class="row"><div class="t" style="color:var(--bad)">Xóa dữ liệu trên máy này</div><span></span></div>
+      </div>
+      <div class="lbl">Tùy chỉnh</div>
+      <div class="card">
+        <div class="row"><span class="t">Danh mục</span><span class="s">12 ›</span></div>
+        <div class="row"><span class="t">Nguồn trả sau</span><span class="s">2 ›</span></div>
+        <div class="row"><span class="t">Đơn vị hiển thị</span><span class="s">nghìn đồng ›</span></div>
+        <div class="row"><span class="t">Giao diện</span><span class="s">Tự động ›</span></div>
+      </div>
+      <div class="lbl">Danh mục › Ăn uống</div>
+      <div class="card">
+        <div class="row"><span class="t">Biểu tượng & màu</span><span class="ico"></span></div>
+        <div class="row"><span class="t">Cảnh báo khoản lớn</span><span class="s">≥ 200 · ≥ 500</span></div>
+        <div class="row"><span class="t">Gộp vào danh mục khác…</span><span></span></div>
+        <div class="row"><span class="t">Ẩn danh mục</span><span class="tog off"></span></div>
+      </div>
+    </div>
+    <div class="nav"><span>Trang chủ</span><span>Giao dịch</span><span class="plus">＋</span><span>Kế hoạch</span><span>Sổ nợ</span></div>
+  </div>
+  <figcaption><b>Cài đặt & danh mục</b><span class="uc">UC6</span><span class="uc">UC21</span><span class="uc">UC22</span> Large-expense warning thresholds are set per category. Merging categories fixes the naming drift seen in the Excel sheet.</figcaption>
+</figure>
+
+</div>
+</section>
+
+<!-- ============ 6. DESKTOP ============ -->
+<section>
+<h2>6 · Desktop</h2>
+<div class="grid">
+<figure class="wide">
+  <div class="desk">
+    <aside>
+      <div style="font-weight:700;color:var(--ink);padding-bottom:12px">Sổ chi tiêu</div>
+      <div class="on">Trang chủ</div><div>Giao dịch</div><div>Kế hoạch</div><div>Sổ nợ</div><div>Tiết kiệm</div><div>Báo cáo</div><div>Cài đặt</div>
+    </aside>
+    <main>
+      <div class="row" style="padding-top:0"><b style="font-size:18px">Giao dịch · Tháng 10/2026</b><span class="btn pri">＋ Ghi giao dịch</span></div>
+      <div><span class="chip on">Tất cả</span><span class="chip">Chi</span><span class="chip">Thu</span><span class="chip">Trả sau</span><span class="chip">Danh mục ▾</span></div>
+      <div class="day"><span>Hôm nay · 02/10</span><span>−421</span></div>
+      <div class="row"><div class="l"><span class="ico"></span><div><div class="t">Ăn trưa</div><div class="s">Ăn uống</div></div></div><b>60</b></div>
+      <div class="row" style="background:var(--fill);border-radius:6px;padding:6px"><div class="l"><span class="ico"></span><div><div class="t">Sửa xe <span class="chip warn">Khoản lớn</span></div><div class="s">Đi lại</div></div></div><b>285</b></div>
+      <div class="row"><div class="l"><span class="ico"></span><div><div class="t">Cơm gà cả nhóm</div><div class="s">Ăn uống · chia 3</div></div></div><b>51</b></div>
+      <div class="day"><span>Hôm qua · 01/10</span><span>−3.570 · +20.000</span></div>
+      <div class="row"><div class="l"><span class="ico"></span><div><div class="t">Lương tháng 9</div><div class="s">Lương</div></div></div><b style="color:var(--ok)">+20.000</b></div>
+      <div class="row"><div class="l"><span class="ico"></span><div><div class="t">Tiền nhà</div><div class="s">Nhà ở</div></div></div><b>3.500</b></div>
+    </main>
+    <div class="side">
+      <div class="lbl">Chi tiết</div>
+      <div class="mid" style="margin:4px 0">Sửa xe · 285</div>
+      <div class="s">Đi lại · 02/10/2026 · Tiền mặt</div>
+      <div class="card" style="margin-top:10px"><div class="lbl">Kế hoạch Đi lại</div><div class="bar over"><i style="width:100%"></i></div><div class="s">585 / 500</div></div>
+      <div class="input">Ghi chú…</div>
+      <div style="display:flex;gap:6px"><span class="btn">Sửa</span><span class="btn">Hoàn tiền</span><span class="btn">Xóa</span></div>
+      <div class="card" style="margin-top:16px"><div class="lbl">Tiền tự do</div><div class="mid">5.300</div></div>
+    </div>
+  </div>
+  <figcaption><b>Desktop: same screens, two columns</b> Sidebar navigation, a list in the middle and details on the right. It is not a separate table or spreadsheet view.</figcaption>
+</figure>
+</div>
+</section>
+</body>
+</html>
