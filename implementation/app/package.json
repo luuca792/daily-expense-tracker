@@ -12,7 +12,8 @@
     "preview": "vite preview",
     "test": "vitest run",
     "icons": "pwa-assets-generator",
-    "e2e": "playwright test"
+    "e2e": "playwright test",
+    "package-and-deploy": "python ../deploy/package_and_deploy.py --no-pause"
   },
   "dependencies": {
     "@fontsource/be-vietnam-pro": "^5.3.0",
