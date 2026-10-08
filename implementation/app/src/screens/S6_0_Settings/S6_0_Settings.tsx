@@ -14,7 +14,7 @@ export const SETTING_ROWS: { section: string; key: keyof Settings; label: string
 ];
 
 /** 6.0 Settings: the two amounts (→ 6.1), then 💾 Dữ liệu · Xuất dữ liệu (plan §4.6): tapping exports right away;
- *  its value is the date of the last export, or — */
+ *  its value is the date of the last export, or —. The app version (package.json, "x.y.z") sits at the bottom center */
 export function S6_0_Settings() {
   const back = useBack('/');
   const d = useData();
@@ -44,6 +44,7 @@ export function S6_0_Settings() {
           </button>
         </div>
       </div>
+      <div className="app-ver">{__APP_VERSION__}</div>
       {editing && (
         <S6_1_SettingSheet k={editing} label={SETTING_ROWS.find((r) => r.key === editing)!.label} onClose={() => setEditing(null)} />
       )}

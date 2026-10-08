@@ -6,7 +6,7 @@ The **actual product**, deployed on the user's server for friends to use. Built 
 |---|---|
 | `plan.md` | Implementation plan: architecture and code layout, data model (schema v1), persistence and migrations, JSON export, quality, deployment |
 | `app/` | Production source code (Vite + React + TS PWA) |
-| `deploy/` | Dockerfile, nginx config, host-proxy example, build-and-push script, Vietnamese install guide (`huong-dan.md`); see `deploy/README.md` |
+| `deploy/` | Dockerfile, nginx config, docker-compose, build-and-push script; see `deploy/README.md` |
 | `test-script.md` | Manual checks per screen number, device checks, update check |
 
 ## Commands (in `app/`)
@@ -20,7 +20,7 @@ The **actual product**, deployed on the user's server for friends to use. Built 
 ## Status (2026-10-08)
 - §7 steps 1–3 done: skeleton, domain port, data layer, **all screens** (1.0–7.1, 4.2, 4.3, BootError) with 6.0 **💾 Dữ liệu · Xuất dữ liệu**.
 - §7 step 4: e2e suite done (5 tests: reload keeps data, export file, two tabs, offline via service worker, manifest), passing against the build and the Docker image. Deploy files ready.
-- **Waiting on the user:** the final subdomain (replace `SUBDOMAIN` in `deploy/host-nginx.example.conf` and `deploy/huong-dan.md`), the deploy itself, and the device checks in `test-script.md` (Android + iPhone, offline, update check).
+- **Waiting on the user:** the final subdomain, the deploy itself, and the device checks in `test-script.md` (Android + iPhone, offline, update check).
 - After that, §7 step 5: friends start using it, and **schema v1 is frozen** (plan §3.1, §5 release rule).
 
 ## Implementation notes (choices the plan left open)

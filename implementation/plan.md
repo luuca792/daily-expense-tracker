@@ -106,7 +106,6 @@ implementation/
       install-offline.spec.ts  service worker serves the app with network off
   deploy/
     nginx.conf · Dockerfile · docker-compose.yml
-    huong-dan.md               Vietnamese install guide for friends
 ```
 Screen numbers, Vietnamese labels and behavior come from `prototype/screens.md` and the running prototype, which wins over `wireframes/` where they differ.
 
@@ -249,7 +248,7 @@ A minimal screen: a short error title, an **Xuất dữ liệu** button that exp
 - `sw.js`, `index.html` and the manifest (`application/manifest+json`) are served with `Cache-Control: no-cache`. Hashed assets are cached long-term.
 - Optional Docker image (nginx:alpine).
 - **Keep the subdomain stable forever.** Data belongs to the address. If moving is ever unavoidable, the way across is export → import, which is another reason export ships first.
-- `deploy/huong-dan.md`, a short Vietnamese guide for friends:
+- A short Vietnamese guide for friends (dropped from the repo 2026-10-09):
   - How to install on Android and iPhone.
   - The data lives only on this phone.
   - Tap **Xuất dữ liệu** now and then and keep the file somewhere safe.

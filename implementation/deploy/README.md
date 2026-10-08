@@ -4,20 +4,19 @@
 |---|---|
 | `Dockerfile` | Node builds `app/` (unit tests must pass), nginx serves `dist/`. Build context: `implementation/`. |
 | `nginx.conf` | nginx inside the container: SPA fallback, CSP (`connect-src 'self'`), `no-cache` for `index.html`, `sw.js`, `registerSW.js`, `workbox-*.js` and the manifest (`application/manifest+json`), one-year cache for hashed `/assets/`. |
-| `docker-compose.yml` | Builds and runs the container on `HOST_PORT` (default 8081). |
-| `host-nginx.example.conf` | Server block for the host nginx that holds the certificates (HTTPS is required for the service worker). Replace `SUBDOMAIN`. |
-| `build_and_push.py` | Double-click: `docker-compose build`, then `push` to Docker Hub (`luuca792/so-chi-tieu`). |
-| `huong-dan.md` | Vietnamese install guide for friends. Replace `SUBDOMAIN` before sharing. |
+| `docker-compose.yml` | Builds and runs the container on `HOST_PORT` (default 8081). Image `luuca792/expense-tracker:${APP_VERSION}` (default `1.0.0`). |
+| `build_and_push.py` | Double-click: reads the version from `app/package.json`, `docker-compose build`, then `push` to Docker Hub (`luuca792/expense-tracker:<version>`). |
 
 ## First deploy
 1. **Choose the final subdomain and never change it** (plan §6): each phone's data belongs to that exact address.
 2. DNS record → the server; certificate for the subdomain (certbot, as for the prototype's IP certificate).
 3. On the server: pull or build the image, `docker-compose up -d` (from this folder, or with the pushed image).
-4. Add the server block from `host-nginx.example.conf` to the host nginx, `nginx -t`, reload.
+4. In the host nginx (the one holding the certificates; HTTPS is required for the service worker), add a server block for the subdomain that proxies to the container on `HOST_PORT`, `nginx -t`, reload.
 5. Open `https://SUBDOMAIN` on a phone and run the device checks in `../test-script.md`.
 
 ## Every later deploy
-`build_and_push.py` → on the server `docker-compose pull && docker-compose up -d`. Installed apps pick up the new
+Bump `version` in `app/package.json` (it is the image tag and the version shown at the bottom of 6.0), run
+`build_and_push.py` → on the server `APP_VERSION=<version> docker-compose pull && APP_VERSION=<version> docker-compose up -d`. Installed apps pick up the new
 version on their next launch (plan §4b). If the release changes `app/src/data/schema/`, it must include a migration
 step, a new fixture and passing tests (plan §5).
 

@@ -186,6 +186,8 @@ select.input { appearance: none; background: #fff url("data:image/svg+xml,%3Csvg
 .set { background: #fff; border: 1.5px solid var(--border); border-radius: 12px; padding: 0 12px; }
 .set button { display: flex; justify-content: space-between; align-items: center; width: 100%; padding: 13px 0; text-align: left; gap: 8px; }
 .val { font-weight: 700; color: var(--teal-d); white-space: nowrap; }
+/* version at the bottom center of 6.0: absolute in .app (min-height 100dvh), so it never covers the rows */
+.app-ver { position: absolute; left: 0; right: 0; bottom: calc(12px + env(safe-area-inset-bottom)); text-align: center; font-size: 12px; color: var(--muted); }
 
 /* welcome */
 .welcome { display: flex; flex-direction: column; min-height: 100dvh; }

@@ -1,12 +1,15 @@
 # Run from implementation/deploy:  docker-compose up -d --build
-# The host's nginx proxies the HTTPS subdomain to this port (host-nginx.example.conf).
+# The image tag is the app version (app/package.json); build_and_push.py sets APP_VERSION from it.
+# The host's nginx proxies the HTTPS subdomain to this port.
 services:
   app:
     build:
       context: ..
       dockerfile: deploy/Dockerfile
-    image: luuca792/so-chi-tieu
-    container_name: so-chi-tieu
+      args:
+        APP_VERSION: ${APP_VERSION:-1.0.0}
+    image: luuca792/expense-tracker:${APP_VERSION:-1.0.0}
+    container_name: expense-tracker
     ports:
       - "${HOST_PORT:-8081}:80"
     restart: unless-stopped
