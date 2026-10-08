@@ -1,1 +1,11 @@
 /* Shared components (Header, Sheet, Dialog, Toast, ＋ button, bottom bar…), added with each component in §7 step 3 */
+
+/* buttons */
+.btn { display: block; width: 100%; text-align: center; padding: 12px; border-radius: 12px; font-weight: 700; font-size: 15px; border: 1.5px solid var(--teal); color: var(--teal-d); background: #fff; }
+.btn.pri { background: var(--grad-btn); border: none; color: #fff; box-shadow: 0 6px 14px #0d948845; }
+.btn:disabled { opacity: .45; box-shadow: none; }
+.btn-col { display: flex; flex-direction: column; gap: 10px; }
+
+/* BootError (plan §4.4) */
+.boot-error { min-height: 100dvh; display: flex; flex-direction: column; justify-content: center; gap: 24px; padding: 24px 16px; }
+.boot-error h1 { margin: 0; font-size: 20px; text-align: center; }

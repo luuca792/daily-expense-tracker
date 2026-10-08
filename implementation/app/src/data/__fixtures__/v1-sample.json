@@ -1,0 +1,1026 @@
+{
+  "schemaVersion": 1,
+  "settings": {
+    "livingMax": 4000,
+    "largeFrom": 200
+  },
+  "periods": [
+    {
+      "id": "p-jul",
+      "name": "Kỳ lương 5/7 – 4/8",
+      "start": "2026-07-05",
+      "end": "2026-08-04",
+      "createdAt": 1782864060000,
+      "living": {
+        "max": 4000,
+        "icon": "🍜",
+        "color": "orange"
+      },
+      "goals": [
+        {
+          "id": "g-1",
+          "name": "Nhà ở",
+          "icon": "🏠",
+          "color": "green",
+          "target": 2500,
+          "done": false
+        },
+        {
+          "id": "g-2",
+          "name": "Gia đình",
+          "icon": "👨‍👩‍👧",
+          "color": "violet",
+          "target": 2000,
+          "done": false
+        },
+        {
+          "id": "g-3",
+          "name": "Mua sắm",
+          "icon": "🛍️",
+          "color": "amber",
+          "target": 1000,
+          "done": false
+        },
+        {
+          "id": "g-4",
+          "name": "Đi lại",
+          "icon": "🛵",
+          "color": "blue",
+          "target": 700,
+          "done": false
+        }
+      ],
+      "expenses": [
+        {
+          "id": "e-7",
+          "amount": 1900,
+          "category": "g-1",
+          "description": "Tiền nhà",
+          "date": "2026-07-06",
+          "createdAt": 1782864240000
+        },
+        {
+          "id": "e-8",
+          "amount": 2000,
+          "category": "g-2",
+          "description": "Biếu ba mẹ",
+          "date": "2026-07-06",
+          "createdAt": 1782864300000
+        },
+        {
+          "id": "e-9",
+          "amount": 600,
+          "category": "g-1",
+          "description": "Tiền điện",
+          "date": "2026-07-10",
+          "createdAt": 1782864360000
+        },
+        {
+          "id": "e-10",
+          "amount": 60,
+          "category": "g-4",
+          "description": "Đổ xăng",
+          "date": "2026-07-12",
+          "createdAt": 1782864420000
+        },
+        {
+          "id": "e-11",
+          "amount": 450,
+          "category": "g-3",
+          "description": "Áo sơ mi",
+          "date": "2026-07-20",
+          "createdAt": 1782864480000
+        },
+        {
+          "id": "e-12",
+          "amount": 55,
+          "category": "g-4",
+          "description": "Đổ xăng",
+          "date": "2026-07-22",
+          "createdAt": 1782864540000
+        },
+        {
+          "id": "e-13",
+          "amount": 65,
+          "category": "g-4",
+          "description": "Đổ xăng",
+          "date": "2026-08-01",
+          "createdAt": 1782864600000
+        },
+        {
+          "id": "e-14",
+          "amount": 40,
+          "category": null,
+          "description": "",
+          "date": "2026-07-15",
+          "createdAt": 1782864660000
+        },
+        {
+          "id": "e-15",
+          "amount": 30,
+          "category": null,
+          "description": "",
+          "date": "2026-07-25",
+          "createdAt": 1782864720000
+        },
+        {
+          "id": "e-16",
+          "amount": 50,
+          "category": null,
+          "description": "",
+          "date": "2026-08-02",
+          "createdAt": 1782864780000
+        },
+        {
+          "id": "e-17",
+          "amount": 120,
+          "category": "living",
+          "description": "Ăn sáng",
+          "date": "2026-07-05",
+          "createdAt": 1782864840000
+        },
+        {
+          "id": "e-18",
+          "amount": 149,
+          "category": "living",
+          "description": "Đi chợ",
+          "date": "2026-07-06",
+          "createdAt": 1782864900000
+        },
+        {
+          "id": "e-19",
+          "amount": 137,
+          "category": "living",
+          "description": "Cà phê",
+          "date": "2026-07-07",
+          "createdAt": 1782864960000
+        },
+        {
+          "id": "e-20",
+          "amount": 125,
+          "category": "living",
+          "description": "Ăn trưa",
+          "date": "2026-07-08",
+          "createdAt": 1782865020000
+        },
+        {
+          "id": "e-21",
+          "amount": 154,
+          "category": "living",
+          "description": "Siêu thị",
+          "date": "2026-07-09",
+          "createdAt": 1782865080000
+        },
+        {
+          "id": "e-22",
+          "amount": 142,
+          "category": "living",
+          "description": "Ăn tối",
+          "date": "2026-07-10",
+          "createdAt": 1782865140000
+        },
+        {
+          "id": "e-23",
+          "amount": 130,
+          "category": "living",
+          "description": "Trà sữa",
+          "date": "2026-07-12",
+          "createdAt": 1782865200000
+        },
+        {
+          "id": "e-24",
+          "amount": 159,
+          "category": "living",
+          "description": "Bánh mì",
+          "date": "2026-07-13",
+          "createdAt": 1782865260000
+        },
+        {
+          "id": "e-25",
+          "amount": 147,
+          "category": "living",
+          "description": "Ăn sáng",
+          "date": "2026-07-14",
+          "createdAt": 1782865320000
+        },
+        {
+          "id": "e-26",
+          "amount": 135,
+          "category": "living",
+          "description": "Đi chợ",
+          "date": "2026-07-15",
+          "createdAt": 1782865380000
+        },
+        {
+          "id": "e-27",
+          "amount": 123,
+          "category": "living",
+          "description": "Cà phê",
+          "date": "2026-07-16",
+          "createdAt": 1782865440000
+        },
+        {
+          "id": "e-28",
+          "amount": 152,
+          "category": "living",
+          "description": "Ăn trưa",
+          "date": "2026-07-18",
+          "createdAt": 1782865500000
+        },
+        {
+          "id": "e-29",
+          "amount": 140,
+          "category": "living",
+          "description": "Siêu thị",
+          "date": "2026-07-19",
+          "createdAt": 1782865560000
+        },
+        {
+          "id": "e-30",
+          "amount": 128,
+          "category": "living",
+          "description": "Ăn tối",
+          "date": "2026-07-20",
+          "createdAt": 1782865620000
+        },
+        {
+          "id": "e-31",
+          "amount": 157,
+          "category": "living",
+          "description": "Trà sữa",
+          "date": "2026-07-21",
+          "createdAt": 1782865680000
+        },
+        {
+          "id": "e-32",
+          "amount": 145,
+          "category": "living",
+          "description": "Bánh mì",
+          "date": "2026-07-22",
+          "createdAt": 1782865740000
+        },
+        {
+          "id": "e-33",
+          "amount": 133,
+          "category": "living",
+          "description": "Ăn sáng",
+          "date": "2026-07-24",
+          "createdAt": 1782865800000
+        },
+        {
+          "id": "e-34",
+          "amount": 121,
+          "category": "living",
+          "description": "Đi chợ",
+          "date": "2026-07-25",
+          "createdAt": 1782865860000
+        },
+        {
+          "id": "e-35",
+          "amount": 150,
+          "category": "living",
+          "description": "Cà phê",
+          "date": "2026-07-26",
+          "createdAt": 1782865920000
+        },
+        {
+          "id": "e-36",
+          "amount": 138,
+          "category": "living",
+          "description": "Ăn trưa",
+          "date": "2026-07-27",
+          "createdAt": 1782865980000
+        },
+        {
+          "id": "e-37",
+          "amount": 126,
+          "category": "living",
+          "description": "Siêu thị",
+          "date": "2026-07-28",
+          "createdAt": 1782866040000
+        },
+        {
+          "id": "e-38",
+          "amount": 155,
+          "category": "living",
+          "description": "Ăn tối",
+          "date": "2026-07-30",
+          "createdAt": 1782866100000
+        },
+        {
+          "id": "e-39",
+          "amount": 143,
+          "category": "living",
+          "description": "Trà sữa",
+          "date": "2026-07-31",
+          "createdAt": 1782866160000
+        },
+        {
+          "id": "e-40",
+          "amount": 131,
+          "category": "living",
+          "description": "Bánh mì",
+          "date": "2026-08-01",
+          "createdAt": 1782866220000
+        },
+        {
+          "id": "e-41",
+          "amount": 160,
+          "category": "living",
+          "description": "Ăn sáng",
+          "date": "2026-08-02",
+          "createdAt": 1782866280000
+        },
+        {
+          "id": "e-42",
+          "amount": 150,
+          "category": "living",
+          "description": "Đi chợ",
+          "date": "2026-08-03",
+          "createdAt": 1782866340000
+        }
+      ],
+      "incomes": [
+        {
+          "id": "i-5",
+          "amount": 23000,
+          "description": "Lương tháng 6",
+          "date": "2026-07-05",
+          "createdAt": 1782864120000
+        }
+      ],
+      "transfers": [
+        {
+          "id": "t-6",
+          "dir": "in",
+          "amount": 4000,
+          "date": "2026-07-05",
+          "createdAt": 1782864180000
+        }
+      ]
+    },
+    {
+      "id": "p-dalat",
+      "name": "Du lịch Đà Lạt",
+      "start": "2026-08-14",
+      "end": "2026-08-18",
+      "createdAt": 1782866400000,
+      "living": {
+        "max": 2000,
+        "icon": "🍜",
+        "color": "orange"
+      },
+      "goals": [
+        {
+          "id": "g-43",
+          "name": "Khách sạn",
+          "icon": "🏨",
+          "color": "indigo",
+          "target": 1200,
+          "done": false
+        }
+      ],
+      "expenses": [
+        {
+          "id": "e-45",
+          "amount": 1200,
+          "category": "g-43",
+          "description": "Khách sạn",
+          "date": "2026-08-14",
+          "createdAt": 1782866520000
+        },
+        {
+          "id": "e-46",
+          "amount": 100,
+          "category": null,
+          "description": "",
+          "date": "2026-08-15",
+          "createdAt": 1782866580000
+        },
+        {
+          "id": "e-47",
+          "amount": 80,
+          "category": null,
+          "description": "",
+          "date": "2026-08-17",
+          "createdAt": 1782866640000
+        },
+        {
+          "id": "e-48",
+          "amount": 110,
+          "category": "living",
+          "description": "Ăn sáng",
+          "date": "2026-08-14",
+          "createdAt": 1782866700000
+        },
+        {
+          "id": "e-49",
+          "amount": 139,
+          "category": "living",
+          "description": "Đi chợ",
+          "date": "2026-08-14",
+          "createdAt": 1782866760000
+        },
+        {
+          "id": "e-50",
+          "amount": 127,
+          "category": "living",
+          "description": "Cà phê",
+          "date": "2026-08-14",
+          "createdAt": 1782866820000
+        },
+        {
+          "id": "e-51",
+          "amount": 115,
+          "category": "living",
+          "description": "Ăn trưa",
+          "date": "2026-08-15",
+          "createdAt": 1782866880000
+        },
+        {
+          "id": "e-52",
+          "amount": 144,
+          "category": "living",
+          "description": "Siêu thị",
+          "date": "2026-08-15",
+          "createdAt": 1782866940000
+        },
+        {
+          "id": "e-53",
+          "amount": 132,
+          "category": "living",
+          "description": "Ăn tối",
+          "date": "2026-08-15",
+          "createdAt": 1782867000000
+        },
+        {
+          "id": "e-54",
+          "amount": 120,
+          "category": "living",
+          "description": "Trà sữa",
+          "date": "2026-08-16",
+          "createdAt": 1782867060000
+        },
+        {
+          "id": "e-55",
+          "amount": 149,
+          "category": "living",
+          "description": "Bánh mì",
+          "date": "2026-08-16",
+          "createdAt": 1782867120000
+        },
+        {
+          "id": "e-56",
+          "amount": 137,
+          "category": "living",
+          "description": "Ăn sáng",
+          "date": "2026-08-16",
+          "createdAt": 1782867180000
+        },
+        {
+          "id": "e-57",
+          "amount": 125,
+          "category": "living",
+          "description": "Đi chợ",
+          "date": "2026-08-17",
+          "createdAt": 1782867240000
+        },
+        {
+          "id": "e-58",
+          "amount": 113,
+          "category": "living",
+          "description": "Cà phê",
+          "date": "2026-08-17",
+          "createdAt": 1782867300000
+        },
+        {
+          "id": "e-59",
+          "amount": 142,
+          "category": "living",
+          "description": "Ăn trưa",
+          "date": "2026-08-17",
+          "createdAt": 1782867360000
+        },
+        {
+          "id": "e-60",
+          "amount": 130,
+          "category": "living",
+          "description": "Siêu thị",
+          "date": "2026-08-18",
+          "createdAt": 1782867420000
+        },
+        {
+          "id": "e-61",
+          "amount": 137,
+          "category": "living",
+          "description": "Ăn tối",
+          "date": "2026-08-18",
+          "createdAt": 1782867480000
+        }
+      ],
+      "incomes": [],
+      "transfers": [
+        {
+          "id": "t-44",
+          "dir": "out",
+          "amount": 2000,
+          "date": "2026-08-14",
+          "createdAt": 1782866460000
+        }
+      ]
+    },
+    {
+      "id": "p-sep",
+      "name": "Tháng 9/2026",
+      "start": "2026-09-01",
+      "end": "2026-09-30",
+      "createdAt": 1782867540000,
+      "living": {
+        "max": 4000,
+        "icon": "🍜",
+        "color": "orange"
+      },
+      "goals": [
+        {
+          "id": "g-62",
+          "name": "Nhà ở",
+          "icon": "🏠",
+          "color": "green",
+          "target": 2500,
+          "done": false
+        },
+        {
+          "id": "g-63",
+          "name": "Gia đình",
+          "icon": "👨‍👩‍👧",
+          "color": "violet",
+          "target": 2000,
+          "done": true
+        },
+        {
+          "id": "g-64",
+          "name": "Mua sắm",
+          "icon": "🛍️",
+          "color": "amber",
+          "target": 1000,
+          "done": false
+        },
+        {
+          "id": "g-65",
+          "name": "Đi lại",
+          "icon": "🛵",
+          "color": "blue",
+          "target": 700,
+          "done": false
+        },
+        {
+          "id": "g-66",
+          "name": "Sức khỏe",
+          "icon": "💊",
+          "color": "pink",
+          "target": 600,
+          "done": false
+        }
+      ],
+      "expenses": [
+        {
+          "id": "e-70",
+          "amount": 1954,
+          "category": "g-62",
+          "description": "Tiền nhà",
+          "date": "2026-09-02",
+          "createdAt": 1782867780000
+        },
+        {
+          "id": "e-71",
+          "amount": 1500,
+          "category": "g-63",
+          "description": "Biếu ba mẹ",
+          "date": "2026-09-05",
+          "createdAt": 1782867840000
+        },
+        {
+          "id": "e-72",
+          "amount": 650,
+          "category": "g-64",
+          "description": "Giày",
+          "date": "2026-09-15",
+          "createdAt": 1782867900000
+        },
+        {
+          "id": "e-73",
+          "amount": 180,
+          "category": "g-65",
+          "description": "Đổ xăng",
+          "date": "2026-09-04",
+          "createdAt": 1782867960000
+        },
+        {
+          "id": "e-74",
+          "amount": 175,
+          "category": "g-65",
+          "description": "Sửa xe",
+          "date": "2026-09-12",
+          "createdAt": 1782868020000
+        },
+        {
+          "id": "e-75",
+          "amount": 176,
+          "category": "g-65",
+          "description": "Đổ xăng",
+          "date": "2026-09-21",
+          "createdAt": 1782868080000
+        },
+        {
+          "id": "e-76",
+          "amount": 80,
+          "category": null,
+          "description": "",
+          "date": "2026-09-08",
+          "createdAt": 1782868140000
+        },
+        {
+          "id": "e-77",
+          "amount": 74,
+          "category": null,
+          "description": "",
+          "date": "2026-09-16",
+          "createdAt": 1782868200000
+        },
+        {
+          "id": "e-78",
+          "amount": 80,
+          "category": null,
+          "description": "",
+          "date": "2026-09-24",
+          "createdAt": 1782868260000
+        },
+        {
+          "id": "e-79",
+          "amount": 101,
+          "category": "living",
+          "description": "Ăn sáng",
+          "date": "2026-09-01",
+          "createdAt": 1782868320000
+        },
+        {
+          "id": "e-80",
+          "amount": 130,
+          "category": "living",
+          "description": "Đi chợ",
+          "date": "2026-09-02",
+          "createdAt": 1782868380000
+        },
+        {
+          "id": "e-81",
+          "amount": 118,
+          "category": "living",
+          "description": "Cà phê",
+          "date": "2026-09-03",
+          "createdAt": 1782868440000
+        },
+        {
+          "id": "e-82",
+          "amount": 106,
+          "category": "living",
+          "description": "Ăn trưa",
+          "date": "2026-09-04",
+          "createdAt": 1782868500000
+        },
+        {
+          "id": "e-83",
+          "amount": 135,
+          "category": "living",
+          "description": "Siêu thị",
+          "date": "2026-09-05",
+          "createdAt": 1782868560000
+        },
+        {
+          "id": "e-84",
+          "amount": 123,
+          "category": "living",
+          "description": "Ăn tối",
+          "date": "2026-09-07",
+          "createdAt": 1782868620000
+        },
+        {
+          "id": "e-85",
+          "amount": 111,
+          "category": "living",
+          "description": "Trà sữa",
+          "date": "2026-09-08",
+          "createdAt": 1782868680000
+        },
+        {
+          "id": "e-86",
+          "amount": 140,
+          "category": "living",
+          "description": "Bánh mì",
+          "date": "2026-09-09",
+          "createdAt": 1782868740000
+        },
+        {
+          "id": "e-87",
+          "amount": 128,
+          "category": "living",
+          "description": "Ăn sáng",
+          "date": "2026-09-10",
+          "createdAt": 1782868800000
+        },
+        {
+          "id": "e-88",
+          "amount": 116,
+          "category": "living",
+          "description": "Đi chợ",
+          "date": "2026-09-12",
+          "createdAt": 1782868860000
+        },
+        {
+          "id": "e-89",
+          "amount": 104,
+          "category": "living",
+          "description": "Cà phê",
+          "date": "2026-09-13",
+          "createdAt": 1782868920000
+        },
+        {
+          "id": "e-90",
+          "amount": 133,
+          "category": "living",
+          "description": "Ăn trưa",
+          "date": "2026-09-14",
+          "createdAt": 1782868980000
+        },
+        {
+          "id": "e-91",
+          "amount": 121,
+          "category": "living",
+          "description": "Siêu thị",
+          "date": "2026-09-15",
+          "createdAt": 1782869040000
+        },
+        {
+          "id": "e-92",
+          "amount": 109,
+          "category": "living",
+          "description": "Ăn tối",
+          "date": "2026-09-16",
+          "createdAt": 1782869100000
+        },
+        {
+          "id": "e-93",
+          "amount": 138,
+          "category": "living",
+          "description": "Trà sữa",
+          "date": "2026-09-18",
+          "createdAt": 1782869160000
+        },
+        {
+          "id": "e-94",
+          "amount": 126,
+          "category": "living",
+          "description": "Bánh mì",
+          "date": "2026-09-19",
+          "createdAt": 1782869220000
+        },
+        {
+          "id": "e-95",
+          "amount": 114,
+          "category": "living",
+          "description": "Ăn sáng",
+          "date": "2026-09-20",
+          "createdAt": 1782869280000
+        },
+        {
+          "id": "e-96",
+          "amount": 102,
+          "category": "living",
+          "description": "Đi chợ",
+          "date": "2026-09-21",
+          "createdAt": 1782869340000
+        },
+        {
+          "id": "e-97",
+          "amount": 131,
+          "category": "living",
+          "description": "Cà phê",
+          "date": "2026-09-23",
+          "createdAt": 1782869400000
+        },
+        {
+          "id": "e-98",
+          "amount": 119,
+          "category": "living",
+          "description": "Ăn trưa",
+          "date": "2026-09-24",
+          "createdAt": 1782869460000
+        },
+        {
+          "id": "e-99",
+          "amount": 107,
+          "category": "living",
+          "description": "Siêu thị",
+          "date": "2026-09-25",
+          "createdAt": 1782869520000
+        },
+        {
+          "id": "e-100",
+          "amount": 151,
+          "category": "living",
+          "description": "Ăn tối",
+          "date": "2026-09-26",
+          "createdAt": 1782869580000
+        },
+        {
+          "id": "e-101",
+          "amount": 500,
+          "category": "g-63",
+          "description": "Biếu ba mẹ",
+          "date": "2026-09-28",
+          "createdAt": 1782869640000
+        },
+        {
+          "id": "e-102",
+          "amount": 646,
+          "category": "g-62",
+          "description": "Tiền điện",
+          "date": "2026-09-28",
+          "createdAt": 1782869700000
+        },
+        {
+          "id": "e-103",
+          "amount": 92,
+          "category": "living",
+          "description": "Đi chợ",
+          "date": "2026-09-28",
+          "createdAt": 1782869760000
+        },
+        {
+          "id": "e-104",
+          "amount": 250,
+          "category": "g-64",
+          "description": "Áo khoác",
+          "date": "2026-09-29",
+          "createdAt": 1782869820000
+        },
+        {
+          "id": "e-105",
+          "amount": 318,
+          "category": "g-66",
+          "description": "Khám bệnh",
+          "date": "2026-09-29",
+          "createdAt": 1782869880000
+        },
+        {
+          "id": "e-106",
+          "amount": 35,
+          "category": "living",
+          "description": "Cà phê",
+          "date": "2026-09-30",
+          "createdAt": 1782869940000
+        },
+        {
+          "id": "e-107",
+          "amount": 51,
+          "category": "g-65",
+          "description": "Đổ xăng",
+          "date": "2026-09-30",
+          "createdAt": 1782870000000
+        },
+        {
+          "id": "e-108",
+          "amount": 16,
+          "category": null,
+          "description": "",
+          "date": "2026-09-30",
+          "createdAt": 1782870060000
+        },
+        {
+          "id": "e-109",
+          "amount": 60,
+          "category": "living",
+          "description": "Ăn trưa",
+          "date": "2026-09-30",
+          "createdAt": 1782870120000
+        }
+      ],
+      "incomes": [
+        {
+          "id": "i-67",
+          "amount": 1250,
+          "description": "Còn lại từ tháng trước",
+          "date": "2026-09-01",
+          "createdAt": 1782867600000
+        },
+        {
+          "id": "i-68",
+          "amount": 21750,
+          "description": "Lương tháng 8",
+          "date": "2026-09-05",
+          "createdAt": 1782867660000
+        }
+      ],
+      "transfers": [
+        {
+          "id": "t-69",
+          "dir": "in",
+          "amount": 3000,
+          "date": "2026-09-05",
+          "createdAt": 1782867720000
+        }
+      ]
+    },
+    {
+      "id": "p-oct",
+      "name": "Tháng 10/2026",
+      "start": "2026-10-01",
+      "end": null,
+      "createdAt": 1782870180000,
+      "living": {
+        "max": 4000,
+        "icon": "🍜",
+        "color": "orange"
+      },
+      "goals": [
+        {
+          "id": "g-110",
+          "name": "Nhà ở",
+          "icon": "🏠",
+          "color": "green",
+          "target": 2500,
+          "done": false
+        },
+        {
+          "id": "g-111",
+          "name": "Gia đình",
+          "icon": "👨‍👩‍👧",
+          "color": "violet",
+          "target": 2000,
+          "done": false
+        },
+        {
+          "id": "g-112",
+          "name": "Mua sắm",
+          "icon": "🛍️",
+          "color": "amber",
+          "target": 1000,
+          "done": false
+        },
+        {
+          "id": "g-113",
+          "name": "Đi lại",
+          "icon": "🛵",
+          "color": "blue",
+          "target": 700,
+          "done": false
+        },
+        {
+          "id": "g-114",
+          "name": "Sức khỏe",
+          "icon": "💊",
+          "color": "pink",
+          "target": 600,
+          "done": false
+        }
+      ],
+      "expenses": [
+        {
+          "id": "e-116",
+          "amount": 45,
+          "category": "living",
+          "description": "Ăn sáng",
+          "date": "2026-10-02",
+          "createdAt": 1782870300000
+        },
+        {
+          "id": "e-117",
+          "amount": 50,
+          "category": "g-113",
+          "description": "Đổ xăng",
+          "date": "2026-10-03",
+          "createdAt": 1782870360000
+        },
+        {
+          "id": "e-118",
+          "amount": 150,
+          "category": "living",
+          "description": "Đi chợ",
+          "date": "2026-10-04",
+          "createdAt": 1782870420000
+        }
+      ],
+      "incomes": [
+        {
+          "id": "i-115",
+          "amount": 10500,
+          "description": "Còn lại từ tháng trước",
+          "date": "2026-10-01",
+          "createdAt": 1782870240000
+        }
+      ],
+      "transfers": []
+    }
+  ],
+  "baseSavings": 1000,
+  "userName": "Lan"
+}

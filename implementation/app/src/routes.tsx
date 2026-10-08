@@ -1,5 +1,6 @@
 import { ReactNode } from 'react';
 import { useParams } from 'react-router-dom';
+import { useStore } from './state/store';
 
 /** Placeholder until each screen is built (plan §7 step 3) */
 function Todo({ name }: { name: string }) {
@@ -34,3 +35,16 @@ export const ROUTES: PageRoute[] = [
 ];
 
 export const HOME = <Todo name="2.0. Trang chủ" />;
+export const NAME = <Todo name="1.1. Xin chào! Bạn tên gì?" />;
+
+/** Placeholder 1.0 until step 3; its button already creates (and saves) empty data */
+function WelcomeTodo() {
+  const start = useStore((s) => s.start);
+  return (
+    <div className="page">
+      <div className="hd">1.0. Chào mừng</div>
+      <button className="btn pri" onClick={start}>Bắt đầu mới</button>
+    </div>
+  );
+}
+export const WELCOME = <WelcomeTodo />;

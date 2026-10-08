@@ -2,6 +2,7 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import { VitePWA } from 'vite-plugin-pwa';
+import pkg from './package.json';
 
 export default defineConfig({
   plugins: [
@@ -36,6 +37,8 @@ export default defineConfig({
     }),
   ],
   base: './',
+  // app version in the export envelope (plan §4.6)
+  define: { __APP_VERSION__: JSON.stringify(pkg.version) },
   test: {
     include: ['src/**/*.test.ts'],
     passWithNoTests: true,

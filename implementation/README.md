@@ -12,7 +12,17 @@ Planning and building the **actual product** that will be deployed on the user's
 
 **Status** (run with `npm run dev` in `app/`, launch config `app`, port 5174):
 - §7 step 1 (skeleton) done 2026-10-08: Vite + React + TS app in `app/`, hash routes per page number (placeholders), tokens, PWA config, Vitest.
-- §7 step 2a (domain port) done 2026-10-08: `src/domain/` + tests (47). Next: step 2b, `data/` (zod, repository, migrations, export, tabs), store + autosave, BootError.
+- §7 step 2a (domain port) done 2026-10-08: `src/domain/` + tests (47).
+- §7 step 2b (data layer) done 2026-10-08: `src/data/` (zod, repository with write queue and pre-migration backup, empty migration list, export, tabs, persist), `src/state/` (store, autosave, exportNow), BootError, boot in `main.tsx`; 1.0 placeholder already saves. Tests: 77. Next: step 3, screens in number order.
+
+## Data layer notes (choices the plan left open)
+- **Validation keeps the stored object as is.** zod only checks; it doesn't return its stripped copy, so a field it doesn't know is never silently dropped.
+- **Old tab vs. new app.** `save()` reads the stored `schemaVersion` inside its transaction. If a newer app (in another tab) already migrated the data, the old tab doesn't write and reloads instead, so it picks up the new version.
+- **Other tabs** re-read through the full `load()` (validation included). Taking another tab's data drops this tab's undo toast, because its "before" copy is out of date.
+- **Save failure** toast: "Chưa lưu được dữ liệu". The change stays in memory; the next change saves the whole data again.
+- **Export cancelled** (share sheet closed) doesn't update the 6.0 date. The export toast is "Đã xuất dữ liệu".
+- **IndexedDB unavailable** at boot (e.g. blocked): BootError, with nothing to export.
+- **Fixture** `data/__fixtures__/v1-sample.json` is the fictional sample data (`domain/__fixtures__/sample.ts`) as JSON.
 
 ## Domain port notes (prototype `domain/` → `app/src/domain/`)
 | Prototype | Now | Change |
