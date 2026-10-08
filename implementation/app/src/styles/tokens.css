@@ -1,0 +1,18 @@
+/* Tokens: wireframes/ux/visual-style.md (values as in the accepted prototype) */
+:root {
+  --bg: #f8fafc;
+  --surface: #fff;
+  --text: #0f172a;
+  --muted: #64748b;
+  --border: #e2e8f0;
+  --teal: #0d9488;
+  --teal-d: #0f766e;
+  --teal-l: #e6f6f4;
+  --income: #16a34a;
+  --expense: #e11d48;
+  --col: 430px;
+  --grad-teal: linear-gradient(135deg, #2dd4bf, #0d9488 55%, #0f766e);
+  --grad-violet: linear-gradient(135deg, #a78bfa, #7c3aed 55%, #5b21b6);
+  --grad-amber: linear-gradient(135deg, #fcd34d, #f59e0b 50%, #b45309);
+  --grad-btn: linear-gradient(135deg, #14b8a6, #0f766e);
+}
