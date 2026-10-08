@@ -1,0 +1,12 @@
+# Run from implementation/deploy:  docker-compose up -d --build
+# The host's nginx proxies the HTTPS subdomain to this port (host-nginx.example.conf).
+services:
+  app:
+    build:
+      context: ..
+      dockerfile: deploy/Dockerfile
+    image: luuca792/so-chi-tieu
+    container_name: so-chi-tieu
+    ports:
+      - "${HOST_PORT:-8081}:80"
+    restart: unless-stopped
