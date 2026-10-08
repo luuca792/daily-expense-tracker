@@ -1,6 +1,8 @@
 // R4 per-period calculations, R1.3 order and R7 active period / total wealth. Nothing here is stored.
+import { addDays, differenceInCalendarDays, format, parseISO } from 'date-fns';
+import { todayISO } from './dates';
 import { fundBalance, transferSigned } from './savings';
-import { ColorKey, Data, Expense, LIVING, Period } from './types';
+import { ColorKey, Data, Expense, ISODate, LIVING, Period } from './types';
 
 const sum = (xs: number[]) => xs.reduce((a, b) => a + b, 0);
 
@@ -73,6 +75,26 @@ export function goalSegments(p: Period): Segment[] {
     ...p.goals.map((g) => ({ key: g.id, name: g.name, color: g.color, amount: spentOn(p, g.id) })),
   ];
   return segs.filter((s) => s.amount > 0);
+}
+
+// ---------- 5.3 chart 1 · Sinh hoạt per day ----------
+
+/**
+ * Sinh hoạt spending (incl. untracked, D47) per calendar day of the period.
+ * A closed period runs start → end; the active one runs to today (at least its start day).
+ */
+export function livingPerDay(p: Period, today = todayISO()): { date: ISODate; amount: number }[] {
+  const endDay = p.end ?? (today > p.start ? today : p.start);
+  const days = Math.max(differenceInCalendarDays(parseISO(endDay), parseISO(p.start)) + 1, 1);
+  const sums = new Map<ISODate, number>();
+  for (const e of p.expenses) {
+    const c = categoryOf(p, e);
+    if (c === LIVING || c === null) sums.set(e.date, (sums.get(e.date) ?? 0) + e.amount);
+  }
+  return Array.from({ length: days }, (_, i) => {
+    const date = format(addDays(parseISO(p.start), i), 'yyyy-MM-dd');
+    return { date, amount: sums.get(date) ?? 0 };
+  });
 }
 
 // ---------- R1.3 / R7 ----------

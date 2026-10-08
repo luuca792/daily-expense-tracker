@@ -1,5 +1,6 @@
 // R6 · savings fund. The fund is not stored: it is the base (Số dư ban đầu) plus every transfer of every period.
-import type { Data, Transfer } from './types';
+import { newId } from './ids';
+import type { Data, ISODate, Period, Transfer } from './types';
 
 const sum = (xs: number[]) => xs.reduce((a, b) => a + b, 0);
 const allTransfers = (d: Data) => d.periods.flatMap((p) => p.transfers);
@@ -37,4 +38,35 @@ export function removalAllowed(after: number, current: number) {
 /** R6.6: fund balance if this period were deleted */
 export function fundWithoutPeriod(d: Data, periodId: string) {
   return fundBalance({ ...d, periods: d.periods.filter((p) => p.id !== periodId) });
+}
+
+/** 7.0 list (R6.2): every transfer with its period, newest date first; same date → most recently added first */
+export function transferHistory(d: Data): { t: Transfer; p: Period }[] {
+  return d.periods
+    .flatMap((p) => p.transfers.map((t) => ({ t, p })))
+    .sort((a, b) => (a.t.date !== b.t.date ? (a.t.date < b.t.date ? 1 : -1) : b.t.createdAt - a.t.createdAt));
+}
+
+// ---------- changes (store recipes); a missing period or transfer (deleted in another tab) changes nothing ----------
+
+export interface TransferInput { dir: 'in' | 'out'; amount: number; date: ISODate }
+
+/** 5.10 save. The caller checks transferAllowed first (R6.4). Returns the id, or null. */
+export function saveTransfer(d: Data, periodId: string, input: TransferInput, id?: string, now = Date.now()): string | null {
+  const p = d.periods.find((x) => x.id === periodId);
+  if (!p) return null;
+  if (id === undefined) {
+    const t = { id: newId(), ...input, createdAt: now };
+    p.transfers.push(t);
+    return t.id;
+  }
+  const t = p.transfers.find((x) => x.id === id);
+  if (!t) return null;
+  Object.assign(t, input);
+  return t.id;
+}
+
+export function removeTransfer(d: Data, periodId: string, id: string) {
+  const p = d.periods.find((x) => x.id === periodId);
+  if (p) p.transfers = p.transfers.filter((t) => t.id !== id);
 }
