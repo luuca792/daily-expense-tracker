@@ -15,7 +15,7 @@ export function categoryOf(p: Period, category: string | null) {
   return g ? { name: g.name, icon: g.icon, color: g.color } : null;
 }
 
-export function S5_1_Logging({ p, toggle, open }: { p: Period; toggle: 'exp' | 'inc'; open: (s: SheetState) => void }) {
+export function S5_1_Logging({ p, toggle, open, readOnly }: { p: Period; toggle: 'exp' | 'inc'; open: (s: SheetState) => void; readOnly: boolean }) {
   const d = useData();
   const setToggle = useStore((s) => s.setToggle);
   const large = d.settings.largeFrom;
@@ -31,7 +31,7 @@ export function S5_1_Logging({ p, toggle, open }: { p: Period; toggle: 'exp' | '
       </div>
 
       <div key={toggle} className="stagger">
-      {toggle === 'inc' && (
+      {toggle === 'inc' && !readOnly && (
         <button className="savebtn" onClick={() => open({ k: 'transfer' })}>
           <span className="pig">🐷</span>
           <span style={{ flex: 1 }}><div className="t1">Gửi tiết kiệm</div><div className="t2">Quỹ {money(fundBalance(d))}</div></span>

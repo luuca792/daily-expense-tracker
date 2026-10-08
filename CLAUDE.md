@@ -2,21 +2,24 @@
 
 A web app that replaces the user's Excel spending workbook (`references/personal-fund.xlsx`, personal data, **never copy names or figures from it into the app or docs**).
 - Vietnamese UI, mobile-first.
-- Installable web app (PWA, D55): a static site with no backend that installs from the browser and works offline. Data lives only on the device (IndexedDB), so even the server owner can't see it. No backup/export for now; losing the phone loses the data, and that's accepted (D56).
+- Installable web app (PWA, D55): a static site with no backend that installs from the browser and works offline. Data lives only on the device (IndexedDB), so even the server owner can't see it. Losing the phone loses the data (D56), so the real app ships a JSON export in its first release (import comes later; see `implementation/plan.md` §4.6).
 - It will be deployed on the user's server for friends too.
 
 ## Repo layout (each phase has its own folder; see the README in each)
 - `wireframes/`: **design phase** (closed 2026-10-06, frozen). Use cases, UX docs, wireframes, screen specs, logic rules, decisions D1–D62. Read it for background; don't edit it.
 - `prototype/`: **current phase**. A clickable draft that runs locally. `README.md` holds the working mode, `screens.md` the screen map, `changes.md` the change log; the code is in `prototype/app/`.
-- `implementation/`: the real product. `plan.md` is an outline; the code goes in `implementation/app/`, and deploy config in `implementation/deploy/`.
+- `implementation/`: the real product, a **new app** built from scratch. `plan.md` holds the architecture, code layout and data/storage plan; the code goes in `implementation/app/`, and deploy config in `implementation/deploy/`. Everything in `prototype/` is only the prototype: use it as a reference, never import from it, and port code only file by file after review.
 - Root: `README.md` (map), `plan.md` (the user's original brief, don't edit), `references/` (Excel, personal data).
 
-## Current phase: PROTOTYPE (forward only)
-We refine the prototype in `prototype/app/` in small steps, one user request at a time. See `prototype/README.md` → "Working mode".
-- **Change the prototype directly.** Never go back to update `wireframes/` (html, specs, registry, decisions, logic rules); the user considers it wasted effort. Where the two differ, the prototype wins.
-- **Screens are named by number** from `prototype/screens.md` (e.g. "5.2", "7.1"). Look up the number there to find the file.
-- **Log each change** as one row in `prototype/changes.md`.
-- After code changes: `npx tsc --noEmit` in `prototype/app` (and `npm run build` to refresh `dist/`).
+## Current phase: IMPLEMENTATION (from 2026-10-08)
+The prototype is accepted as the base. Build the real app in `implementation/app/` following `implementation/plan.md` (build order in §7; the data layer comes before any screen).
+- **Behavior comes from the prototype:** `prototype/screens.md`, `prototype/changes.md`, the prototype's `domain/` code, and `implementation/plan.md` §2.5 (rules changed after the design phase). Where they differ from `wireframes/`, the prototype wins. Never update `wireframes/`.
+- **Screens are named by number** from `prototype/screens.md` (e.g. "5.2", "7.1").
+- **Data format is precious:** follow plan §3–4; any change to `data/schema/` needs a migration step, a fixture and tests (plan §5).
+- After code changes: `npx tsc --noEmit` and `npm test` in `implementation/app`.
+
+## Prototype (reference, kept runnable)
+`prototype/app/`, the clickable draft: `npm run dev -- --host` there. If the prototype itself is changed, log one row per change in `prototype/changes.md` and run `npx tsc --noEmit` and `npm run build` there.
 
 ## Background (read when a request needs it)
 1. `prototype/screens.md` and `prototype/changes.md`: current state.

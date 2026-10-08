@@ -1,7 +1,7 @@
 import { ReactNode, useRef } from 'react';
 import { HashRouter, Navigate, Route, Routes, useLocation } from 'react-router-dom';
 import { Toast } from './components/ui';
-import { S1_0_Welcome } from './screens/S1_0_Welcome';
+import { S1_0_Welcome, S1_1_YourName } from './screens/S1_0_Welcome';
 import { S2_0_Home } from './screens/S2_0_Home';
 import { S3_0_Overview } from './screens/S3_0_Overview';
 import { S4_0_Periods } from './screens/S4_0_Periods';
@@ -10,9 +10,10 @@ import { S6_0_Settings } from './screens/S6_0_Settings';
 import { S7_0_Savings } from './screens/S7_0_Savings';
 import { useStore } from './store/store';
 
+/** Pages after 2.0 need data and a display name; otherwise back to / (1.0 or 1.1) */
 function Guard({ children }: { children: ReactNode }) {
-  const hasData = useStore((s) => s.data !== null);
-  return hasData ? <>{children}</> : <Navigate to="/" replace />;
+  const ready = useStore((s) => s.data !== null && s.data.userName !== null);
+  return ready ? <>{children}</> : <Navigate to="/" replace />;
 }
 
 /** Screen depth: going deeper slides in from the right, going back from the left */
@@ -21,6 +22,7 @@ const depth = (path: string) =>
 
 function AnimatedRoutes() {
   const hasData = useStore((s) => s.data !== null);
+  const hasName = useStore((s) => s.data?.userName != null);
   const loc = useLocation();
   // 5.0 tabs share one page: switching tabs is not a page transition
   const key = loc.pathname.replace(/^(\/p\/[^/]+)\/.*$/, '$1');
@@ -32,7 +34,7 @@ function AnimatedRoutes() {
   return (
     <div key={key} className={`route route-${prev.current.dir}`}>
       <Routes location={loc}>
-          <Route path="/" element={hasData ? <S2_0_Home /> : <S1_0_Welcome />} />
+          <Route path="/" element={!hasData ? <S1_0_Welcome /> : !hasName ? <S1_1_YourName /> : <S2_0_Home />} />
           <Route path="/overview" element={<Guard><S3_0_Overview /></Guard>} />
           <Route path="/periods" element={<Guard><S4_0_Periods /></Guard>} />
           <Route path="/p/:id/:tab" element={<Guard><S5_0_PeriodDetail /></Guard>} />

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Header } from '../components/ui';
+import { CalendarIcon, Header } from '../components/ui';
 import { activePeriod, chi, entryCount, thu } from '../domain/calc';
 import { todayISO } from '../domain/entries';
 import { fmtDate, money } from '../domain/format';
@@ -43,7 +43,7 @@ export function S4_0_Periods() {
               const t = thu(p);
               return (
                 <button key={p.id} className={`mcard period ${p.id === active?.id ? 'now' : ''}`} onClick={() => nav(`/p/${p.id}/log`)}>
-                  <span className="mnum">{p.icon ?? '🗓'}</span>
+                  <span className="mnum"><CalendarIcon /></span>
                   <span className="body">
                     <div className="name">{p.name}</div>
                     <PeriodDates p={p} />

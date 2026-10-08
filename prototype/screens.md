@@ -5,11 +5,14 @@ Use these numbers in requests, e.g. "5.2: make the goal cards smaller". The numb
 | # | Name | Vietnamese (on screen) | Type | How to open | File (`app/src/screens/`) |
 |---|---|---|---|---|---|
 | **1.0.** | Welcome | Chào mừng | Page | `?seed=empty` | `S1_0_Welcome.tsx` |
-| **2.0.** | Home | Bạn muốn làm gì? | Page | `#/` (with data) | `S2_0_Home.tsx` |
+| 1.1. | Your Name | Xin chào! Bạn tên gì? | Page | `#/` with data but no name (after 1.0 Bắt đầu mới) | `S1_0_Welcome.tsx` (`S1_1_YourName`) |
+| **2.0.** | Home | Xin chào, (name) 👋 · Bạn muốn làm gì? | Page | `#/` (with data and a name) | `S2_0_Home.tsx` |
+| 2.1. | Edit Name | Đổi tên | Sheet | 2.0 → ✎ next to the name | `S2_0_Home.tsx` (`S2_1_NameSheet`) |
 | **3.0.** | Overview | Tổng quan | Page | 2.0 → Tổng quan | `S3_0_Overview.tsx` |
 | **4.0.** | Periods | Ghi chép | Page | 2.0 → Ghi chép | `S4_0_Periods.tsx` |
-| 4.1. | Create / Edit Period | Tạo kỳ mới / Sửa kỳ | Sheet | 4.0 ＋, or 5.0 ⋯ → Sửa kỳ | `S4_1_PeriodSheet.tsx` |
+| 4.1. | Create / Edit Period | Tạo kỳ mới / Sửa kỳ | Sheet | 4.0 ＋, or 5.0 ⋯ → Sửa kỳ (active period only) | `S4_1_PeriodSheet.tsx` |
 | 4.2. | Delete Period | Xóa kỳ “…”? | Dialog | 5.0 ⋯ → Xóa kỳ, or 4.1 → Xóa kỳ | `S5_0_PeriodDetail.tsx` (`S4_2_DeletePeriod`) |
+| 4.3. | Close Period | Đóng kỳ “…”? | Dialog | 4.1 Tạo kỳ, when an active period exists | `S4_1_PeriodSheet.tsx` (`S4_3_ClosePeriod`) |
 | **5.0.** | Period Detail | (period name) | Page, bottom bar | 4.0 → a period card | `S5_0_PeriodDetail.tsx` |
 | 5.1. | Logging | tab Ghi chép (Chi tiêu / Thu nhập) | Tab | 5.0 bottom bar | `S5_1_Logging.tsx` |
 | 5.2. | Goals | tab Mục tiêu | Tab | 5.0 bottom bar | `S5_2_Goals.tsx` |

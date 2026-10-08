@@ -59,6 +59,26 @@ export function Dialog({ onClose, children }: { onClose: () => void; children: R
   );
 }
 
+/** Pencil for "edit" buttons (2.0 name): drawn in currentColor */
+export function PencilIcon() {
+  return (
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <path d="M4 20h4L19 9l-4-4L4 16v4z" />
+      <path d="M13.5 6.5l4 4" />
+    </svg>
+  );
+}
+
+/** Period tile icon (4.0, 3.0): a drawn calendar in the tile's text color, so it keeps contrast on any tile */
+export function CalendarIcon() {
+  return (
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true">
+      <rect x="3.5" y="5" width="17" height="15.5" rx="2.5" />
+      <path d="M3.5 10h17M8 3v4M16 3v4" />
+    </svg>
+  );
+}
+
 /** strong: tile tinted with the solid color at ~33% alpha instead of the pale bg (5.2 goal list) */
 export function Ico({ icon, color, size = 'sm', strong }: { icon: string; color: ColorKey | null; size?: 'sm' | 'md' | 'lg'; strong?: boolean }) {
   if (color === null) return <i className={`ico ${size} none`}>?</i>;

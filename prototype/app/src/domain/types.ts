@@ -51,7 +51,6 @@ export interface Transfer {
 export interface Period {
   id: string;
   name: string;
-  icon?: string;
   start: ISODate;
   end: ISODate | null;
   createdAt: number;
@@ -72,12 +71,21 @@ export interface Data {
   settings: Settings;
   periods: Period[];
   baseSavings: number | null; // R6.7
+  /** Display name shown on 2.0; null until asked on 1.1 (first start) */
+  userName: string | null;
 }
 
 export const DEFAULT_SETTINGS: Settings = { livingMax: 4000, largeFrom: 200 };
 
 export function emptyData(): Data {
-  return { schemaVersion: 1, settings: { ...DEFAULT_SETTINGS }, periods: [], baseSavings: null };
+  return { schemaVersion: 1, settings: { ...DEFAULT_SETTINGS }, periods: [], baseSavings: null, userName: null };
+}
+
+/** Display name: trimmed, at most NAME_MAX characters; empty → null (the caller keeps the old name) */
+export const NAME_MAX = 30;
+export function cleanName(raw: string): string | null {
+  const n = raw.trim().slice(0, NAME_MAX);
+  return n === '' ? null : n;
 }
 
 export function uid(): string {

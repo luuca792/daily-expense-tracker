@@ -61,7 +61,7 @@ function dalat(): Period {
     exp('2026-08-14', 1200, hotel.id, 'Khách sạn'), exp('2026-08-15', 100, null), exp('2026-08-17', 80, null),
     ...fillers(14, 1820, '2026-08-14', 5),
   ];
-  return { id: 'p-dalat', name: 'Du lịch Đà Lạt', icon: '✈️', start: '2026-08-14', end: '2026-08-18', createdAt, living: { ...living, max: 2000 }, goals: [hotel], expenses, incomes: [], transfers };
+  return { id: 'p-dalat', name: 'Du lịch Đà Lạt', start: '2026-08-14', end: '2026-08-18', createdAt, living: { ...living, max: 2000 }, goals: [hotel], expenses, incomes: [], transfers };
 }
 
 function september(): Period {
@@ -112,5 +112,5 @@ export function demoData(): Data {
   const dl = dalat();
   const sep = september();
   const oct = october(sep);
-  return { schemaVersion: 1, settings: { ...DEFAULT_SETTINGS }, periods: [jul, dl, sep, oct], baseSavings: 1000 };
+  return { schemaVersion: 1, settings: { ...DEFAULT_SETTINGS }, periods: [jul, dl, sep, oct], baseSavings: 1000, userName: 'Lan' };
 }

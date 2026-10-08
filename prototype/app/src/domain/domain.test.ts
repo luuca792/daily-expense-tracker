@@ -5,7 +5,9 @@ import {
   removalAllowed, reserve, shares, soDu, sortPeriods, spentOn, thu, transferAllowed, wealth,
 } from './calc';
 import { defaultDate, groupByDay } from './entries';
-import { buildPeriod, carryOver, defaultPrevious, entriesOutside, yearGroups } from './periods';
+import {
+  buildPeriod, carryOver, closesActive, closingEnd, createPeriod, deletePeriod, entriesOutside, normalizePeriods, yearGroups,
+} from './periods';
 import { DEFAULT_SETTINGS, Period } from './types';
 
 const data = demoData();
@@ -22,8 +24,8 @@ describe('seed matches sample-data.md', () => {
   });
   it('Tháng 9 summary (R4)', () => {
     expect(soDu(sep)).toBe(10500);
-    expect(reserve(sep)).toBe(400);
-    expect(conLai(sep)).toBe(10100);
+    expect(reserve(sep)).toBe(500); // Nhà ở is 100 over; the other goals still need 500
+    expect(conLai(sep)).toBe(10000);
     expect(livingSpent(sep)).toEqual({ categorized: 2850, untracked: 250, total: 3100 });
     expect(sep.expenses.length).toBe(40);
     expect(livingCount(sep)).toBe(29);
@@ -35,10 +37,15 @@ describe('seed matches sample-data.md', () => {
 });
 
 describe('R4 reserve', () => {
-  it('marking an overspent goal done raises the reserve of the others', () => {
+  it('overspending one goal does not lower the others', () => {
     const p = structuredClone(sep);
-    p.goals[0].done = true; // Nhà ở 2.600 / 2.500
+    p.goals[0].target = 1; // Nhà ở far over target
     expect(reserve(p)).toBe(500);
+  });
+  it('a done goal reserves nothing', () => {
+    const p = structuredClone(sep);
+    p.goals[1].done = true;
+    expect(reserve(p)).toBe(500 - Math.max(p.goals[1].target - spentOn(p, p.goals[1].id), 0));
   });
   it('never below 0', () => {
     const p = structuredClone(sep);
@@ -63,10 +70,47 @@ describe('R1 periods', () => {
   it('R1.1 year groups', () => {
     expect(yearGroups(data.periods).map((g) => g.year)).toEqual([2026]);
   });
-  it('R1.6 nearest previous period, tie → earlier', () => {
-    expect(defaultPrevious(data.periods, '2026-11-01')!.id).toBe('p-oct');
-    expect(defaultPrevious(data.periods, '2026-08-23')!.id).toBe('p-dalat'); // 9 days vs 9 days → earlier
-    expect(defaultPrevious([], '2026-11-01')).toBeNull();
+  it('create closes the active period and carries its Số dư over', () => {
+    const dd = structuredClone(data);
+    const p = createPeriod(dd, { name: 'Tháng 11/2026', start: '2026-11-01' });
+    expect(dd.periods.find((x) => x.id === 'p-oct')!.end).toBe('2026-10-31');
+    expect(activePeriod(dd)!.id).toBe(p.id);
+    expect(p.end).toBeNull();
+    expect(p.incomes[0].amount).toBe(10255);
+  });
+  it('closing end is never before the last entry or the start', () => {
+    const oct = get('p-oct');
+    const last = [...oct.expenses, ...oct.incomes].map((e) => e.date).sort().at(-1)!;
+    expect(closingEnd(oct, last)).toBe(last); // new period starts on the day of the last entry
+    expect(closingEnd({ ...oct, expenses: [], incomes: [] }, '2026-10-01')).toBe('2026-10-01');
+  });
+  it('a past start date closes nothing; the mistake can be undone by re-dating', () => {
+    const dd = structuredClone(data);
+    expect(closesActive(dd, '2026-09-15')).toBe(false);
+    expect(closesActive(dd, '2026-10-01')).toBe(true);
+    const p = createPeriod(dd, { name: 'x', start: '2026-09-15' });
+    expect(activePeriod(dd)!.id).toBe('p-oct');
+    expect(dd.periods.find((x) => x.id === 'p-oct')!.end).toBeNull();
+    expect(p.end).toBe('2026-09-30'); // closed before Tháng 10 starts
+    // editing the active period's start to before Tháng 9 flips the active period, and back again
+    const oct = dd.periods.find((x) => x.id === 'p-oct')!;
+    oct.start = '2026-08-31';
+    normalizePeriods(dd);
+    expect(activePeriod(dd)!.id).toBe(p.id);
+    expect(p.end).toBeNull();
+    oct.start = '2026-10-01';
+    normalizePeriods(dd);
+    expect(activePeriod(dd)!.id).toBe('p-oct');
+    expect(oct.end).toBeNull();
+  });
+  it('deleting the active period reopens the one before it', () => {
+    const dd = structuredClone(data);
+    deletePeriod(dd, 'p-oct');
+    expect(activePeriod(dd)!.id).toBe('p-sep');
+    expect(activePeriod(dd)!.end).toBeNull();
+    const dd2 = structuredClone(data);
+    deletePeriod(dd2, 'p-dalat'); // a past period: nothing reopens
+    expect(dd2.periods.find((x) => x.id === 'p-sep')!.end).toBe('2026-09-30');
   });
   it('R1.8 carry-over, copied goals not done', () => {
     expect(carryOver(get('p-oct'))).toBe(10255);
@@ -118,6 +162,9 @@ describe('R6 fund and R7 wealth', () => {
     expect(transferAllowed(-500, -500, 'out', 1)).toBe(false);
     expect(transferAllowed(-500, -500, 'in', 100)).toBe(true); // raises a negative fund
     expect(transferAllowed(-100, 400, 'in', 50)).toBe(false); // lowering a deposit below 0
+    // fund −3.000 after the base was deleted; the withdrawal of 3.000 is edited
+    expect(transferAllowed(0, -3000, 'out', 1000)).toBe(true); // lowered: fund rises to −1.000
+    expect(transferAllowed(0, -3000, 'out', 4000)).toBe(false); // raised: fund drops to −4.000
     expect(removalAllowed(-1, 3000)).toBe(false);
   });
   it('R7.2 total wealth and shares', () => {
@@ -125,5 +172,16 @@ describe('R6 fund and R7 wealth', () => {
     expect([w.fund, w.balance, w.total]).toEqual([6000, 10255, 16255]);
     expect(w.shares).toEqual([37, 63]);
     expect(shares(100, -5)).toBeNull();
+    expect(shares(1, 1000)).toEqual([1, 99]); // never 0% while both parts > 0
+    expect(shares(1000, 1)).toEqual([99, 1]);
+  });
+});
+
+describe('display name', () => {
+  it('trimmed, max 30 characters; empty → null so the old name stays', async () => {
+    const { cleanName } = await import('./types');
+    expect(cleanName('  Lan  ')).toBe('Lan');
+    expect(cleanName('   ')).toBeNull();
+    expect(cleanName('a'.repeat(40))).toHaveLength(30);
   });
 });

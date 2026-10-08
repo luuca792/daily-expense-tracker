@@ -31,10 +31,12 @@ export function livingSpent(p: Period) {
 
 export const livingCount = (p: Period) => countOn(p, LIVING) + countOn(p, null);
 
-/** R4 Dự trữ: max(Σ targets − Σ spent, 0) over goals not done; Sinh hoạt excluded (D36, D59, D61) */
+/**
+ * R4 Dự trữ: Σ max(target − spent, 0) per goal not done; Sinh hoạt excluded (D36, D59, D61).
+ * Per goal (changed 2026-10-08): overspending one goal no longer lowers what the others still need.
+ */
 export function reserve(p: Period) {
-  const open = p.goals.filter((g) => !g.done);
-  return Math.max(sum(open.map((g) => g.target)) - sum(open.map((g) => spentOn(p, g.id))), 0);
+  return sum(p.goals.filter((g) => !g.done).map((g) => Math.max(g.target - spentOn(p, g.id), 0)));
 }
 
 /** R4 Còn lại = Số dư − Dự trữ */
@@ -78,12 +80,12 @@ export function fundBalance(d: Data, excludeTransferId?: string) {
 
 /**
  * R6.4: is saving this transfer allowed? `without` = fund balance without the edited entry.
- * A withdrawal may not exceed it. A deposit may not leave the fund below 0 when it lowers it.
+ * Allowed if the fund after saving is ≥ 0, or not lower than now (it can be below 0 after the base
+ * savings is lowered or deleted, R6.7; any edit that raises it is then allowed).
  */
 export function transferAllowed(without: number, current: number, dir: 'in' | 'out', amount: number) {
-  if (dir === 'out') return amount <= without;
-  const after = without + amount;
-  return after >= 0 || after >= current;
+  const after = without + (dir === 'in' ? amount : -amount);
+  return removalAllowed(after, current);
 }
 
 /** R6.4 / R6.6: may an existing transfer (or a whole period's transfers) be removed? */
@@ -111,7 +113,8 @@ export const activePeriod = (d: Data): Period | null => sortPeriods(d.periods)[0
 /** R7.2: whole-percent shares that add up to 100; only when both parts > 0 */
 export function shares(a: number, b: number): [number, number] | null {
   if (a <= 0 || b <= 0) return null;
-  const pa = Math.round((a / (a + b)) * 100);
+  // kept within 1–99 so a part that is > 0 never shows as 0%
+  const pa = Math.min(99, Math.max(1, Math.round((a / (a + b)) * 100)));
   return [pa, 100 - pa];
 }
 

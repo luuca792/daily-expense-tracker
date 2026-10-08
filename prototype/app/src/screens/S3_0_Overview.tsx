@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import { Header } from '../components/ui';
+import { CalendarIcon, Header } from '../components/ui';
 import { wealth } from '../domain/calc';
 import { money } from '../domain/format';
 import { useData } from '../store/store';
@@ -38,7 +38,7 @@ export function S3_0_Overview() {
           <>
             <div className="sec-lbl">Kỳ đang theo dõi</div>
             <button className="mcard" style={{ borderLeft: '5px solid #14b8a6' }} onClick={() => nav(`/p/${w.period!.id}/log`)}>
-              <span className="mnum">{w.period.icon ?? '🗓'}</span>
+              <span className="mnum"><CalendarIcon /></span>
               <span className="body">
                 <div className="name">{w.period.name}</div>
                 <PeriodDates p={w.period} />

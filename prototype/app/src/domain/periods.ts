@@ -1,5 +1,5 @@
-import { differenceInCalendarDays, parseISO } from 'date-fns';
-import { soDu, sortPeriods } from './calc';
+import { addDays, format, parseISO } from 'date-fns';
+import { activePeriod, soDu, sortPeriods } from './calc';
 import { Data, ISODate, LIVING, Period, Settings, uid } from './types';
 
 export const CARRY_OVER_TEXT = 'Còn lại từ tháng trước';
@@ -19,23 +19,6 @@ export function yearGroups(periods: Period[]) {
 export function defaultOpenYear(years: number[], today: ISODate) {
   const cur = Number(today.slice(0, 4));
   return years.includes(cur) ? cur : years[0];
-}
-
-/**
- * R1.6 (D61): the period whose start is closest to the new start.
- * Tie → the earlier one; still tied → the most recently created.
- */
-export function defaultPrevious(periods: Period[], start: ISODate | null): Period | null {
-  if (periods.length === 0) return null;
-  if (!start) return sortPeriods(periods)[0];
-  const s = parseISO(start);
-  return [...periods].sort((a, b) => {
-    const da = Math.abs(differenceInCalendarDays(parseISO(a.start), s));
-    const db = Math.abs(differenceInCalendarDays(parseISO(b.start), s));
-    if (da !== db) return da - db;
-    if (a.start !== b.start) return a.start < b.start ? -1 : 1;
-    return b.createdAt - a.createdAt;
-  })[0];
 }
 
 /** R1.8: the carry-over amount (0 → no entry) */
@@ -67,6 +50,47 @@ export function buildPeriod(
     transfers: [],
   };
 }
+
+const shift = (date: ISODate, days: number) => format(addDays(parseISO(date), days), 'yyyy-MM-dd');
+
+/** Closing a period: end = the day before the new start, but never before its last entry or its own start */
+export function closingEnd(p: Period, newStart: ISODate): ISODate {
+  const last = [...p.expenses, ...p.incomes, ...p.transfers].reduce((m, e) => (e.date > m ? e.date : m), p.start);
+  const dayBefore = shift(newStart, -1);
+  return dayBefore > last ? dayBefore : last;
+}
+
+/**
+ * After any create / edit / delete of a period (2026-10-08): the active period (R7.1, newest start)
+ * is open (no end), and any other period still open is closed before the next newer period starts.
+ * Dates are free, so this keeps a mistake correctable: re-dating a period back flips everything back.
+ */
+export function normalizePeriods(d: Data) {
+  sortPeriods(d.periods).forEach((p, i, sorted) => {
+    if (i === 0) p.end = null;
+    else if (p.end === null) p.end = closingEnd(p, sorted[i - 1].start);
+  });
+}
+
+/** Create a period: carries over the active period's Số dư (R1.8); a newer start closes the active period */
+export function createPeriod(d: Data, input: { name: string; start: ISODate }, now = Date.now()): Period {
+  const p = buildPeriod({ ...input, end: null }, activePeriod(d), d.settings, now);
+  d.periods.push(p);
+  normalizePeriods(d);
+  return p;
+}
+
+/** Delete a period; if it was the active one, the next one becomes active and is reopened */
+export function deletePeriod(d: Data, id: string) {
+  d.periods = d.periods.filter((p) => p.id !== id);
+  normalizePeriods(d);
+}
+
+/** True when a period starting on `start` would become the active one (and so close the current one, 4.3) */
+export const closesActive = (d: Data, start: ISODate) => {
+  const a = activePeriod(d);
+  return !!a && start >= a.start;
+};
 
 /** R1.5 / R3.5: entries that would fall outside new dates */
 export function entriesOutside(p: Period, start: ISODate, end: ISODate | null) {

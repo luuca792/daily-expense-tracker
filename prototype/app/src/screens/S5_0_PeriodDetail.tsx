@@ -2,9 +2,9 @@ import { useRef, useState } from 'react';
 import { Navigate, useNavigate, useParams } from 'react-router-dom';
 import { useGhostExit } from '../components/motion';
 import { AnimMoney, Dialog, Header } from '../components/ui';
-import { chi, conLai, fundWithoutPeriod, fundBalance, removalAllowed, soDu, thu } from '../domain/calc';
+import { activePeriod, chi, conLai, fundWithoutPeriod, fundBalance, removalAllowed, soDu, thu } from '../domain/calc';
 import { headerDates, signed } from '../domain/format';
-import { findPeriod } from '../domain/periods';
+import { deletePeriod, findPeriod } from '../domain/periods';
 import { Period } from '../domain/types';
 import { useData, useStore } from '../store/store';
 import { S4_1_PeriodSheet } from './S4_1_PeriodSheet';
@@ -62,9 +62,12 @@ export function S5_0_PeriodDetail() {
 
   const dates = headerDates(p.start, p.end);
   const close = () => setSheet(null);
+  // Only the active period (R7.1) can be changed; older periods are history: no ＋, no Gửi tiết kiệm,
+  // entries and goals can't be opened, and the period can't be edited (no Sửa kỳ). Xóa kỳ stays.
+  const readOnly = activePeriod(d)?.id !== p.id;
 
   // R5: the ＋ action depends on the tab and the toggle
-  const plus = tab === 'log' ? () => setSheet({ k: toggle === 'exp' ? 'expense' : 'income' })
+  const plus = readOnly ? null : tab === 'log' ? () => setSheet({ k: toggle === 'exp' ? 'expense' : 'income' })
     : tab === 'goals' ? () => setSheet({ k: 'goal' }) : null;
 
   return (
@@ -82,7 +85,7 @@ export function S5_0_PeriodDetail() {
               <>
                 <div className="menu-catch" onClick={() => setMenu(false)} />
                 <div className="menu">
-                  <button onClick={() => { setMenu(false); setSheet({ k: 'edit-period' }); }}>Sửa kỳ</button>
+                  {!readOnly && <button onClick={() => { setMenu(false); setSheet({ k: 'edit-period' }); }}>Sửa kỳ</button>}
                   <button className="red" onClick={() => { setMenu(false); setSheet({ k: 'delete-period' }); }}>Xóa kỳ</button>
                 </div>
               </>
@@ -92,8 +95,8 @@ export function S5_0_PeriodDetail() {
       />
       <div className="page with-bar">
         <SummaryCard p={p} />
-        <div key={tab} className={`tab-in ${lastTab.current.dir}`}>
-          {tab === 'log' && <S5_1_Logging p={p} toggle={toggle} open={setSheet} />}
+        <div key={tab} className={`tab-in ${lastTab.current.dir}${readOnly ? ' ro' : ''}`}>
+          {tab === 'log' && <S5_1_Logging p={p} toggle={toggle} open={setSheet} readOnly={readOnly} />}
           {tab === 'goals' && <S5_2_Goals p={p} open={setSheet} />}
           {tab === 'stats' && <S5_3_Statistics p={p} />}
         </div>
@@ -141,7 +144,7 @@ function S4_2_DeletePeriod({ p, onClose }: { p: Period; onClose: () => void }) {
         <button className="btn" onClick={onClose}>Hủy</button>
         <button className="btn danger" disabled={!allowed} onClick={() => {
           nav('/periods', { replace: true });
-          updateWithUndo('Đã xóa kỳ', (dd) => { dd.periods = dd.periods.filter((x) => x.id !== p.id); });
+          updateWithUndo('Đã xóa kỳ', (dd) => deletePeriod(dd, p.id));
         }}>Xóa</button>
       </div>
     </Dialog>
