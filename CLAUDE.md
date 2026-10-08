@@ -17,6 +17,7 @@ The prototype is accepted as the base. Build the real app in `implementation/app
 - **Screens are named by number** from `prototype/screens.md` (e.g. "5.2", "7.1").
 - **Data format is precious:** follow plan §3–4; any change to `data/schema/` needs a migration step, a fixture and tests (plan §5).
 - After code changes: `npx tsc --noEmit` and `npm test` in `implementation/app`.
+- **Changelog:** every change to the real app (or its deploy) gets a line in `implementation/CHANGELOG.md` (Keep a Changelog), under the newest version block, committed together with the change. A new version block appears only when the version in `implementation/app/package.json` is bumped.
 
 ## Prototype (reference, kept runnable)
 `prototype/app/`, the clickable draft: `npm run dev -- --host` there. If the prototype itself is changed, log one row per change in `prototype/changes.md` and run `npx tsc --noEmit` and `npm run build` there.

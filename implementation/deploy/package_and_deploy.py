@@ -1,6 +1,6 @@
 """Double-click (or `npm run package-and-deploy` in app/) to release the version in app/package.json.
 
-1. Checks: on main, nothing uncommitted, and the tag is free (or already on this commit).
+1. Checks that the repo is on main. Uncommitted and untracked files are ignored: the tag is the last commit.
 2. Tags the repo with the version (annotated, no "v", like 1.0.0) and pushes main and the tag to origin.
 3. Runs build_and_push.py: docker-compose build, then push luuca792/expense-tracker:<version> to Docker Hub.
 
@@ -11,6 +11,7 @@ import os
 import subprocess
 import sys
 
+sys.dont_write_bytecode = True  # no __pycache__/ next to the scripts
 import build_and_push  # same folder; reads VERSION from app/package.json
 
 VERSION = build_and_push.VERSION
@@ -24,9 +25,6 @@ def git(*args):
 def tag_and_push():
     if git("branch", "--show-current").stdout.strip() != "main":
         print("Not on main, nothing was done.")
-        return False
-    if git("status", "--porcelain").stdout.strip():
-        print("Uncommitted changes, commit them first. Nothing was done.")
         return False
     head = git("rev-parse", "HEAD").stdout.strip()
     tagged = git("rev-parse", "--verify", "--quiet", f"refs/tags/{VERSION}^{{commit}}").stdout.strip()
