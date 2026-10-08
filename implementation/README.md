@@ -13,7 +13,8 @@ Planning and building the **actual product** that will be deployed on the user's
 **Status** (run with `npm run dev` in `app/`, launch config `app`, port 5174):
 - §7 step 1 (skeleton) done 2026-10-08: Vite + React + TS app in `app/`, hash routes per page number (placeholders), tokens, PWA config, Vitest.
 - §7 step 2a (domain port) done 2026-10-08: `src/domain/` + tests (47).
-- §7 step 2b (data layer) done 2026-10-08: `src/data/` (zod, repository with write queue and pre-migration backup, empty migration list, export, tabs, persist), `src/state/` (store, autosave, exportNow), BootError, boot in `main.tsx`; 1.0 placeholder already saves. Tests: 77. Next: step 3, screens in number order.
+- §7 step 2b (data layer) done 2026-10-08: `src/data/` (zod, repository with write queue and pre-migration backup, empty migration list, export, tabs, persist), `src/state/` (store, autosave, exportNow), BootError, boot in `main.tsx`; 1.0 placeholder already saves. Tests: 77.
+- §7 step 3 (screens) started 2026-10-08. Done: 1.0, 1.1, 2.0, 2.1; shared Header, Sheet + Field, Dialog, Toast (Hoàn tác only when undoable), icons, motion; page-slide transitions; prototype CSS ported into `styles/base.css` + `components.css`. Placeholders (with back button): 3.0, 4.0, 5.0, 6.0, 7.0. Next: 3.0 Overview.
 
 ## Data layer notes (choices the plan left open)
 - **Validation keeps the stored object as is.** zod only checks; it doesn't return its stripped copy, so a field it doesn't know is never silently dropped.

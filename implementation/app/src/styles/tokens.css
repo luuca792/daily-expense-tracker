@@ -16,3 +16,6 @@
   --grad-amber: linear-gradient(135deg, #fcd34d, #f59e0b 50%, #b45309);
   --grad-btn: linear-gradient(135deg, #14b8a6, #0f766e);
 }
+
+/* motion */
+:root { --ease-out: cubic-bezier(.2, .85, .25, 1); --ease-spring: cubic-bezier(.3, 1.35, .5, 1); }
