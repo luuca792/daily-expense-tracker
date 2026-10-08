@@ -55,7 +55,7 @@ export function S5_6_GoalSheet({ p, id, onClose, onCreated, stack }: {
           <div style={{ flex: 1 }}>
             <Field label="Tên danh mục">
               {isLiving ? <div className="input ro">Sinh hoạt</div>
-                : <input className="input" value={name} autoFocus={creating} onChange={(e) => setName(e.target.value)} />}
+                : <input enterKeyHint="done" className="input" value={name} autoFocus={creating} onChange={(e) => setName(e.target.value)} />}
             </Field>
           </div>
         </div>

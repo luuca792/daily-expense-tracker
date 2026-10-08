@@ -30,7 +30,15 @@ export function Sheet({ title, onClose, children, stack }: { title: string; onCl
   return (
     <>
       <div ref={dim} className={`dim ${stack ? 'stack' : ''}`} onClick={onClose} />
-      <div ref={box} className={`sheet fixed-col ${stack ? 'stack' : ''}`} role="dialog">
+      <div ref={box} className={`sheet fixed-col ${stack ? 'stack' : ''}`} role="dialog" onKeyDown={(e) => {
+        // Enter (keyboard "Done"/"Go") in a text or amount field presses this sheet's primary button (Lưu / Tạo kỳ),
+        // if it is enabled; date and select fields are left alone
+        const t = e.target as HTMLElement;
+        if (e.key !== 'Enter' || t.tagName !== 'INPUT' || (t as HTMLInputElement).type === 'date') return;
+        if (t.closest('.sheet') !== box.current) return;
+        e.preventDefault();
+        box.current?.querySelector<HTMLButtonElement>('.btn.pri:not(:disabled)')?.click();
+      }}>
         <div className="grab" />
         <div className="sheet-hd"><b>{title}</b><button onClick={onClose} aria-label="Đóng">✕</button></div>
         {children}
@@ -76,6 +84,7 @@ export function AmountBox({ label, value, onChange, accent, allowNegative, autoF
       )}
       <input
         inputMode="numeric"
+        enterKeyHint="done"
         autoFocus={autoFocus}
         value={shown}
         onChange={(e) => {

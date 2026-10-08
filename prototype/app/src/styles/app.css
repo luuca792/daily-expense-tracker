@@ -279,8 +279,9 @@ select.input { appearance: none; background: #fff url("data:image/svg+xml,%3Csvg
 @keyframes shake { 0%, 100% { transform: none; } 25% { transform: translateX(-4px); } 75% { transform: translateX(4px); } }
 
 /* page transitions: only .hd and .page move, so fixed bars and sheets keep their place */
-.route.fwd > .hd, .route.fwd > .page { animation: from-r .3s var(--ease-out) backwards; }
-.route.back > .hd, .route.back > .page { animation: from-l .3s var(--ease-out) backwards; }
+/* route-fwd / route-back, not fwd / back: a bare "back" class would pick up the back-arrow style (.back, 26px teal) on the whole page */
+.route-fwd > .hd, .route-fwd > .page { animation: from-r .3s var(--ease-out) backwards; }
+.route-back > .hd, .route-back > .page { animation: from-l .3s var(--ease-out) backwards; }
 .route > .welcome { animation: fade-in .4s ease-out backwards; }
 
 /* 5.0 tabs and 5.3 charts slide toward the tapped side */

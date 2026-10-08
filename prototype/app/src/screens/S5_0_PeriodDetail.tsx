@@ -70,7 +70,8 @@ export function S5_0_PeriodDetail() {
   return (
     <>
       <Header
-        onBack={() => nav('/periods')}
+        // back returns to wherever 5.0 was opened from (4.0, 3.0, 7.0); opened directly (refresh, link: no earlier in-app entry, history idx 0) → 4.0
+        onBack={() => (window.history.state?.idx > 0 ? nav(-1) : nav('/periods'))}
         title={p.name}
         sub={<>{dates.text}{dates.open && <i>chưa kết thúc</i>}</>}
         right={

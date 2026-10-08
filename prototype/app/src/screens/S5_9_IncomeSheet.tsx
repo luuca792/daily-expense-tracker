@@ -36,7 +36,7 @@ export function S5_9_IncomeSheet({ p, id, onClose }: { p: Period; id?: string; o
     <Sheet title={existing ? 'Sửa thu nhập' : 'Thêm thu nhập'} onClose={onClose}>
       <AmountBox key={focusKey} label="Số tiền" accent="green" allowNegative value={amount} onChange={setAmount} autoFocus={!existing} />
       <Field label="Mô tả">
-        <input className="input" value={description} onChange={(e) => setDescription(e.target.value)} />
+        <input enterKeyHint="done" className="input" value={description} onChange={(e) => setDescription(e.target.value)} />
       </Field>
       <Field label="Ngày">
         <DateField value={date} min={p.start} max={p.end ?? undefined} onChange={(v) => v && setDate(v)} />

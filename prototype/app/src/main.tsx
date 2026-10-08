@@ -3,6 +3,12 @@ import ReactDOM from 'react-dom/client';
 import { App } from './App';
 import { demoData } from './store/seed';
 import { useStore } from './store/store';
+// Font bundled with the app (not Google Fonts) so the installed app looks the same offline (D55).
+import '@fontsource/be-vietnam-pro/400.css';
+import '@fontsource/be-vietnam-pro/500.css';
+import '@fontsource/be-vietnam-pro/600.css';
+import '@fontsource/be-vietnam-pro/700.css';
+import '@fontsource/be-vietnam-pro/800.css';
 import './styles/app.css';
 
 // Data lives in memory only (no saving), so every load starts fresh with the sample data for a quick tour.

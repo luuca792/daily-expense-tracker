@@ -52,7 +52,7 @@ export function S4_1_PeriodSheet({ period, onClose, onCreated, onDelete }: {
   return (
     <Sheet title={editing ? 'Sửa kỳ' : 'Tạo kỳ mới'} onClose={onClose}>
       <Field label="Tên kỳ" error={nameErr}>
-        <input className={`input ${nameErr ? 'bad' : ''}`} value={name} onChange={(e) => setName(e.target.value)} />
+        <input enterKeyHint="done" className={`input ${nameErr ? 'bad' : ''}`} value={name} onChange={(e) => setName(e.target.value)} />
       </Field>
       <div style={{ display: 'flex', gap: 8 }}>
         <div style={{ flex: 1, minWidth: 0 }}>

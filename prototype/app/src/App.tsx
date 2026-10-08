@@ -30,7 +30,7 @@ function AnimatedRoutes() {
     prev.current = { key, dir: back ? 'back' : 'fwd' };
   }
   return (
-    <div key={key} className={`route ${prev.current.dir}`}>
+    <div key={key} className={`route route-${prev.current.dir}`}>
       <Routes location={loc}>
           <Route path="/" element={hasData ? <S2_0_Home /> : <S1_0_Welcome />} />
           <Route path="/overview" element={<Guard><S3_0_Overview /></Guard>} />

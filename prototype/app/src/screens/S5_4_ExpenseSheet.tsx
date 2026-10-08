@@ -61,7 +61,7 @@ export function S5_4_ExpenseSheet({ p, id, onClose }: { p: Period; id?: string; 
         </div>
         {category !== null && (
           <Field label="Mô tả">
-            <input className="input" value={description} onChange={(e) => setDescription(e.target.value)} />
+            <input enterKeyHint="done" className="input" value={description} onChange={(e) => setDescription(e.target.value)} />
           </Field>
         )}
         <Field label="Ngày">
