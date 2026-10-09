@@ -19,12 +19,17 @@ const BACKUPS_KEPT = 2;
  * A storage call that hasn't answered after this long counts as failed (plan §4.5). IndexedDB can stop answering
  * without an error (seen on phones after the app was in the background): without a limit, one stuck save
  * would hold up every later save in the queue and the user would keep typing into memory only.
+ * A save of the whole Data normally takes well under 50 ms, so 2 s is generous; loading (boot, other tabs) may
+ * also migrate, so it gets 5 s.
  */
-export const STORAGE_TIMEOUT_MS = 5000;
+export const SAVE_TIMEOUT_MS = 2000;
+export const LOAD_TIMEOUT_MS = 5000;
 
+/** `timeoutMs` (tests) replaces both limits */
 export function createRepository(db: KvDb = getDb(), opts: Options & { timeoutMs?: number } = {}) {
   const current = opts.current ?? CURRENT_VERSION;
-  const timeoutMs = opts.timeoutMs ?? STORAGE_TIMEOUT_MS;
+  const saveMs = opts.timeoutMs ?? SAVE_TIMEOUT_MS;
+  const loadMs = opts.timeoutMs ?? LOAD_TIMEOUT_MS;
   let tail: Promise<unknown> = Promise.resolve();
   /** number of the newest save asked for; older saves still in the queue are skipped */
   let latest = 0;
@@ -35,12 +40,12 @@ export function createRepository(db: KvDb = getDb(), opts: Options & { timeoutMs
    * overwrite a newer one: IndexedDB runs read-write transactions on the same store in the order they were
    * created, even across connections.
    */
-  async function attempt<T>(op: () => PromiseLike<T>): Promise<T> {
+  async function attempt<T>(op: () => PromiseLike<T>, ms: number): Promise<T> {
     try {
-      return await withTimeout(op(), timeoutMs);
+      return await withTimeout(op(), ms);
     } catch {
       db.close({ disableAutoOpen: false });
-      return withTimeout(op(), timeoutMs);
+      return withTimeout(op(), ms);
     }
   }
 
@@ -48,7 +53,7 @@ export function createRepository(db: KvDb = getDb(), opts: Options & { timeoutMs
    * Boot load: read → refuse newer → migrate + validate in memory → if migrated, write the backup
    * of the untouched raw record and the new data in ONE transaction. Any failure writes nothing.
    */
-  const load = () => attempt(loadOnce);
+  const load = () => attempt(loadOnce, loadMs);
 
   async function loadOnce(): Promise<LoadResult> {
     const raw = await db.kv.get(KEY.data);
@@ -92,6 +97,7 @@ export function createRepository(db: KvDb = getDb(), opts: Options & { timeoutMs
               await db.kv.put(data, KEY.data);
               return 'ok';
             }),
+            saveMs,
           ),
     );
     tail = run.catch(() => undefined);
@@ -102,12 +108,21 @@ export function createRepository(db: KvDb = getDb(), opts: Options & { timeoutMs
   const readRaw = () => db.kv.get(KEY.data);
 
   async function getLastExportAt(): Promise<number | null> {
-    const v = await attempt(() => db.kv.get(KEY.lastExportAt));
+    const v = await attempt(() => db.kv.get(KEY.lastExportAt), loadMs);
     return typeof v === 'number' ? v : null;
   }
   const setLastExportAt = (ms: number) => db.kv.put(ms, KEY.lastExportAt).then(() => undefined);
 
-  return { load, save, readRaw, getLastExportAt, setLastExportAt };
+  /**
+   * The app goes to the background (plan §4.5): once the queued saves are done, close the connection on purpose.
+   * Phones may break a connection while the app sleeps; this way none is ever used after a pause. The next call
+   * (a save on coming back, which waits in the same queue) opens a fresh one, which takes a few ms.
+   */
+  function suspend() {
+    tail = tail.then(() => db.close({ disableAutoOpen: false })).catch(() => undefined);
+  }
+
+  return { load, save, suspend, readRaw, getLastExportAt, setLastExportAt };
 }
 
 function storedVersion(raw: unknown) {

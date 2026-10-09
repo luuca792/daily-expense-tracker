@@ -25,4 +25,5 @@ export async function addExpense(page: Page, amount: string, description: string
   await page.locator('.sheet .field input.input').first().fill(description);
   await page.locator('.sheet .btn.pri').click();
   await expect(page.locator('.it', { hasText: description })).toBeVisible();
+  await expect(page.locator('.sheet')).toHaveCount(0); // closing animation done, so another sheet can open
 }

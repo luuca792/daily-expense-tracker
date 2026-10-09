@@ -21,6 +21,24 @@ test('an expense is still there after a reload', async ({ page }) => {
   expect(errors).toEqual([]);
 });
 
+test('switching to another app and back: changes are still saved (plan §4.5)', async ({ page }) => {
+  /** Pretend the app goes to the background or comes back, as on a phone */
+  const setVisible = (visible: boolean) =>
+    page.evaluate((v) => {
+      Object.defineProperty(document, 'visibilityState', { value: v ? 'visible' : 'hidden', configurable: true });
+      document.dispatchEvent(new Event('visibilitychange'));
+    }, visible);
+  await startWithName(page, 'Minh');
+  await createPeriod(page, 'Tháng 10/2026');
+  await addExpense(page, '75', 'Bánh mì');
+  await setVisible(false); // the connection is closed here
+  await setVisible(true);
+  await addExpense(page, '20', 'Cà phê'); // saved on a fresh connection
+  await page.reload();
+  await expect(page.locator('.it', { hasText: 'Bánh mì' })).toContainText('−75');
+  await expect(page.locator('.it', { hasText: 'Cà phê' })).toContainText('−20');
+});
+
 test('Xuất dữ liệu downloads a valid file and shows the date', async ({ page }) => {
   // Desktop path (download link): no share sheet in the test browser
   await page.addInitScript(() => { Object.defineProperty(navigator, 'canShare', { value: undefined }); });

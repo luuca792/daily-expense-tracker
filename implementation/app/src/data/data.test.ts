@@ -202,6 +202,21 @@ describe('repository', () => {
     expect(db.transaction).toHaveBeenCalledTimes(2);
   });
 
+  it('suspend closes the connection after the queued saves; the next save opens a fresh one', async () => {
+    const db = freshDb();
+    const repo = createRepository(db);
+    const close = vi.spyOn(db, 'close');
+    const first = repo.save({ ...emptyData(), userName: 'a' });
+    repo.suspend();
+    expect(close).not.toHaveBeenCalled(); // the save in the queue goes first
+    expect(await first).toBe('ok');
+    await new Promise((r) => setTimeout(r, 0));
+    expect(close).toHaveBeenCalledWith({ disableAutoOpen: false });
+    expect(db.isOpen()).toBe(false);
+    expect(await repo.save({ ...emptyData(), userName: 'b' })).toBe('ok');
+    expect(await db.kv.get(KEY.data)).toMatchObject({ userName: 'b' });
+  });
+
   it('a stuck boot load reconnects and loads', async () => {
     const db = freshDb();
     await db.kv.put(demoData(), KEY.data);

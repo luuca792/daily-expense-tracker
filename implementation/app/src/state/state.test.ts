@@ -11,22 +11,23 @@ const flush = () => new Promise((r) => setTimeout(r, 0));
 function fakeRepo(save: (d: Data) => Promise<SaveResult> = async () => 'ok', stored: Data | null = null) {
   return {
     save: vi.fn(save),
+    suspend: vi.fn(),
     load: vi.fn(async () => (stored ? { kind: 'ok' as const, data: stored } : { kind: 'empty' as const })),
   } as unknown as Repository & { save: ReturnType<typeof vi.fn> };
 }
 
 function setup(repo = fakeRepo()) {
   let otherTab: () => void = () => undefined;
-  let visible: () => void = () => undefined;
+  let visibility: (visible: boolean) => void = () => undefined;
   const deps = {
     repo,
     postSaved: vi.fn(),
     reload: vi.fn(),
     onOtherTabSaved: (cb: () => void) => ((otherTab = cb), () => undefined),
-    onVisible: (cb: () => void) => ((visible = cb), () => undefined),
+    onVisibility: (cb: (visible: boolean) => void) => ((visibility = cb), () => undefined),
   };
   const stop = startAutosave(useStore, deps);
-  return { deps, stop, otherTab: () => otherTab(), visible: () => visible() };
+  return { deps, stop, otherTab: () => otherTab(), visible: () => visibility(true), hidden: () => visibility(false) };
 }
 
 beforeEach(() => useStore.getState().init(demoData(), null));
@@ -106,6 +107,24 @@ describe('autosave (plan §4.5)', () => {
     visible(); // saved now: nothing more to do
     await flush();
     expect(repo.save).toHaveBeenCalledTimes(2);
+    stop();
+  });
+  it('leaving the app: a failed save is tried again, then the connection is closed', async () => {
+    let fail = true;
+    const repo = fakeRepo(async () => {
+      if (fail) throw new Error('stuck');
+      return 'ok';
+    });
+    const { hidden, stop } = setup(repo);
+    useStore.getState().update((d) => (d.userName = 'Lan'));
+    await flush();
+    fail = false;
+    hidden();
+    expect(repo.save).toHaveBeenCalledTimes(2);
+    expect(repo.suspend).toHaveBeenCalledTimes(1);
+    expect(repo.save.mock.invocationCallOrder[1]).toBeLessThan(
+      (repo.suspend as ReturnType<typeof vi.fn>).mock.invocationCallOrder[0],
+    );
     stop();
   });
   it('newer data in storage → reload instead of overwriting', async () => {

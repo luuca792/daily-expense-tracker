@@ -8,8 +8,9 @@ Docker image tag, and the version shown at the bottom of 6.0 Settings.
 ## [1.0.2] - 2026-10-09
 ### Fixed
 - Fix a white screen when a screen crashes; show an error screen with Xuất dữ liệu (the data in memory) and Thử lại instead.
-- Fix changes silently not being saved when the phone's storage stops answering (e.g. after the app was in the background): each save now times out after 5 s, reconnects and retries, shows "Chưa lưu được dữ liệu" if it still fails, and saves again when the app comes back to the foreground.
+- Fix changes silently not being saved when the phone's storage stops answering (e.g. after the app was in the background): each save now has a time limit, reconnects and retries, shows "Chưa lưu được dữ liệu" if it still fails, and saves again when the app comes back to the foreground.
 - Fix a white screen on launch when storage doesn't answer; show the "Không mở được dữ liệu" screen instead.
+- Close the storage connection when switching to another app and open a fresh one on return, so a connection broken while the phone had the app in the background is never used; failed saves are retried on leaving too, and a save now gives up after 2 s instead of 5 s.
 
 ## [1.0.1] - 2026-10-09
 ### Added

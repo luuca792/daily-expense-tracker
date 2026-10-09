@@ -14,12 +14,12 @@ export interface AutosaveDeps {
   onOtherTabSaved?: (cb: () => void) => () => void;
   /** a newer app version runs in another tab: reload so this tab gets it too (the service worker serves it) */
   reload?: () => void;
-  /** calls back when the app comes back to the foreground; returns the unsubscribe function */
-  onVisible?: (cb: () => void) => () => void;
+  /** calls back when the app goes to the background (false) or comes back (true); returns the unsubscribe function */
+  onVisibility?: (cb: (visible: boolean) => void) => () => void;
 }
 
-function onVisible(cb: () => void) {
-  const listener = () => document.visibilityState === 'visible' && cb();
+function onVisibility(cb: (visible: boolean) => void) {
+  const listener = () => cb(document.visibilityState === 'visible');
   document.addEventListener('visibilitychange', listener);
   return () => document.removeEventListener('visibilitychange', listener);
 }
@@ -52,11 +52,13 @@ export function startAutosave(store: StoreApi<Store>, deps: AutosaveDeps) {
     void save(s.data);
   });
 
-  // Back to the foreground after a failed save: try again without waiting for the next change. Phones often
-  // break the storage connection while the app is in the background; the retry opens a new one.
-  const unvisible = (deps.onVisible ?? onVisible)(() => {
+  // Switching apps (plan §4.5). Leaving: a failed save is tried again while the phone still lets us run, then the
+  // connection is closed on purpose (repo.suspend), since phones may break it while the app sleeps. Coming back:
+  // a failed save is tried again without waiting for the next change; it opens a fresh connection.
+  const unvisible = (deps.onVisibility ?? onVisibility)((visible) => {
     const { data } = store.getState();
     if (unsaved && data) void save(data);
+    if (!visible) repo.suspend();
   });
 
   // Another tab saved: re-read through the full load (validation included). Data from a newer app → reload.
