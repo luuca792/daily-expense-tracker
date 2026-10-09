@@ -5,7 +5,10 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
 [Semantic Versioning](https://semver.org/). The version is the one in `app/package.json`: the git tag, the
 Docker image tag, and the version shown at the bottom of 6.0 Settings.
 
-## [1.0.2] - 2026-10-09
+## [1.0.2] - 2026-10-10
+### Added
+- `app/.design-sync/`: sync the shared UI components, styles and font to a Claude Design design-system project (`/design-sync`), with a preview per component and notes for the design agent.
+
 ### Fixed
 - Fix a white screen when a screen crashes; show an error screen with Xuất dữ liệu (the data in memory) and Thử lại instead.
 - Fix changes silently not being saved when the phone's storage stops answering (e.g. after the app was in the background): each save now has a time limit, reconnects and retries, shows "Chưa lưu được dữ liệu" if it still fails, and saves again when the app comes back to the foreground.

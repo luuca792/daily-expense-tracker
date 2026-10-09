@@ -1,0 +1,14 @@
+{
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "noEmit": false,
+    "declaration": true,
+    "emitDeclarationOnly": true,
+    "rootDir": "..",
+    "outDir": ".cache/pkg/types",
+    "noUnusedLocals": false,
+    "types": ["vite/client"]
+  },
+  "include": ["lib-entry.ts"],
+  "exclude": []
+}

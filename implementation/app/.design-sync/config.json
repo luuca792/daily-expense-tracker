@@ -1,0 +1,127 @@
+{
+  "projectId": "e387f9fd-7abc-4477-8132-b55dd02bb03c",
+  "shape": "package",
+  "pkg": "so-chi-tieu-ui",
+  "globalName": "SoChiTieu",
+  "buildCmd": "node .design-sync/build-lib.mjs",
+  "entry": ".design-sync/.cache/pkg/dist/index.js",
+  "srcDir": "../../../src/components",
+  "cssEntry": "dist/styles.css",
+  "extraFonts": [
+    "../../../node_modules/@fontsource/be-vietnam-pro/400.css",
+    "../../../node_modules/@fontsource/be-vietnam-pro/500.css",
+    "../../../node_modules/@fontsource/be-vietnam-pro/600.css",
+    "../../../node_modules/@fontsource/be-vietnam-pro/700.css",
+    "../../../node_modules/@fontsource/be-vietnam-pro/800.css"
+  ],
+  "componentSrcMap": {
+    "DayBox": "../../../src/components/EntryRow.tsx",
+    "ExpenseRow": "../../../src/components/EntryRow.tsx",
+    "IncomeRow": "../../../src/components/EntryRow.tsx",
+    "TransferRow": "../../../src/components/EntryRow.tsx",
+    "Field": "../../../src/components/Sheet.tsx",
+    "PencilIcon": "../../../src/components/icons.tsx",
+    "CalendarIcon": "../../../src/components/icons.tsx"
+  },
+  "dtsPropsFor": {
+    "AmountBox": "/** field label, e.g. 'Số tiền' */ label: string; /** thousands of đồng (1700 = 1.700.000 ₫); null = empty */ value: number | null; onChange: (v: number | null) => void; accent?: 'green' | 'amber'; /** shows a ± toggle */ allowNegative?: boolean; autoFocus?: boolean;",
+    "DateField": "/** 'yyyy-MM-dd'; shown as dd/MM/yyyy */ value: string | null; min?: string; max?: string | null; onChange: (v: string) => void; /** red border */ bad?: boolean;",
+    "BottomBar": "/** icon is an emoji */ tabs: ReadonlyArray<{ key: string; icon: string; label: string }>; current: string; onSelect: (key: string) => void;",
+    "Bars": "/** one bar per day; amounts in thousands of đồng */ days: Array<{ date: string; amount: number }>;",
+    "Ico": "/** an emoji */ icon: string; /** null = untracked: dashed '?' tile */ color: ('orange' | 'blue' | 'pink' | 'violet' | 'green' | 'amber' | 'indigo' | 'slate' | 'red' | 'teal' | 'cyan' | 'lime') | null; size?: 'sm' | 'md' | 'lg'; /** solid color at ~33% alpha instead of the pale tint */ strong?: boolean;",
+    "GoalCard": "g: { id: string; name: string; icon: string; color: ('orange' | 'blue' | 'pink' | 'violet' | 'green' | 'amber' | 'indigo' | 'slate' | 'red' | 'teal' | 'cyan' | 'lime'); target: number; done: boolean }; /** thousands of đồng */ spent: number; onClick: () => void;",
+    "PeriodDates": "/** only start/end are read; end null = active period ('chưa kết thúc') */ p: { start: string; end: string | null };",
+    "ExpenseRow": "/** the period, for the category name/color lookup: category 'living' -> p.living (named 'Sinh hoạt'), else a goal id in p.goals */ p: { id: string; name: string; start: string; end: string | null; living: { max: number; icon: string; color: ('orange' | 'blue' | 'pink' | 'violet' | 'green' | 'amber' | 'indigo' | 'slate' | 'red' | 'teal' | 'cyan' | 'lime') }; goals: Array<{ id: string; name: string; icon: string; color: ('orange' | 'blue' | 'pink' | 'violet' | 'green' | 'amber' | 'indigo' | 'slate' | 'red' | 'teal' | 'cyan' | 'lime'); target: number; done: boolean }>; expenses: unknown[]; incomes: unknown[]; transfers: unknown[]; createdAt: number }; e: { id: string; amount: number; category: string | null; description: string; date: string; createdAt: number }; /** amounts >= this are red */ large: number; /** plays the 'just added' highlight */ fresh: boolean; onClick: () => void;",
+    "IncomeRow": "/** amount may be negative */ i: { id: string; amount: number; description: string; date: string; createdAt: number }; fresh: boolean; onClick: () => void;",
+    "TransferRow": "/** in = deposit to savings, out = withdrawal */ t: { id: string; dir: 'in' | 'out'; amount: number; date: string; createdAt: number }; fresh: boolean; onClick: () => void;"
+  },
+  "docsMap": {
+    "AmountBox": "../../groups/Forms.md",
+    "DateField": "../../groups/Forms.md",
+    "Field": "../../groups/Forms.md",
+    "Sheet": "../../groups/Overlays.md",
+    "Dialog": "../../groups/Overlays.md",
+    "Header": "../../groups/Navigation.md",
+    "BottomBar": "../../groups/Navigation.md",
+    "PlusButton": "../../groups/Navigation.md",
+    "DayBox": "../../groups/Entries.md",
+    "ExpenseRow": "../../groups/Entries.md",
+    "IncomeRow": "../../groups/Entries.md",
+    "TransferRow": "../../groups/Entries.md",
+    "GoalCard": "../../groups/Summary.md",
+    "Ring": "../../groups/Summary.md",
+    "Bars": "../../groups/Summary.md",
+    "AnimMoney": "../../groups/Summary.md",
+    "PeriodDates": "../../groups/Summary.md",
+    "Ico": "../../groups/Icons.md",
+    "PencilIcon": "../../groups/Icons.md",
+    "CalendarIcon": "../../groups/Icons.md"
+  },
+  "overrides": {
+    "AmountBox": {
+      "cardMode": "column"
+    },
+    "DateField": {
+      "cardMode": "column"
+    },
+    "Field": {
+      "cardMode": "column"
+    },
+    "Header": {
+      "cardMode": "column"
+    },
+    "DayBox": {
+      "cardMode": "column"
+    },
+    "ExpenseRow": {
+      "cardMode": "column"
+    },
+    "IncomeRow": {
+      "cardMode": "column"
+    },
+    "TransferRow": {
+      "cardMode": "column"
+    },
+    "GoalCard": {
+      "cardMode": "column"
+    },
+    "Ring": {
+      "cardMode": "column"
+    },
+    "Bars": {
+      "cardMode": "column"
+    },
+    "AnimMoney": {
+      "cardMode": "column"
+    },
+    "PeriodDates": {
+      "cardMode": "column"
+    },
+    "Ico": {
+      "cardMode": "column"
+    },
+    "PencilIcon": {
+      "cardMode": "column"
+    },
+    "CalendarIcon": {
+      "cardMode": "column"
+    },
+    "Sheet": {
+      "cardMode": "single",
+      "primaryStory": "AddExpense"
+    },
+    "Dialog": {
+      "cardMode": "single",
+      "primaryStory": "ConfirmDelete"
+    },
+    "BottomBar": {
+      "cardMode": "single",
+      "primaryStory": "Tabs"
+    },
+    "PlusButton": {
+      "cardMode": "single",
+      "primaryStory": "AboveBottomBar"
+    }
+  },
+  "readmeHeader": ".design-sync/conventions.md"
+}
