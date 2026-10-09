@@ -4,9 +4,10 @@
 |---|---|
 | `Dockerfile` | Node builds `app/` (unit tests must pass), nginx serves `dist/`. Build context: `implementation/`. |
 | `nginx.conf` | nginx inside the container: SPA fallback, CSP (`connect-src 'self'`), `no-cache` for `index.html`, `sw.js`, `registerSW.js`, `workbox-*.js` and the manifest (`application/manifest+json`), one-year cache for hashed `/assets/`. |
-| `docker-compose.yml` | Builds and runs the container on `HOST_PORT` (default 8081). Image `luuca792/expense-tracker:${APP_VERSION}` (default `1.0.2`). |
+| `docker-compose.yml` | Builds and runs the container on `HOST_PORT` (default 8081). Image `luuca792/expense-tracker:${APP_VERSION}` (default `1.0.3`). |
 | `build_and_push.py` | Double-click: reads the version from `app/package.json`, `docker-compose build`, then `push` to Docker Hub (`luuca792/expense-tracker:<version>`). |
-| `package_and_deploy.py` | Double-click or `npm run package-and-deploy` in `app/`: checks the repo is on main, tags the last commit with the version, pushes main and the tag, runs `build_and_push.py`, then bumps the patch version everywhere (`BUMP_FILES`, `package.json`, a new empty `CHANGELOG.md` block dated today), commits "Increase version to x.y.z" and pushes main. A `-SNAPSHOT` version only builds and pushes the image. |
+| `package_and_deploy.py` | Double-click or `npm run package-and-deploy` in `app/`: checks the repo is on main, tags the last commit with the version, pushes main and the tag, runs `build_and_push.py`, then `bump_version.py`. A `-SNAPSHOT` version only builds and pushes the image. |
+| `bump_version.py` | Double-click or `npm run bump-version` in `app/`: bumps the patch version everywhere (`BUMP_FILES`, `package.json`, a new empty `CHANGELOG.md` block dated today), commits "Increase version to x.y.z" and pushes main. The last step of `package_and_deploy.py`; run it by hand when a release stopped before it (e.g. the Docker Hub push failed). By hand it only runs on main and only when the current version already has its git tag. |
 
 ## First deploy
 1. **Choose the final subdomain and never change it** (plan §6): each phone's data belongs to that exact address.

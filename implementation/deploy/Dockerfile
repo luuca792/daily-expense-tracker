@@ -1,5 +1,5 @@
 # Sổ chi tiêu: Node builds the static site, nginx serves it. Build context: implementation/
-#   docker build -f deploy/Dockerfile --build-arg APP_VERSION=1.0.2 -t luuca792/expense-tracker:1.0.2 .
+#   docker build -f deploy/Dockerfile --build-arg APP_VERSION=1.0.3 -t luuca792/expense-tracker:1.0.3 .
 FROM node:22-alpine AS build
 WORKDIR /app
 COPY app/package.json app/package-lock.json ./
@@ -10,7 +10,7 @@ RUN npx vitest run && npm run build
 
 FROM nginx:1.27-alpine
 # the tag's version (app/package.json); the app itself reads package.json at build time
-ARG APP_VERSION=1.0.2
+ARG APP_VERSION=1.0.3
 LABEL org.opencontainers.image.title="expense-tracker"
 LABEL org.opencontainers.image.version="${APP_VERSION}"
 COPY deploy/nginx.conf /etc/nginx/conf.d/default.conf

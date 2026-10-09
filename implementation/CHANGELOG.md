@@ -5,6 +5,8 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
 [Semantic Versioning](https://semver.org/). The version is the one in `app/package.json`: the git tag, the
 Docker image tag, and the version shown at the bottom of 6.0 Settings.
 
+## [1.0.3] - 2026-10-10
+
 ## [1.0.2] - 2026-10-10
 ### Added
 - `app/.design-sync/`: sync the shared UI components, styles and font to a Claude Design design-system project (`/design-sync`), with a preview per component and notes for the design agent.
