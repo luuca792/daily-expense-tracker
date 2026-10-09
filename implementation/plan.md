@@ -37,7 +37,7 @@ state/ ─▶ domain/  ◀── data/
 - **`domain/`** contains pure functions and types, with no React and no browser APIs. It holds every rule (R1–R7 as amended in §2.5), which can all be unit-tested.
 - **`data/`** is the only code that touches IndexedDB or files: the stored schema, migrations, loading, saving and export. It depends on `domain/` types and nothing else.
 - **`state/`** is the Zustand store. It loads through `data/`, changes data by applying recipes that call `domain/` functions, and calls `data/` to save after each change.
-- **`screens/`** and **`components/`** read from and write to `state/`. They never call `data/` directly, with one exception: the boot error screen calls export (§4.4).
+- **`screens/`** and **`components/`** read from and write to `state/`. They never call `data/` directly, with one exception: the boot error screen and the crash screen call export (§4.4).
 
 ### 2.3 Code layout
 ```
@@ -95,6 +95,7 @@ implementation/
         S6_0_Settings/         S6_0_Settings.tsx · S6_1_SettingSheet.tsx
         S7_0_Savings/          S7_0_Savings.tsx · S7_1_BaseSheet.tsx
         BootError.tsx          shown when stored data can't be opened (§4.4)
+        CrashGuard.tsx         error boundary: crash screen instead of a white page (§4.5)
 
       components/              shared parts named in prototype/screens.md
         Header.tsx · Sheet.tsx · Dialog.tsx · Toast.tsx · PlusButton.tsx · BottomBar.tsx
@@ -210,6 +211,8 @@ A minimal screen: a short error title, an **Xuất dữ liệu** button that exp
 - The undo toast keeps the previous `data` in memory. Undo is just another save.
 - **Several tabs or windows:** after each save the tab posts `saved` on a `BroadcastChannel`. Other tabs re-read `data` and replace their store. Every change applies a recipe to the **current** data, so a sheet left open in another tab doesn't overwrite newer changes when it saves.
 - If a save fails (storage full or blocked), show a toast. The change stays in memory, and the next save tries again.
+- **Storage that stops answering** (added in 1.0.2 after a real loss: on a phone, IndexedDB hung without an error, every later save waited behind the stuck one, and a whole session stayed in memory only). Every storage call has a 5 s limit (`STORAGE_TIMEOUT_MS`). If it fails or hangs, the repository closes the connection, Dexie opens a new one, and the call is tried once more; after that it fails with the toast above. Saves a newer one replaced while they waited in the queue are skipped. After a failed save, coming back to the app (`visibilitychange`) saves again without waiting for the next change. The boot load uses the same limit, so a hung boot ends on BootError instead of a white page.
+- **Crash screen:** `CrashGuard` (a React error boundary around `<App>`) catches an error while a screen renders, which would otherwise leave a white page. It shows the BootError layout titled "Đã xảy ra lỗi", with the error message in small text, **Xuất dữ liệu** (the data in memory) and **Thử lại** (reload on 2.0 Home).
 
 ### 4.6 JSON export (first release)
 - **Where:** 6.0 Settings gets a new section **💾 Dữ liệu** with one row, **Xuất dữ liệu**, whose value is the date of the last export (`08/10/2026`) or `—`. Tapping it exports immediately; there's no extra screen. Afterwards a toast says "Đã xuất dữ liệu". Following the "no explanatory text" rule, nothing else appears on screen. Why to export goes in the install guide (§6).

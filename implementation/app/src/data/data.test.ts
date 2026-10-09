@@ -1,11 +1,12 @@
 import 'fake-indexeddb/auto';
-import { afterEach, describe, expect, it } from 'vitest';
+import { afterEach, describe, expect, it, vi } from 'vitest';
 import { demoData } from '../domain/__fixtures__/sample';
 import { emptyData } from '../domain/types';
 import { KEY, KvDb } from './db';
 import { buildEnvelope, envelopeJson, exportFileName } from './export';
 import { DataError, type Step, upgrade, validateData } from './migrations';
 import { createRepository } from './repository';
+import { TimeoutError } from './timeout';
 import type { Data } from './schema/current';
 
 let n = 0;
@@ -162,6 +163,51 @@ describe('repository', () => {
     await db.kv.put(newer, KEY.data);
     expect(await createRepository(db).save(emptyData())).toBe('newer');
     expect(await db.kv.get(KEY.data)).toEqual(newer);
+  });
+
+  /** The next `n` transactions never answer, like a storage connection that broke in the background */
+  function hangNext(db: KvDb, n: number) {
+    const real = db.transaction.bind(db) as (...a: unknown[]) => unknown;
+    vi.spyOn(db, 'transaction').mockImplementation(((...a: unknown[]) =>
+      n-- > 0 ? new Promise(() => undefined) : real(...a)) as unknown as KvDb['transaction']);
+    return vi.spyOn(db, 'close');
+  }
+
+  it('a stuck save times out, reconnects and is tried once more', async () => {
+    const db = freshDb();
+    const close = hangNext(db, 1);
+    const repo = createRepository(db, { timeoutMs: 20 });
+    expect(await repo.save({ ...emptyData(), userName: 'Lan' })).toBe('ok');
+    expect(close).toHaveBeenCalledWith({ disableAutoOpen: false });
+    expect(await db.kv.get(KEY.data)).toMatchObject({ userName: 'Lan' });
+  });
+
+  it('a save stuck twice fails, and the next save still goes through', async () => {
+    const db = freshDb();
+    hangNext(db, 2);
+    const repo = createRepository(db, { timeoutMs: 20 });
+    await expect(repo.save({ ...emptyData(), userName: 'a' })).rejects.toBeInstanceOf(TimeoutError);
+    expect(await repo.save({ ...emptyData(), userName: 'b' })).toBe('ok');
+    expect(await db.kv.get(KEY.data)).toMatchObject({ userName: 'b' });
+  });
+
+  it('saves replaced while waiting behind a stuck one are skipped', async () => {
+    const db = freshDb();
+    hangNext(db, 1);
+    const repo = createRepository(db, { timeoutMs: 20 });
+    const saves = Array.from({ length: 5 }, (_, i) => repo.save({ ...emptyData(), userName: `n${i}` }));
+    expect(await Promise.all(saves)).toEqual(['ok', 'ok', 'ok', 'ok', 'ok']);
+    expect(await db.kv.get(KEY.data)).toMatchObject({ userName: 'n4' });
+    // all five were queued before the first ran: only n4 is written (stuck once, then retried)
+    expect(db.transaction).toHaveBeenCalledTimes(2);
+  });
+
+  it('a stuck boot load reconnects and loads', async () => {
+    const db = freshDb();
+    await db.kv.put(demoData(), KEY.data);
+    hangNext(db, 1);
+    vi.spyOn(db.kv, 'get').mockImplementationOnce(() => new Promise(() => undefined) as never);
+    expect(await createRepository(db, { timeoutMs: 20 }).load()).toEqual({ kind: 'ok', data: demoData() });
   });
 
   it('last export date is kept outside the data', async () => {

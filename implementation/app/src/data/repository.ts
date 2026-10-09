@@ -2,6 +2,7 @@
 import { CURRENT_VERSION, type Data } from './schema/current';
 import { KEY, KvDb, getDb } from './db';
 import { DataError, type DataErrorReason, type Options, readVersion, upgrade } from './migrations';
+import { withTimeout } from './timeout';
 
 export type LoadResult =
   | { kind: 'empty' } // no data yet → 1.0 Welcome
@@ -14,15 +15,42 @@ export type SaveResult = 'ok' | 'newer';
 /** Backups kept (`backup-vN`), most recent versions first */
 const BACKUPS_KEPT = 2;
 
-export function createRepository(db: KvDb = getDb(), opts: Options = {}) {
+/**
+ * A storage call that hasn't answered after this long counts as failed (plan §4.5). IndexedDB can stop answering
+ * without an error (seen on phones after the app was in the background): without a limit, one stuck save
+ * would hold up every later save in the queue and the user would keep typing into memory only.
+ */
+export const STORAGE_TIMEOUT_MS = 5000;
+
+export function createRepository(db: KvDb = getDb(), opts: Options & { timeoutMs?: number } = {}) {
   const current = opts.current ?? CURRENT_VERSION;
+  const timeoutMs = opts.timeoutMs ?? STORAGE_TIMEOUT_MS;
   let tail: Promise<unknown> = Promise.resolve();
+  /** number of the newest save asked for; older saves still in the queue are skipped */
+  let latest = 0;
+
+  /**
+   * Run a storage call with a time limit. If it fails or hangs: close the connection (Dexie opens a new one on the
+   * next call) and try once more, then give up with the error. A stuck write that still lands later can't
+   * overwrite a newer one: IndexedDB runs read-write transactions on the same store in the order they were
+   * created, even across connections.
+   */
+  async function attempt<T>(op: () => PromiseLike<T>): Promise<T> {
+    try {
+      return await withTimeout(op(), timeoutMs);
+    } catch {
+      db.close({ disableAutoOpen: false });
+      return withTimeout(op(), timeoutMs);
+    }
+  }
 
   /**
    * Boot load: read → refuse newer → migrate + validate in memory → if migrated, write the backup
    * of the untouched raw record and the new data in ONE transaction. Any failure writes nothing.
    */
-  async function load(): Promise<LoadResult> {
+  const load = () => attempt(loadOnce);
+
+  async function loadOnce(): Promise<LoadResult> {
     const raw = await db.kv.get(KEY.data);
     if (raw === undefined) return { kind: 'empty' };
     let result: { data: Data; from: number };
@@ -49,15 +77,22 @@ export function createRepository(db: KvDb = getDb(), opts: Options = {}) {
    * Save the whole Data (plan §4.5). Writes go through a queue, so an older write never lands after a newer one.
    * Inside the transaction the stored version is checked: if another tab already runs a newer app and
    * migrated the data, this (older) tab must not overwrite it → 'newer'.
+   * Every save writes the whole Data, so a save that a newer one has replaced while it waited is skipped ('ok'):
+   * after a stuck save, the queue catches up with one write instead of one per change.
    */
   function save(data: Data): Promise<SaveResult> {
+    const n = ++latest;
     const run = tail.then(() =>
-      db.transaction('rw', db.kv, async (): Promise<SaveResult> => {
-        const stored = await db.kv.get(KEY.data);
-        if (stored !== undefined && storedVersion(stored) > current) return 'newer';
-        await db.kv.put(data, KEY.data);
-        return 'ok';
-      }),
+      n !== latest
+        ? ('ok' as const)
+        : attempt(() =>
+            db.transaction('rw', db.kv, async (): Promise<SaveResult> => {
+              const stored = await db.kv.get(KEY.data);
+              if (stored !== undefined && storedVersion(stored) > current) return 'newer';
+              await db.kv.put(data, KEY.data);
+              return 'ok';
+            }),
+          ),
     );
     tail = run.catch(() => undefined);
     return run;
@@ -67,7 +102,7 @@ export function createRepository(db: KvDb = getDb(), opts: Options = {}) {
   const readRaw = () => db.kv.get(KEY.data);
 
   async function getLastExportAt(): Promise<number | null> {
-    const v = await db.kv.get(KEY.lastExportAt);
+    const v = await attempt(() => db.kv.get(KEY.lastExportAt));
     return typeof v === 'number' ? v : null;
   }
   const setLastExportAt = (ms: number) => db.kv.put(ms, KEY.lastExportAt).then(() => undefined);

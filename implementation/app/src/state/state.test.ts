@@ -17,14 +17,16 @@ function fakeRepo(save: (d: Data) => Promise<SaveResult> = async () => 'ok', sto
 
 function setup(repo = fakeRepo()) {
   let otherTab: () => void = () => undefined;
+  let visible: () => void = () => undefined;
   const deps = {
     repo,
     postSaved: vi.fn(),
     reload: vi.fn(),
     onOtherTabSaved: (cb: () => void) => ((otherTab = cb), () => undefined),
+    onVisible: (cb: () => void) => ((visible = cb), () => undefined),
   };
   const stop = startAutosave(useStore, deps);
-  return { deps, stop, otherTab: () => otherTab() };
+  return { deps, stop, otherTab: () => otherTab(), visible: () => visible() };
 }
 
 beforeEach(() => useStore.getState().init(demoData(), null));
@@ -85,6 +87,25 @@ describe('autosave (plan §4.5)', () => {
     await flush();
     expect(useStore.getState().toast?.text).toBe(SAVE_FAILED_TEXT);
     expect(useStore.getState().data!.userName).toBe('Lan');
+    stop();
+  });
+  it('after a failed save, coming back to the app saves again', async () => {
+    let fail = true;
+    const repo = fakeRepo(async () => {
+      if (fail) throw new Error('stuck');
+      return 'ok';
+    });
+    const { visible, stop } = setup(repo);
+    useStore.getState().update((d) => (d.userName = 'Lan'));
+    await flush();
+    fail = false;
+    visible();
+    await flush();
+    expect(repo.save).toHaveBeenCalledTimes(2);
+    expect(repo.save).toHaveBeenLastCalledWith(useStore.getState().data);
+    visible(); // saved now: nothing more to do
+    await flush();
+    expect(repo.save).toHaveBeenCalledTimes(2);
     stop();
   });
   it('newer data in storage → reload instead of overwriting', async () => {

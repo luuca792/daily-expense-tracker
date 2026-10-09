@@ -4,6 +4,7 @@ import { App } from './App';
 import { requestPersist } from './data/persist';
 import { getRepository } from './data/repository';
 import { BootError } from './screens/BootError';
+import { CrashGuard } from './screens/CrashGuard';
 import { startAutosave } from './state/autosave';
 import { useStore } from './state/store';
 // Font bundled with the app (not Google Fonts) so the installed app looks the same offline (D55).
@@ -32,13 +33,16 @@ async function boot() {
   startAutosave(useStore, { repo });
   root.render(
     <React.StrictMode>
-      <App />
+      <CrashGuard>
+        <App />
+      </CrashGuard>
     </React.StrictMode>,
   );
 }
 
 boot().catch((e) => {
-  // IndexedDB unavailable (e.g. blocked in a private window): nothing can be read, so there is nothing to export
+  // IndexedDB unavailable (e.g. blocked in a private window) or not answering even after reconnecting
+  // (repository.ts): nothing can be read, so there is nothing to export
   console.error(e);
   root.render(<BootError raw={null} />);
 });
