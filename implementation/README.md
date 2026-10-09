@@ -6,7 +6,8 @@ The **actual product**, deployed on the user's server for friends to use. Built 
 |---|---|
 | `plan.md` | Implementation plan: architecture and code layout, data model (schema v1), persistence and migrations, JSON export, quality, deployment |
 | `app/` | Production source code (Vite + React + TS PWA) |
-| `deploy/` | Dockerfile, nginx config, docker-compose, build-and-push script; see `deploy/README.md` |
+| `CHANGELOG.md` | Changes per released version (Keep a Changelog); every change adds a line under the newest version |
+| `deploy/` | Dockerfile, nginx config, docker-compose, build-and-push and package-and-deploy scripts; see `deploy/README.md` |
 | `test-script.md` | Manual checks per screen number, device checks, update check |
 
 ## Commands (in `app/`)
